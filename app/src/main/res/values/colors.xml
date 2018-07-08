@@ -3,4 +3,14 @@
     <color name="colorPrimary">#F56A05</color>
     <color name="colorPrimaryDark">	#F56A05</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--general-->
+    <color name="white">#FFffff</color>
+    <color name="blockchain_dark_blue">#F56A05</color>
+
+    <!--toast color-->
+    <color name="toast_text">@color/white</color>
+    <color name="toast_error_background">#F44336</color>
+    <color name="toast_warning_background">@color/blockchain_dark_blue</color>
+    <color name="toast_info_background">@color/blockchain_dark_blue</color>
 </resources>

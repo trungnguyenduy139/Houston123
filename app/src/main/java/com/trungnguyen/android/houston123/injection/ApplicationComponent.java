@@ -1,7 +1,5 @@
 package com.trungnguyen.android.houston123.injection;
 
-import com.trungnguyen.android.houston123.ui.main.MainViewModel;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -15,9 +13,6 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     DataManagerComponent plus(DataManagerModule userModule);
-
-
-
 
 //    void inject(AppUtil appUtil);
 //

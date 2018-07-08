@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.injection;
 
 
+import com.trungnguyen.android.houston123.ui.login.LoginViewModel;
 import com.trungnguyen.android.houston123.ui.main.MainViewModel;
 
 import dagger.Subcomponent;
@@ -9,14 +10,14 @@ import dagger.Subcomponent;
  * Subcomponents have access to all upstream objects in the graph but can have their own scope -
  * they don't need to explicitly state their dependencies as they have access anyway
  */
-@SuppressWarnings("WeakerAccess")
 @ViewModelScope
 @Subcomponent(modules = DataManagerModule.class)
 public interface DataManagerComponent {
 
     void inject(MainViewModel mainViewModel);
 
-//
+    void inject(LoginViewModel loginViewModel);
+
 //    void inject(AddMarketViewModel addMarketViewModel);
 //
 //    void inject(OrderBookViewModel orderBookViewModel);

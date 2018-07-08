@@ -5,6 +5,7 @@ import android.content.Context;
 
 
 import com.trungnguyen.android.houston123.util.Navigator;
+import com.trungnguyen.android.houston123.util.PrefsUtil;
 
 import javax.inject.Singleton;
 
@@ -26,13 +27,11 @@ public class ApplicationModule {
         return mApplication;
     }
 
-
-//
-//    @Provides
-//    @Singleton
-//    protected AppUtil provideAppUtil() {
-//        return new AppUtil(mApplication);
-//    }
+    @Provides
+    @Singleton
+    protected PrefsUtil providePrefsUtil() {
+        return new PrefsUtil(mApplication);
+    }
 //
 //    @Provides
 //    protected AccessState provideAccessState() {
