@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.trungnguyen.android.houston123.injection.Injector;
-import com.trungnguyen.android.houston123.util.Utils;
 
 /**
  * Created by goldze on 2017/6/15.
@@ -27,7 +26,7 @@ public class BaseApplication extends Application {
 
         sInstance = this;
         Injector.getInstance().init(this);
-        Utils.init(this);
+
         registerActivityLifecycleCallbacks(mCallbacks);
     }
 
