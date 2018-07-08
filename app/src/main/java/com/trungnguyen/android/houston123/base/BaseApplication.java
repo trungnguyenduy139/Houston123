@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.squareup.leakcanary.LeakCanary;
 import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.Utils;
 
@@ -17,6 +18,13 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
         sInstance = this;
         Injector.getInstance().init(this);
         Utils.init(this);

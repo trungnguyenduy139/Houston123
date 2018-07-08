@@ -1,7 +1,6 @@
 package com.trungnguyen.android.houston123.anotation;
 
 import android.support.annotation.IntDef;
-import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

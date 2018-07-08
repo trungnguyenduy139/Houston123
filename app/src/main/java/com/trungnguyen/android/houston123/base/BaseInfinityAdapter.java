@@ -33,7 +33,7 @@ public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<RecyclerV
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View rootView;
         switch (viewType) {
