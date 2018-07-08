@@ -3,8 +3,12 @@ package com.trungnguyen.android.houston123.base;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
 
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+import com.trungnguyen.android.houston123.BuildConfig;
 import com.trungnguyen.android.houston123.injection.Injector;
 
 /**
@@ -12,22 +16,40 @@ import com.trungnguyen.android.houston123.injection.Injector;
  */
 
 public class BaseApplication extends Application {
+
     private static BaseApplication sInstance;
+    private static RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
 
         sInstance = this;
         Injector.getInstance().init(this);
 
         registerActivityLifecycleCallbacks(mCallbacks);
+
+        if (isDebugBuild()) {
+            StrictMode.enableDefaults();
+        }
+
+        initLeakCanary();
+
+    }
+
+    @NonNull
+    public static boolean isDebugBuild() {
+		return BuildConfig.BUILD_TYPE.equals("debug");
+    }
+
+    private void initLeakCanary() {
+        if (!LeakCanary.isInAnalyzerProcess(this)) {
+            refWatcher = LeakCanary.install(this);
+        }
+    }
+
+    public static RefWatcher getRefWatcher() {
+        return BaseApplication.refWatcher;
     }
 
 

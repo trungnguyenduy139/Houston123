@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.ui.main;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.Navigator;
@@ -23,6 +24,7 @@ public class MainViewModel extends BaseViewModel {
         Injector.getInstance().getDataManagerComponent().inject(this);
     }
 
+    @OnClick
     public void onTextClick() {
         Toast.makeText(mContext, "Click click boom", Toast.LENGTH_SHORT).show();
         mNavigator.startLoginActivity(mContext);

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F56A05</color>
-    <color name="colorPrimaryDark">	#F56A05</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#40c4ff</color>
+    <color name="colorPrimaryDark">	#40c4ff</color>
+    <color name="colorAccent">#F56A05</color>
 
     <!--general-->
     <color name="white">#FFffff</color>
+    <color name="white_50">#80ffffff</color>
     <color name="blockchain_dark_blue">#F56A05</color>
 
     <!--toast color-->

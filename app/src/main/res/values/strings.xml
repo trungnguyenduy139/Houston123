@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Houston123Android</string>
+    <string name="login_screen">Đăng nhập</string>
 </resources>
