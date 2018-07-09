@@ -9,6 +9,9 @@ import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.AppUtils;
+import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.BundleBuilder;
+import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Navigator;
 import com.trungnguyen.android.houston123.widget.ToastCustom;
 
@@ -35,13 +38,17 @@ public class LoginViewModel extends BaseViewModel {
         String userName = mLoginModel.getUserName();
         String password = mLoginModel.getPassword();
         if (!AppUtils.isAuthValid(userName, password)) {
-            ToastCustom.makeText(mContext, "Something went wrong, try again", ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR);
+            ToastCustom.makeText(mContext, Constants.SOMETHING_WRONG, ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR);
             return;
         }
-        Toast.makeText(mContext, mLoginModel.getUserName() + "\n" + mLoginModel.getPassword(), Toast.LENGTH_SHORT).show();
-        Bundle bundle = new Bundle();
-        bundle.putString("USER_NAME", mLoginModel.getPassword());
-        bundle.putString("PASSWORD", mLoginModel.getUserName());
+
+//        Toast.makeText(mContext, mLoginModel.getUserName() + "\n" + mLoginModel.getPassword(), Toast.LENGTH_SHORT).show();
+
+        Bundle bundle = new BundleBuilder()
+                .putString(BundleConstants.USER_NAME, mLoginModel.getPassword())
+                .putString(BundleConstants.PASSWORD, mLoginModel.getPassword())
+                .build();
+
         mNavigator.startMainActivity(mContext, bundle);
     }
 
