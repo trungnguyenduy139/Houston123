@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/editText"
             android:layout_width="250dp"
             android:layout_height="40dp"
@@ -36,6 +36,7 @@
             android:drawableLeft="@drawable/account"
             android:ems="10"
             android:hint="Username"
+            android:text="@={viewModel.mLoginModel.userName}"
             android:textColor="@color/white_50"
             android:textColorHint="@color/white_50"
             android:inputType="textPersonName"
@@ -44,11 +45,12 @@
             android:layout_above="@+id/editText2"
             android:layout_centerHorizontal="true" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/editText2"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:background="#11000000"
+            android:text="@={viewModel.mLoginModel.password}"
             android:drawableLeft="@drawable/lock_question"
             android:ems="10"
             android:textColor="@color/white_50"

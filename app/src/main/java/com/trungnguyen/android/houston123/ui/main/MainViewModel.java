@@ -27,6 +27,6 @@ public class MainViewModel extends BaseViewModel {
     @OnClick
     public void onTextClick() {
         Toast.makeText(mContext, "Click click boom", Toast.LENGTH_SHORT).show();
-        mNavigator.startLoginActivity(mContext);
+//        mNavigator.startLoginActivity(mContext);
     }
 }

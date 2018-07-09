@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -35,6 +36,9 @@ public class AppUtils {
 
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
+    public static boolean isAuthValid(String userName, String password) {
+        return !TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password);
     }
 }
