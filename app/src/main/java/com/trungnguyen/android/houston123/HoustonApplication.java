@@ -1,4 +1,4 @@
-package com.trungnguyen.android.houston123.base;
+package com.trungnguyen.android.houston123;
 
 import android.app.Activity;
 import android.app.Application;
@@ -8,23 +8,19 @@ import android.support.annotation.NonNull;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import com.trungnguyen.android.houston123.BuildConfig;
+import com.trungnguyen.android.houston123.base.AppManager;
 import com.trungnguyen.android.houston123.injection.Injector;
 
-/**
- * Created by goldze on 2017/6/15.
- */
+public class HoustonApplication extends Application {
 
-public class BaseApplication extends Application {
-
-    private static BaseApplication sInstance;
-    private static RefWatcher refWatcher;
+    private static HoustonApplication mInstance;
+    private static RefWatcher mRefWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        sInstance = this;
+        mInstance = this;
         Injector.getInstance().init(this);
 
         registerActivityLifecycleCallbacks(mCallbacks);
@@ -44,17 +40,17 @@ public class BaseApplication extends Application {
 
     private void initLeakCanary() {
         if (!LeakCanary.isInAnalyzerProcess(this)) {
-            refWatcher = LeakCanary.install(this);
+            mRefWatcher = LeakCanary.install(this);
         }
     }
 
     public static RefWatcher getRefWatcher() {
-        return BaseApplication.refWatcher;
+        return HoustonApplication.mRefWatcher;
     }
 
 
-    public static BaseApplication getInstance() {
-        return sInstance;
+    public static HoustonApplication getInstance() {
+        return mInstance;
     }
 
     private ActivityLifecycleCallbacks mCallbacks = new ActivityLifecycleCallbacks() {

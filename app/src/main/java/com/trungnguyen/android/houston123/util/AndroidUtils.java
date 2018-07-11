@@ -3,7 +3,7 @@ package com.trungnguyen.android.houston123.util;
 import android.os.Build;
 import android.os.Handler;
 
-import com.trungnguyen.android.houston123.base.BaseApplication;
+import com.trungnguyen.android.houston123.HoustonApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class AndroidUtils {
     private static final String STR_EMPTY = "";
 
     static {
-        mApplicationHandler = new Handler(BaseApplication.getInstance().getMainLooper());
+        mApplicationHandler = new Handler(HoustonApplication.getInstance().getMainLooper());
     }
 
     public static void runOnUIThread(Runnable runnable) {

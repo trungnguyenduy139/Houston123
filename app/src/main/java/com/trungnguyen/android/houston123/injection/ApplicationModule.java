@@ -30,7 +30,7 @@ public class ApplicationModule {
     @Provides
     @Singleton
     protected PrefsUtil providePrefsUtil() {
-        return new PrefsUtil(mApplication);
+        return new PrefsUtil();
     }
 //
 //    @Provides

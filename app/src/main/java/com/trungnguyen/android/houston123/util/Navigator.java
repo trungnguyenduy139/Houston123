@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 public final class Navigator {
 
-    @Inject
+//    @Inject
     public Navigator() {
 
     }

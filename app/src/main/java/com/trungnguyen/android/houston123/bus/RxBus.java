@@ -10,9 +10,6 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-
-/**
- */
 public class RxBus {
     private static volatile RxBus mDefaultInstance;
     private final Subject<Object> mBus;
