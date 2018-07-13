@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.annotation.NonNull;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.trungnguyen.android.houston123.base.AppManager;
 import com.trungnguyen.android.houston123.injection.Injector;
+import com.trungnguyen.android.houston123.util.AppLogger;
 
 public class HoustonApplication extends Application {
 
@@ -21,7 +21,10 @@ public class HoustonApplication extends Application {
         super.onCreate();
 
         mInstance = this;
+
         Injector.getInstance().init(this);
+
+        AppLogger.init();
 
         registerActivityLifecycleCallbacks(mCallbacks);
 
@@ -33,9 +36,8 @@ public class HoustonApplication extends Application {
 
     }
 
-    @NonNull
     public static boolean isDebugBuild() {
-		return BuildConfig.BUILD_TYPE.equals("debug");
+        return BuildConfig.BUILD_TYPE.equals("debug");
     }
 
     private void initLeakCanary() {

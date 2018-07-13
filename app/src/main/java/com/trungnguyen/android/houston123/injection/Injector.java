@@ -1,50 +1,45 @@
 package com.trungnguyen.android.houston123.injection;
 
 import android.app.Application;
-import android.content.Context;
 
 public enum Injector {
 
     INSTANCE;
 
-    private ApplicationComponent applicationComponent;
-    private DataManagerComponent dataManagerComponent;
+    private ApplicationComponent mApplicationComponent;
+
+    private DataManagerComponent mDataManagerComponent;
 
     public static Injector getInstance() {
         return INSTANCE;
     }
 
-    public void init(Context applicationContext) {
+    public void init(Application applicationContext) {
 
-        ApplicationModule applicationModule = new ApplicationModule((Application) applicationContext);
-        ApiModule apiModule = new ApiModule();
-        DataManagerModule managerModule = new DataManagerModule();
-
-        initAppComponent(applicationModule, apiModule, managerModule);
+        initAppComponent(applicationContext);
     }
 
-    protected void initAppComponent(ApplicationModule applicationModule, ApiModule apiModule, DataManagerModule managerModule) {
+    protected void initAppComponent(Application applicationContext) {
 
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(applicationModule)
-                .apiModule(apiModule)
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .application(applicationContext)
                 .build();
 
-        dataManagerComponent = applicationComponent.plus(managerModule);
+        mDataManagerComponent = getDataManagerComponent();
     }
 
     public ApplicationComponent getAppComponent() {
-        return applicationComponent;
+        return mApplicationComponent;
     }
 
     public DataManagerComponent getDataManagerComponent() {
-        if (dataManagerComponent == null) {
-            dataManagerComponent = applicationComponent.plus(new DataManagerModule());
+        if (mDataManagerComponent == null) {
+            mDataManagerComponent = mApplicationComponent.dataManagerComponentBuilder().build();
         }
-        return dataManagerComponent;
+        return mDataManagerComponent;
     }
 
     public void releaseViewModelScope() {
-        dataManagerComponent = null;
+        mDataManagerComponent = null;
     }
 }

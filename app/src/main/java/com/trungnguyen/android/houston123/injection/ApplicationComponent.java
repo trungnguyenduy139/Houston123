@@ -1,7 +1,13 @@
 package com.trungnguyen.android.houston123.injection;
 
+import android.app.Application;
+import android.support.annotation.NonNull;
+
+import com.trungnguyen.android.houston123.HoustonApplication;
+
 import javax.inject.Singleton;
 
+import dagger.BindsInstance;
 import dagger.Component;
 
 @SuppressWarnings("WeakerAccess")
@@ -12,14 +18,17 @@ import dagger.Component;
 })
 public interface ApplicationComponent {
 
-    DataManagerComponent plus(DataManagerModule userModule);
+    void inject(HoustonApplication app);
 
-//    void inject(AppUtil appUtil);
-//
-//    void inject(LoggingExceptionHandler loggingExceptionHandler);
-//
-//    void inject(EnvironmentManager environmentManager);
-//
-//    RxEventBus eventBus();
+    @Component.Builder
+    interface Builder {
 
+        @BindsInstance
+        Builder application(Application application);
+
+        @NonNull
+        ApplicationComponent build();
+    }
+
+    DataManagerComponent.Builder dataManagerComponentBuilder();
 }

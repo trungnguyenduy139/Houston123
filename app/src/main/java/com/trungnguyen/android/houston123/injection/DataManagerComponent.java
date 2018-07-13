@@ -1,6 +1,8 @@
 package com.trungnguyen.android.houston123.injection;
 
 
+import android.support.annotation.NonNull;
+
 import com.trungnguyen.android.houston123.ui.login.LoginViewModel;
 import com.trungnguyen.android.houston123.ui.main.MainViewModel;
 
@@ -14,55 +16,15 @@ import dagger.Subcomponent;
 @Subcomponent(modules = DataManagerModule.class)
 public interface DataManagerComponent {
 
+    @Subcomponent.Builder
+    interface Builder {
+        @NonNull
+        DataManagerComponent build();
+    }
+
     void inject(MainViewModel mainViewModel);
 
     void inject(LoginViewModel loginViewModel);
 
 //    void inject(AddMarketViewModel addMarketViewModel);
-//
-//    void inject(OrderBookViewModel orderBookViewModel);
-//
-//    void inject(WatchlistMarketsViewModel watchlistMarketsViewModel);
-//
-//    void inject(MarketsViewModel marketsViewModel);
-//
-//    void inject(SendViewModel sendViewModel);
-//
-//    void inject(ChartViewModel chartViewModel);
-//
-//    void inject(PinEntryViewModel pinEntryViewModel);
-//
-//    void inject(MainViewModel mainViewModel);
-//
-//    void inject(TransactionsViewModel transactionsViewModel);
-//
-//    void inject(PairingViewModel pairingViewModel);
-//
-//    void inject(ReceiveViewModel receiveViewModel);
-//
-//    void inject(TransactionDetailViewModel transactionDetailViewModel);
-//
-//    void inject(FingerprintDialogViewModel fingerprintDialogViewModel);
-//
-//    void inject(LandingViewModel landingViewModel);
-//
-//    void inject(AddressBookManager addressBookManager);
-//
-//    void inject(IssueDetailViewModel issueDetailViewModel);
-//
-//    void inject(IssueViewModel issueViewModel);
-//
-//    void inject(ReissueDetailViewModel reissueDetailViewModel);
-//
-//    void inject(ExchangeTransactionDetailViewModel exchangeTransactionDetailViewModel);
-//
-//    void inject(UnknownDetailViewModel unknownDetailViewModel);
-//
-//    void inject(PlaceOrderViewModel placeOrderViewModel);
-//
-//    void inject(DexDetailsViewModel dexDetailsViewModel);
-//
-//    void inject(LastTradesViewModel lastTradesViewModel);
-//
-//    void inject(MyOrdersViewModel myOrdersViewModel);
 }

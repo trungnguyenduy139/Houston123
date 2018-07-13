@@ -31,7 +31,7 @@ public class BaseViewModel implements IBaseViewModel {
     private AlertDialog dialog;
 
     public void showDialog() {
-        showDialog("请稍后...");
+        showDialog("Dialog...");
     }
 
     public void showDialog(String title) {

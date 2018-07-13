@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context context;
+    protected Context context;
 
 
     @Override

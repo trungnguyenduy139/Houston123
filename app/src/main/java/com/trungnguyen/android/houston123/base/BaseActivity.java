@@ -8,7 +8,8 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trungnguyen.android.houston123.bus.Messenger;
 
 
-public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseActivity {
+public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel>
+        extends RxAppCompatActivity implements IBaseActivity, BaseFragment.Callback {
     protected V binding;
     protected VM viewModel;
 
@@ -69,6 +70,17 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 
     @Override
     public void initViewObservable() {
+
+    }
+
+
+    @Override
+    public void onFragmentAttached() {
+
+    }
+
+    @Override
+    public void onFragmentDetached(String tag) {
 
     }
 }

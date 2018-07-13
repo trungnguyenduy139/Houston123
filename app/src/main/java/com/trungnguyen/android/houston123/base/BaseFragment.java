@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.base;
 
+import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -15,14 +16,36 @@ import com.trungnguyen.android.houston123.bus.Messenger;
  * Created by goldze on 2017/6/15.
  */
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
+
     protected V binding;
     protected VM viewModel;
+    private BaseActivity mActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initParam();
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = (BaseActivity) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        mActivity = null;
+        super.onDetach();
+    }
+
+    public BaseActivity getBaseActivity() {
+        if (mActivity == null || mActivity.isFinishing()) {
+            return null;
+        }
+        return mActivity;
+    }
+
 
     @Override
     public void onDestroy() {
@@ -65,7 +88,6 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
     }
 
-    //刷新布局
     public void refreshLayout() {
         if (viewModel != null) {
             binding.setVariable(initVariableId(), viewModel);
@@ -93,5 +115,12 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
     public boolean onBackPressed() {
         return false;
+    }
+
+    public interface Callback {
+
+        void onFragmentAttached();
+
+        void onFragmentDetached(String tag);
     }
 }

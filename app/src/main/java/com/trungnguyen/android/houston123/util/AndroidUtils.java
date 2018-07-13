@@ -57,7 +57,7 @@ public class AndroidUtils {
             int sdkVersion = Build.VERSION.SDK_INT;
             return "Android " + sdkVersion + " (" + release + ")";
         } catch (Exception e) {
-            Timber.d(e, "getAndroidVersion() exception [%s]", e.getMessage());
+            AppLogger.d(e, "getAndroidVersion() exception [%s]", e.getMessage());
         }
         return STR_EMPTY;
     }

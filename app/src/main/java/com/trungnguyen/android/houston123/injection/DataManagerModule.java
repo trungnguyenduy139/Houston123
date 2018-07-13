@@ -1,24 +1,17 @@
 package com.trungnguyen.android.houston123.injection;
 
-import android.content.Context;
-
-
 import com.trungnguyen.android.houston123.util.Navigator;
 
-import javax.inject.Singleton;
-
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
 @Module
-public class DataManagerModule {
+public abstract class DataManagerModule {
 
 
-    @Provides
-    @ViewModelScope
-    protected Navigator provideNavigator() {
-        return new Navigator();
-    }
+//    @Binds
+//    @ViewModelScope
+//    abstract Navigator provideNavigator(Navigator navigator);
 
 //
 //    @Provides
