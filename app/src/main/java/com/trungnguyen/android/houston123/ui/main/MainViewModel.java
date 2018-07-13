@@ -13,20 +13,20 @@ import javax.inject.Inject;
 public class MainViewModel extends BaseViewModel {
 
     private Context mContext;
-
-    @Inject
-    Navigator mNavigator;
-
+//
+//    @Inject
+//    Navigator mNavigator;
+//
     public MainViewModel(Context context) {
 
         super(context);
         mContext = context;
-        Injector.getInstance().getDataManagerComponent().inject(this);
+//        Injector.getInstance().getDataManagerComponent().inject(this);
     }
-
-    @OnClick
-    public void onTextClick() {
-        Toast.makeText(mContext, "Click click boom", Toast.LENGTH_SHORT).show();
-//        mNavigator.startLoginActivity(mContext);
-    }
+//
+//    @OnClick
+//    public void onTextClick() {
+//        Toast.makeText(mContext, "Click click boom", Toast.LENGTH_SHORT).show();
+////        mNavigator.startLoginActivity(mContext);
+//    }
 }

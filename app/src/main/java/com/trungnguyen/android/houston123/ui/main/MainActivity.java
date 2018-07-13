@@ -8,12 +8,18 @@ import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityMainBinding;
 
+import javax.inject.Inject;
+
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
+
+    @Inject
+    MainViewModel mMainViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -28,6 +34,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public MainViewModel initViewModel() {
-        return new MainViewModel(this);
+        return mMainViewModel;
     }
 }

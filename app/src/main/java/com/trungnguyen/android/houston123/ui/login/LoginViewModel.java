@@ -23,8 +23,8 @@ public class LoginViewModel extends BaseViewModel {
 
     private Context mContext;
     public LoginModel mLoginModel;
-    @Inject
-    Navigator mNavigator;
+//    @Inject
+//    Navigator mNavigator;
 
     private MutableLiveData isLoggedIn = new MutableLiveData<Boolean>();
 
@@ -57,7 +57,7 @@ public class LoginViewModel extends BaseViewModel {
                 .putString(BundleConstants.PASSWORD, mLoginModel.getPassword())
                 .build();
 
-        mNavigator.startMainActivity(mContext, bundle);
+//        mNavigator.startMainActivity(mContext, bundle);
     }
 
 
@@ -66,7 +66,7 @@ public class LoginViewModel extends BaseViewModel {
         Toast.makeText(mContext, "onRegisterClick", Toast.LENGTH_SHORT).show();
     }
 
-    public void startMainActivity() {
-        mNavigator.startMainActivity(mContext, new Bundle());
-    }
+//    public void startMainActivity() {
+//        mNavigator.startMainActivity(mContext, new Bundle());
+//    }
 }

@@ -8,10 +8,10 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 
-@Module
-public class ApiModule {
+//@Module
+//public class ApiModule {
 
-    private static final int API_TIMEOUT = 15;
+//    private static final int API_TIMEOUT = 15;
 
 //    @Provides
 //    @Singleton
@@ -37,4 +37,4 @@ public class ApiModule {
 //        return JacksonConverterFactory.create();
 //    }
 
-}
+//}

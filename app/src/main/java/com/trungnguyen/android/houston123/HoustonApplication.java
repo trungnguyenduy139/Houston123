@@ -11,7 +11,10 @@ import com.squareup.leakcanary.RefWatcher;
 import com.trungnguyen.android.houston123.base.AppManager;
 import com.trungnguyen.android.houston123.injection.Injector;
 
-public class HoustonApplication extends Application {
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
+
+public class HoustonApplication extends DaggerApplication {
 
     private static HoustonApplication mInstance;
     private static RefWatcher mRefWatcher;
@@ -85,4 +88,10 @@ public class HoustonApplication extends Application {
             AppManager.getAppManager().removeActivity(activity);
         }
     };
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return Injector.getInstance().applicationInjector();
+
+    }
 }

@@ -7,8 +7,11 @@ import android.os.Bundle;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trungnguyen.android.houston123.bus.Messenger;
 
+import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.support.DaggerApplication;
 
-public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseActivity {
+
+public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends DaggerAppCompatActivity implements IBaseActivity {
     protected V binding;
     protected VM viewModel;
 

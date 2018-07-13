@@ -32,7 +32,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     public void handleState(boolean isLoggedIn) {
         if (isLoggedIn) {
-            viewModel.startMainActivity();
+//            viewModel.startMainActivity();
             finish();
         }
     }

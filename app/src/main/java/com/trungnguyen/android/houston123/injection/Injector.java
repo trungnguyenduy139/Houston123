@@ -3,6 +3,11 @@ package com.trungnguyen.android.houston123.injection;
 import android.app.Application;
 import android.content.Context;
 
+import com.trungnguyen.android.houston123.HoustonApplication;
+
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
+
 public enum Injector {
 
     INSTANCE;
@@ -17,20 +22,23 @@ public enum Injector {
     public void init(Context applicationContext) {
 
         ApplicationModule applicationModule = new ApplicationModule((Application) applicationContext);
-        ApiModule apiModule = new ApiModule();
+//        ApiModule apiModule = new ApiModule();
         DataManagerModule managerModule = new DataManagerModule();
 
-        initAppComponent(applicationModule, apiModule, managerModule);
+        initAppComponent(applicationModule, managerModule);
     }
 
-    protected void initAppComponent(ApplicationModule applicationModule, ApiModule apiModule, DataManagerModule managerModule) {
+    protected void initAppComponent(ApplicationModule applicationModule, DataManagerModule managerModule) {
 
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(applicationModule)
-                .apiModule(apiModule)
-                .build();
+        applicationComponent = applicationInjector();
 
         dataManagerComponent = applicationComponent.plus(managerModule);
+    }
+
+    public ApplicationComponent applicationInjector() {
+        ApplicationComponent appComponent = DaggerAppComponent.builder().application(this).build();
+        appComponent.inject(HoustonApplication.getInstance());
+        return appComponent;
     }
 
     public ApplicationComponent getAppComponent() {
