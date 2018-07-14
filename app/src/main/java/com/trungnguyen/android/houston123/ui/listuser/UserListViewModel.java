@@ -3,9 +3,11 @@ package com.trungnguyen.android.houston123.ui.listuser;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
+import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.Navigator;
+import com.trungnguyen.android.houston123.widget.ToastCustom;
 
 import java.util.List;
 
@@ -38,5 +40,11 @@ public class UserListViewModel extends BaseViewModel implements UserListListener
     @Override
     public void onItemClick(int position) {
         mNavigator.startLoginActivity(context);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        ToastCustom.makeText(context, "Removed " +
+                position, ToastCustom.LENGTH_SHORT, ToastType.TYPE_GENERAL);
     }
 }

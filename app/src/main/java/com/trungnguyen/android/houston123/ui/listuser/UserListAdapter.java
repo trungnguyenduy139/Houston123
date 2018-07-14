@@ -86,10 +86,13 @@ public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
 
         @Override
         public boolean onUserLongClick() {
-            ToastCustom.makeText(context, "Removed " +
-                    getAdapterPosition(), ToastCustom.LENGTH_SHORT, ToastType.TYPE_GENERAL);
-            mListUser.remove(getAdapterPosition());
+            if (mListUser == null) {
+                return false;
+            }
+            int position = getAdapterPosition();
+            mListUser.remove(position);
             notifyDataSetChanged();
+            mListener.onItemLongClick(position);
             return true;
         }
     }

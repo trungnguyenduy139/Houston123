@@ -7,4 +7,6 @@ import com.trungnguyen.android.houston123.base.IAdapterListener;
  */
 public interface UserListListener extends IAdapterListener {
     void onItemClick(int position);
+
+    void onItemLongClick(int position);
 }
