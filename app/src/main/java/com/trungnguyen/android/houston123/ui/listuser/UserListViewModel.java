@@ -14,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserListViewModel extends BaseViewModel {
+public class UserListViewModel extends BaseViewModel implements UserListListener {
 
     @Inject
     Navigator mNavigator;
@@ -31,8 +31,12 @@ public class UserListViewModel extends BaseViewModel {
         return mUserListLiveData;
     }
 
+    public void attachAdapter(UserListAdapter adapter) {
+        adapter.setListener(this);
+    }
 
-    public void onItemSelected() {
+    @Override
+    public void onItemClick(int position) {
         mNavigator.startLoginActivity(context);
     }
 }

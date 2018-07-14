@@ -14,8 +14,7 @@ import java.util.List;
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserListActivity extends BaseActivity<ActivityUserListBinding, UserListViewModel>
-        implements UserListAdapter.OnItemSelected {
+public class UserListActivity extends BaseActivity<ActivityUserListBinding, UserListViewModel> {
 
     private UserListAdapter mListAdapter;
 
@@ -23,18 +22,19 @@ public class UserListActivity extends BaseActivity<ActivityUserListBinding, User
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new UserListAdapter(initTemporaryData());
-        mListAdapter.setListener(this);
+        viewModel.attachAdapter(mListAdapter);
         binding.userListRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.userListRecycler.setAdapter(mListAdapter);
+
+        viewModel.getUserListLiveData().observe(this, userModels -> {
+
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mListAdapter.releaseListener();
-        viewModel.getUserListLiveData().observe(this, userModels -> {
-            
-        });
     }
 
     private List<UserModel> initTemporaryData() {
@@ -74,8 +74,4 @@ public class UserListActivity extends BaseActivity<ActivityUserListBinding, User
         return new UserListViewModel(this);
     }
 
-    @Override
-    public void onItemClick(int position) {
-        viewModel.onItemSelected();
-    }
 }

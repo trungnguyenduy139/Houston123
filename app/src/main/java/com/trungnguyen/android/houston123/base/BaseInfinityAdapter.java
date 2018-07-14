@@ -11,10 +11,10 @@ import android.widget.ProgressBar;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.InfinityAdapterType;
 
-public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends RecyclerView.Adapter<BaseViewHolder> {
 
     protected Context context;
-
+    protected L mListener;
 
     @Override
     public int getItemViewType(int position) {
@@ -32,6 +32,17 @@ public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<BaseViewH
     protected BaseViewHolder getLoadingViewHolder(@NonNull ViewGroup parent) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.loading_more, parent, false);
         return new LoaderViewHolder(rootView);
+    }
+
+    public void setListener(L listener) {
+        if (listener == null) {
+            return;
+        }
+        mListener = listener;
+    }
+
+    public void releaseListener() {
+        mListener = null;
     }
 
     @Override

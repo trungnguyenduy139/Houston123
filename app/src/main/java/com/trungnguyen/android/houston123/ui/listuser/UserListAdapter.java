@@ -21,25 +21,13 @@ import java.util.Objects;
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserListAdapter extends BaseInfinityAdapter {
+
+public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
 
     private List<UserModel> mListUser;
 
-    private OnItemSelected mListener;
-
     UserListAdapter(List<UserModel> listUser) {
         mListUser = listUser;
-    }
-
-    public void setListener(OnItemSelected listener) {
-        if (listener == null) {
-            return;
-        }
-        mListener = listener;
-    }
-
-    public void releaseListener() {
-        mListener = null;
     }
 
     @Override
@@ -61,10 +49,6 @@ public class UserListAdapter extends BaseInfinityAdapter {
         }
         mListUser.addAll(userModels);
         notifyDataSetChanged();
-    }
-
-    interface OnItemSelected {
-        void onItemClick(int position);
     }
 
     public class UserListViewHolder extends BaseViewHolder implements UserItemViewModel.OnUserClickListener {
