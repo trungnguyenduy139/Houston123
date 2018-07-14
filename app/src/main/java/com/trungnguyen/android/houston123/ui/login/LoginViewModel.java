@@ -53,8 +53,8 @@ public class LoginViewModel extends BaseViewModel {
 //        Toast.makeText(mContext, mLoginModel.getUserName() + "\n" + mLoginModel.getPassword(), Toast.LENGTH_SHORT).show();
 
         Bundle bundle = new BundleBuilder()
-                .putString(BundleConstants.USER_NAME, mLoginModel.getPassword())
-                .putString(BundleConstants.PASSWORD, mLoginModel.getPassword())
+                .putValue(BundleConstants.USER_NAME, mLoginModel.getPassword())
+                .putValue(BundleConstants.PASSWORD, mLoginModel.getPassword())
                 .build();
 
         mNavigator.startMainActivity(mContext, bundle);
