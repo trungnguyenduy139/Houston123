@@ -11,9 +11,7 @@ import android.widget.ProgressBar;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.InfinityAdapterType;
 
-import java.util.List;
-
-public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     protected Context context;
 
@@ -31,43 +29,39 @@ public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<RecyclerV
         return InfinityAdapterType.TYPE_NORMAL;
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        View rootView;
-        switch (viewType) {
-            case InfinityAdapterType.TYPE_NORMAL:
-                rootView = LayoutInflater.from(context).inflate(getLayoutResource(), parent, false);
-                break;
-            case InfinityAdapterType.TYPE_LOADING:
-                rootView = LayoutInflater.from(context).inflate(R.layout.loading_more, parent, false);
-                return new LoaderViewHolder(rootView);
-            default:
-                rootView = LayoutInflater.from(context).inflate(getLayoutResource(), parent, false);
-                break;
-        }
-        return getViewHolder(rootView);
+    protected BaseViewHolder getLoadingViewHolder(@NonNull ViewGroup parent) {
+        View rootView = LayoutInflater.from(context).inflate(R.layout.loading_more, parent, false);
+        return new LoaderViewHolder(rootView);
     }
 
     @Override
     public int getItemCount() {
         // If no items are present, there's no need for loader
-        if (getData() == null || getData().size() == 0) {
+        if (getDataSize() == 0) {
             return 0;
         }
 
         // +1 for loader
-        return getData().size() + 1;
+        return getDataSize() + 1;
     }
 
-    public class LoaderViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onBindViewHolder(@NonNull BaseViewHolder baseViewHolder, int position) {
+        baseViewHolder.onBind(position);
+    }
+
+    public class LoaderViewHolder extends BaseViewHolder {
 
         ProgressBar progressBar;
 
         public LoaderViewHolder(View root) {
             super(root);
             progressBar = root.findViewById(R.id.loading_more_progress_bar);
+        }
+
+        @Override
+        public void onBind(int position) {
+            // Empty onBind method
         }
 
         public void setVisible(int status) {
@@ -79,9 +73,5 @@ public abstract class BaseInfinityAdapter extends RecyclerView.Adapter<RecyclerV
     public abstract int getLayoutResource();
 
     public abstract int getDataSize();
-
-    public abstract List<Object> getData();
-
-    public abstract RecyclerView.ViewHolder getViewHolder(View root);
 
 }

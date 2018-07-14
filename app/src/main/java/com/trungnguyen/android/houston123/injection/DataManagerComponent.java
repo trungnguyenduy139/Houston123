@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.injection;
 
 import android.support.annotation.NonNull;
 
+import com.trungnguyen.android.houston123.ui.listuser.UserListViewModel;
 import com.trungnguyen.android.houston123.ui.login.LoginViewModel;
 import com.trungnguyen.android.houston123.ui.main.MainViewModel;
 
@@ -26,5 +27,6 @@ public interface DataManagerComponent {
 
     void inject(LoginViewModel loginViewModel);
 
-//    void inject(AddMarketViewModel addMarketViewModel);
+    void inject(UserListViewModel userListViewModel);
+
 }

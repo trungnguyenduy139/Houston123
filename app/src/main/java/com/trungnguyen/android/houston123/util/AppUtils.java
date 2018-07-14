@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-public class AppUtils {
+public final class AppUtils {
 
     //hide soft keyboard
     public static void hideKeyboard(Activity th) {

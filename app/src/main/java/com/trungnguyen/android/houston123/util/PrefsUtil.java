@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import java.util.Collection;
 
 
-public class PrefsUtil implements PersistentPrefs {
+public final class PrefsUtil implements PersistentPrefs {
 
     private static SharedPreferences getSharedPreferenceUtil(Context context) {
         return context.getSharedPreferences(Constants.APP_NAME, Activity.MODE_PRIVATE);

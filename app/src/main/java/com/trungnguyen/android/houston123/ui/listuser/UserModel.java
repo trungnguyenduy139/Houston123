@@ -1,9 +1,11 @@
 package com.trungnguyen.android.houston123.ui.listuser;
 
+import android.databinding.BaseObservable;
+
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserModel {
+public class UserModel extends BaseObservable {
     private String mUserImg;
     private String mName;
     private String mPosition;

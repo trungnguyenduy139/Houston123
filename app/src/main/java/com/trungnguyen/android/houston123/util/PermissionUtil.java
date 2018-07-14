@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
-public class PermissionUtil {
+public final class PermissionUtil {
     private PermissionUtil() {
         // private constructor for utils class
     }

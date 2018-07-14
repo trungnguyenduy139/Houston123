@@ -31,7 +31,7 @@ import java.security.spec.InvalidKeySpecException;
 import timber.log.Timber;
 
 
-public class Security {
+public final class Security {
 
     public static final String TAG = Security.class.getSimpleName();
 

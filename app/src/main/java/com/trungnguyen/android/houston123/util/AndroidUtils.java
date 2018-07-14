@@ -8,13 +8,10 @@ import com.trungnguyen.android.houston123.HoustonApplication;
 import java.util.ArrayList;
 import java.util.List;
 
-import timber.log.Timber;
-
-
 /**
  * Created by trungnd4 on 09/07/2018.
  */
-public class AndroidUtils {
+public final class AndroidUtils {
 
     private static volatile Handler mApplicationHandler;
     private static final String STR_EMPTY = "";
