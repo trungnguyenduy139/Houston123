@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.base.BaseActivity;
+import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserListActivity extends BaseActivity<ActivityUserListBinding, UserListViewModel> {
+public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> {
 
     private UserListAdapter mListAdapter;
 
