@@ -27,6 +27,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         binding.userListRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.userListRecycler.setAdapter(mListAdapter);
 
+        setTitle(getResources().getString(R.string.user_list));
         viewModel.getUserListLiveData().observe(this, userModels -> {
 
         });

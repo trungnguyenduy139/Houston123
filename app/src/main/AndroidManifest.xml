@@ -22,7 +22,6 @@
 
         <activity
             android:name=".ui.listuser.UserListActivity"
-            android:label="@string/user_list"
             android:screenOrientation="portrait">
 
             <intent-filter>

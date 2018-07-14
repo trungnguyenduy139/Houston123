@@ -3,14 +3,11 @@ package com.trungnguyen.android.houston123.base;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-
-import com.trungnguyen.android.houston123.R;
 
 public abstract class BaseToolbarActivity<V extends ViewDataBinding, VM extends BaseViewModel>
         extends BaseActivity<V, VM> {
 
-    private Toolbar toolBar;
+    private ActionBar toolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +15,7 @@ public abstract class BaseToolbarActivity<V extends ViewDataBinding, VM extends 
         if (getSupportActionBar() != null) {
             setDisplayHomeEnabled(true);
         }
+        toolBar = getSupportActionBar();
     }
 
     public void setDisplayHomeEnabled(boolean b) {
