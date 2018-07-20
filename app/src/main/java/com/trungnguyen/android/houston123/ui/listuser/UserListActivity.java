@@ -7,6 +7,7 @@ import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
+import com.trungnguyen.android.houston123.ui.userdetail.lecturer.LecturerModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,19 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new UserListAdapter(initTemporaryData());
+        mListAdapter = new UserListAdapter<>(initTemporaryData());
+
         viewModel.attachAdapter(mListAdapter);
+
         binding.userListRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.userListRecycler.setAdapter(mListAdapter);
 
         setTitle(getResources().getString(R.string.user_list));
-        viewModel.getUserListLiveData().observe(this, userModels -> {
+
+        viewModel.getUserListLiveData().observe(this, o -> {
 
         });
+
     }
 
     @Override
@@ -38,11 +43,12 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         mListAdapter.releaseListener();
     }
 
-    private List<UserModel> initTemporaryData() {
-        List<UserModel> userList = new ArrayList<>();
+    private List<LecturerModel> initTemporaryData() {
+        List<LecturerModel> userList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            UserModel userModel = new UserModel();
-            userModel.setmName("Samantha "+i);
+            LecturerModel userModel = new LecturerModel();
+            userModel.setName("Samantha "+i);
+            userModel.setPosition("Senior QC Engineer");
             userList.add(userModel);
         }
         return userList;
@@ -60,7 +66,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
 
     @Override
     public UserListViewModel initViewModel() {
-        return new UserListViewModel(this);
+        return new UserListViewModel(this, 1);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.trungnguyen.android.houston123.ui.login;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.os.Bundle;
@@ -37,7 +36,7 @@ public class LoginViewModel extends BaseViewModel {
         Injector.getInstance().getDataManagerComponent().inject(this);
     }
 
-    public LiveData<Boolean> getIsLoggedIn() {
+    public MutableLiveData<Boolean> getIsLoggedIn() {
         return isLoggedIn;
     }
 

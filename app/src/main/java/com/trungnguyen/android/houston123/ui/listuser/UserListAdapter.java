@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.InfinityAdapterType;
 import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseInfinityAdapter;
+import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.UserListItemBinding;
 import com.trungnguyen.android.houston123.widget.ToastCustom;
@@ -22,11 +23,11 @@ import java.util.Objects;
  * Created by trungnd4 on 13/07/2018.
  */
 
-public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
+public class UserListAdapter<US extends BaseUserModel> extends BaseInfinityAdapter<UserListListener> {
 
-    private List<UserModel> mListUser;
+    private List<US> mListUser;
 
-    UserListAdapter(List<UserModel> listUser) {
+    UserListAdapter(List<US> listUser) {
         mListUser = listUser;
     }
 
@@ -43,11 +44,11 @@ public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
         return mListUser.size();
     }
 
-    public void addItems(List<UserModel> userModels) {
-        if (userModels == null) {
+    public void addItems(List<US> lecturerModels) {
+        if (lecturerModels == null) {
             return;
         }
-        mListUser.addAll(userModels);
+        mListUser.addAll(lecturerModels);
         notifyDataSetChanged();
     }
 
@@ -64,7 +65,7 @@ public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
 
         @Override
         public void onBind(int position) {
-            final UserModel user = mListUser.get(position);
+            final BaseUserModel user = mListUser.get(position);
 
             userItemViewModel = new UserItemViewModel(user, this);
 
@@ -81,7 +82,7 @@ public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
             if (mListener == null) {
                 return;
             }
-            mListener.onItemClick(getAdapterPosition());
+            mListener.onItemClick(mListUser.get(getAdapterPosition()));
         }
 
         @Override
@@ -91,7 +92,7 @@ public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
             }
             int position = getAdapterPosition();
 //            mListUser.remove(position);
-            mListUser.get(position).setmName("Nikki");
+            mListUser.get(position).setName("Jersey");
             notifyDataSetChanged();
             mListener.onItemLongClick(position);
             return true;

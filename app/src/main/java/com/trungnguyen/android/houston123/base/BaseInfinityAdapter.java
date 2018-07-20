@@ -65,7 +65,7 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
 
         ProgressBar progressBar;
 
-        public LoaderViewHolder(View root) {
+        LoaderViewHolder(View root) {
             super(root);
             progressBar = root.findViewById(R.id.loading_more_progress_bar);
         }

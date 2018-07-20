@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.base;
 
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -10,12 +11,15 @@ import com.trungnguyen.android.houston123.bus.Messenger;
 
 public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel>
         extends RxAppCompatActivity implements IBaseActivity, BaseFragment.Callback {
+
     protected V binding;
     protected VM viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         initParam();
 

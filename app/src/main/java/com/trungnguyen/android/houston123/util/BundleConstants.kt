@@ -7,4 +7,7 @@ object BundleConstants {
     //Login Screen
     const val USER_NAME = "user_name"
     const val PASSWORD = "password"
+
+    //detail
+    const val KEY_USER_DETAIL = "key_user_detail";
 }

@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.ui.listuser;
 
 import android.databinding.ObservableField;
 
+import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 
 /**
@@ -15,15 +16,15 @@ public class UserItemViewModel extends BaseViewModel {
 
     public final ObservableField<String> mPosition;
 
-    private final UserModel mUserModel;
+    private final BaseUserModel mLecturerModel;
 
     private OnUserClickListener mListener;
 
-    public UserItemViewModel(UserModel userModel, OnUserClickListener listener) {
-        this.mUserModel = userModel;
-        mImgUrl = new ObservableField<>(mUserModel.getmUserImg());
-        mName = new ObservableField<>(mUserModel.getmName());
-        mPosition = new ObservableField<>(mUserModel.getmPosition());
+    public UserItemViewModel(BaseUserModel lecturerModel, OnUserClickListener listener) {
+        this.mLecturerModel = lecturerModel;
+        mImgUrl = new ObservableField<>(mLecturerModel.getUserImg());
+        mName = new ObservableField<>(mLecturerModel.getName());
+        mPosition = new ObservableField<>(mLecturerModel.getPosition());
         mListener = listener;
     }
 

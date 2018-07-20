@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.trungnguyen.android.houston123.ui.listuser.UserListViewModel;
 import com.trungnguyen.android.houston123.ui.login.LoginViewModel;
 import com.trungnguyen.android.houston123.ui.main.MainViewModel;
+import com.trungnguyen.android.houston123.ui.userdetail.lecturer.LecturerViewModel;
 
 import dagger.Subcomponent;
 
@@ -28,5 +29,7 @@ public interface DataManagerComponent {
     void inject(LoginViewModel loginViewModel);
 
     void inject(UserListViewModel userListViewModel);
+
+    void inject(LecturerViewModel lecturerViewModel);
 
 }

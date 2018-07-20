@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.util
 
 import android.os.Bundle
+import java.io.Serializable
 
 /**
  * Created by trungnd4 on 09/07/2018.
@@ -22,6 +23,7 @@ class BundleBuilder {
         when (value) {
             is String -> mBundle?.putString(key, value)
             is Int -> mBundle?.putInt(key, value)
+            is Serializable -> mBundle?.putSerializable(key, value)
         // continue update for others type
         }
         return this

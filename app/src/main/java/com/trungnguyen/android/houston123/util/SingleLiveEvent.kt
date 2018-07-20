@@ -1,10 +1,9 @@
-package com.trungnguyen.android.houston123.base
+package com.trungnguyen.android.houston123.util
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.support.annotation.MainThread
-import com.trungnguyen.android.houston123.util.AppLogger
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
