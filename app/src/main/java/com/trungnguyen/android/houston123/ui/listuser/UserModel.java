@@ -1,11 +1,11 @@
 package com.trungnguyen.android.houston123.ui.listuser;
 
-import android.databinding.BaseObservable;
+import java.io.Serializable;
 
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserModel extends BaseObservable {
+public class UserModel implements Serializable {
     private String mUserImg;
     private String mName;
     private String mPosition;

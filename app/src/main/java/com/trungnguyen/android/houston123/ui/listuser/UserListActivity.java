@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
-import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 
@@ -41,23 +40,11 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
 
     private List<UserModel> initTemporaryData() {
         List<UserModel> userList = new ArrayList<>();
-        UserModel user = new UserModel();
-        user.setmName("Samantha Wilson");
-        user.setmPosition("Senior QC Engineer");
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-        userList.add(user);
-
+        for (int i = 0; i < 10; i++) {
+            UserModel userModel = new UserModel();
+            userModel.setmName("Samantha "+i);
+            userList.add(userModel);
+        }
         return userList;
     }
 

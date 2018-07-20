@@ -90,7 +90,8 @@ public class UserListAdapter extends BaseInfinityAdapter<UserListListener> {
                 return false;
             }
             int position = getAdapterPosition();
-            mListUser.remove(position);
+//            mListUser.remove(position);
+            mListUser.get(position).setmName("Nikki");
             notifyDataSetChanged();
             mListener.onItemLongClick(position);
             return true;
