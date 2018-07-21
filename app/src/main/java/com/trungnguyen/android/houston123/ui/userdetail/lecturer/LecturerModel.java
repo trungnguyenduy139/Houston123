@@ -1,5 +1,7 @@
 package com.trungnguyen.android.houston123.ui.userdetail.lecturer;
 
+import android.databinding.Bindable;
+
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 
 /**
@@ -8,6 +10,7 @@ import com.trungnguyen.android.houston123.base.BaseUserModel;
 public class LecturerModel extends BaseUserModel {
     private int lectureCount = 10;
 
+    @Bindable
     public int getLectureCount() {
         return lectureCount;
     }

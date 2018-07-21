@@ -10,11 +10,24 @@ import com.trungnguyen.android.houston123.injection.Injector;
  */
 public class LecturerViewModel extends BaseViewModel {
 
-    public static final String HIHI = "hihi";
+    public LecturerModel mLecturerModel;
+
+    public void setLecturerModel(LecturerModel lecturerModel) {
+        if (lecturerModel == null) {
+            return;
+        }
+        mLecturerModel = lecturerModel;
+    }
 
     public LecturerViewModel(Context context) {
 
         super(context);
         Injector.getInstance().getDataManagerComponent().inject(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        mLecturerModel = null;
+        super.onDestroy();
     }
 }

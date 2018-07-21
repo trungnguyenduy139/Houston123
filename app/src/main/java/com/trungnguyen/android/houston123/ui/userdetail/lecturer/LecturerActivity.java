@@ -18,15 +18,13 @@ public class LecturerActivity extends BaseToolbarActivity<ActivityLecturerBindin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
-        int count = 0;
         BaseUserModel baseUserModel = null;
         if (bundle != null) {
             baseUserModel = (BaseUserModel) bundle.getSerializable(BundleConstants.KEY_USER_DETAIL);
         }
         if (baseUserModel != null && baseUserModel instanceof LecturerModel) {
-            count = ((LecturerModel) baseUserModel).getLectureCount();
+            viewModel.setLecturerModel((LecturerModel) baseUserModel);
         }
-        ToastCustom.makeText(this, String.valueOf(count), ToastCustom.LENGTH_SHORT, ToastType.TYPE_GENERAL);
     }
 
     @Override
