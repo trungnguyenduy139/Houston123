@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.injection.Injector;
+import com.trungnguyen.android.houston123.util.AppLogger;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Navigator;
@@ -16,8 +17,6 @@ import com.trungnguyen.android.houston123.widget.ToastCustom;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 13/07/2018.
@@ -54,7 +53,7 @@ public class UserListViewModel extends BaseViewModel implements UserListListener
                     .build();
             mNavigator.startDetailActivity(context, bundle, mTypeOfUserList);
         } catch (ClassCastException | NullPointerException e) {
-            Timber.w("UserListViewModel onItemClick() [%s]", e.getMessage());
+            AppLogger.w("UserListViewModel onItemClick() [%s]", e.getMessage());
         }
     }
 

@@ -12,8 +12,6 @@ import com.trungnguyen.android.houston123.ui.userdetail.lecturer.LecturerActivit
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 public final class Navigator {
 
     @Inject
@@ -31,7 +29,7 @@ public final class Navigator {
             intent.putExtras(bundle);
             context.startActivity(intent);
         } catch (IllegalArgumentException e) {
-            Timber.w("Navigator startDetailActivity() [%s]", e.getMessage());
+            AppLogger.w("Navigator startDetailActivity() [%s]", e.getMessage());
         }
     }
 

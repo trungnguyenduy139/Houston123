@@ -28,8 +28,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-import timber.log.Timber;
-
 
 public final class Security {
 
@@ -49,7 +47,7 @@ public final class Security {
             return hexString.toString();
 
         } catch (NoSuchAlgorithmException e) {
-            Timber.d(e, "Something is gone wrong calculating MD5");
+            AppLogger.d(e, "Something is gone wrong calculating MD5");
         }
         return "";
     }
@@ -69,7 +67,7 @@ public final class Security {
             return encrypedValue;
         } catch (InvalidKeyException | NoSuchPaddingException | InvalidKeySpecException | BadPaddingException |
                 IllegalBlockSizeException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            Timber.d(e, "Something is gone wrong encrypting");
+            AppLogger.d(e, "Something is gone wrong encrypting");
         }
         return encrypedValue;
     }
@@ -92,15 +90,13 @@ public final class Security {
         } catch (InvalidKeyException | UnsupportedEncodingException | InvalidKeySpecException |
                 NoSuchAlgorithmException | BadPaddingException | NoSuchPaddingException | IllegalBlockSizeException
                 e) {
-            Timber.e(TAG, "Error decrypting");
+            AppLogger.e(TAG, "Error decrypting");
             return value;
             // try-catch ensure compatibility with old masked (without encryption) values
         } catch (IllegalArgumentException e) {
-            Timber.e("Error decrypting: old notes were not encrypted but just masked to users");
+            AppLogger.e("Error decrypting: old notes were not encrypted but just masked to users");
             return value;
         }
         return decryptedValue;
     }
-
-
 }

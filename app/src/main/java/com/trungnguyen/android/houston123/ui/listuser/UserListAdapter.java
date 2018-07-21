@@ -23,11 +23,11 @@ import java.util.Objects;
  * Created by trungnd4 on 13/07/2018.
  */
 
-public class UserListAdapter<US extends BaseUserModel> extends BaseInfinityAdapter<UserListListener> {
+public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapter<UserListListener> {
 
-    private List<US> mListUser;
+    private List<U> mListUser;
 
-    UserListAdapter(List<US> listUser) {
+    UserListAdapter(List<U> listUser) {
         mListUser = listUser;
     }
 
@@ -44,7 +44,7 @@ public class UserListAdapter<US extends BaseUserModel> extends BaseInfinityAdapt
         return mListUser.size();
     }
 
-    public void addItems(List<US> lecturerModels) {
+    public void addItems(List<U> lecturerModels) {
         if (lecturerModels == null) {
             return;
         }

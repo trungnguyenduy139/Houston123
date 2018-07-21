@@ -5,12 +5,10 @@ import android.os.Bundle;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
 
-import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityLecturerBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
-import com.trungnguyen.android.houston123.widget.ToastCustom;
 
 public class LecturerActivity extends BaseToolbarActivity<ActivityLecturerBinding, LecturerViewModel> {
 
