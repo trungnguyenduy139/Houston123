@@ -8,14 +8,14 @@ import com.trungnguyen.android.houston123.base.BaseUserModel;
  * Created by trungnd4 on 13/07/2018.
  */
 public class LecturerModel extends BaseUserModel {
-    private int lectureCount = 10;
+    private String lectureCount = "10";
 
     @Bindable
-    public int getLectureCount() {
+    public String getLectureCount() {
         return lectureCount;
     }
 
-    public void setLectureCount(int lectureCount) {
+    public void setLectureCount(String lectureCount) {
         this.lectureCount = lectureCount;
     }
 }
