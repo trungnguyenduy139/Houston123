@@ -42,7 +42,7 @@ public class UserListViewModel extends BaseViewModel implements UserListListener
         return mUserListLiveData;
     }
 
-    public void attachAdapter(UserListAdapter adapter) {
+    public void attachAdapter(UserListAdapter<BaseUserModel> adapter) {
         adapter.setListener(this);
     }
 

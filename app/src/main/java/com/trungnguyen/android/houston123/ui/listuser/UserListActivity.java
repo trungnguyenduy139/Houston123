@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
+import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 import com.trungnguyen.android.houston123.ui.userdetail.lecturer.LecturerModel;
 
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> {
 
-    private UserListAdapter mListAdapter;
+    private UserListAdapter<BaseUserModel> mListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,10 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         mListAdapter.releaseListener();
     }
 
-    private List<LecturerModel> initTemporaryData() {
-        List<LecturerModel> userList = new ArrayList<>();
+    private List<BaseUserModel> initTemporaryData() {
+        List<BaseUserModel> userList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            LecturerModel userModel = new LecturerModel();
+            BaseUserModel userModel = new LecturerModel();
             userModel.setName("Samantha "+i);
             userModel.setPosition("Senior QC Engineer");
             userList.add(userModel);
