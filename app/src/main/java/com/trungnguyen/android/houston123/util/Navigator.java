@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.anotation.UserListType;
+import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
 import com.trungnguyen.android.houston123.ui.userdetail.lecturer.LecturerActivity;
@@ -56,6 +57,12 @@ public final class Navigator {
 
     public void startMainActivity(Context context, Bundle bundle) {
         Intent intent = getIntent(context, MainActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    public void startUserListActivity(Context context, Bundle bundle) {
+        Intent intent = getIntent(context, UserListActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }

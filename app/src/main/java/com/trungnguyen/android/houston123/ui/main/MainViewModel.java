@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.main;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
@@ -27,6 +28,6 @@ public class MainViewModel extends BaseViewModel {
     @OnClick
     public void onTextClick() {
         Toast.makeText(mContext, "Click click boom", Toast.LENGTH_SHORT).show();
-//        mNavigator.startLoginActivity(mContext);
+        mNavigator.startUserListActivity(mContext, new Bundle());
     }
 }
