@@ -8,13 +8,17 @@ import android.support.v7.app.AlertDialog;
 
 import com.trungnguyen.android.houston123.injection.Injector;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 
 /**
  * Created by goldze on 2017/6/15.
  */
-public class BaseViewModel implements IBaseViewModel {
+public class BaseViewModel<View> implements IBaseViewModel<View> {
     protected Context context;
     protected Fragment fragment;
+    protected final CompositeDisposable mSubscription = new CompositeDisposable();
+    protected View mView;
 
     public BaseViewModel() {
     }
@@ -80,12 +84,19 @@ public class BaseViewModel implements IBaseViewModel {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(View view) {
+        if (view != null) {
+            mView = view;
+        }
     }
 
     @Override
     public void onDestroy() {
         Injector.getInstance().releaseViewModelScope();
+        if (mSubscription != null) {
+            mSubscription.clear();
+        }
+        mView = null;
     }
 
     @Override

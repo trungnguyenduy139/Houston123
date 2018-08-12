@@ -18,7 +18,7 @@ import com.trungnguyen.android.houston123.widget.ToastCustom;
 
 import javax.inject.Inject;
 
-public class LoginViewModel extends BaseViewModel {
+public class LoginViewModel extends BaseViewModel<ILoginView> {
 
     private Context mContext;
     public LoginModel mLoginModel;

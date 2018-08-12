@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> {
+public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> implements IUserListView {
 
     private UserListAdapter<BaseUserModel> mListAdapter;
 
@@ -70,4 +70,8 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         return new UserListViewModel(this, 1);
     }
 
+    @Override
+    public void makeSomeUpdateToUI() {
+        // handle some Change on UI from ViewModel
+    }
 }

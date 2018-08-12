@@ -11,7 +11,7 @@ import com.trungnguyen.android.houston123.util.Navigator;
 
 import javax.inject.Inject;
 
-public class MainViewModel extends BaseViewModel {
+public class MainViewModel extends BaseViewModel<IMainView> {
 
     private Context mContext;
 

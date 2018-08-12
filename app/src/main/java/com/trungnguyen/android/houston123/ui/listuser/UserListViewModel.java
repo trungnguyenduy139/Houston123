@@ -21,7 +21,7 @@ import javax.inject.Inject;
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserListViewModel extends BaseViewModel implements UserListListener {
+public class UserListViewModel extends BaseViewModel<IUserListView> implements UserListListener {
 
     private int mTypeOfUserList;
     @Inject

@@ -8,7 +8,7 @@ import com.trungnguyen.android.houston123.injection.Injector;
 /**
  * Created by trungnd4 on 20/07/2018.
  */
-public class LecturerViewModel extends BaseViewModel {
+public class LecturerViewModel extends BaseViewModel<ILecturerView> {
 
     public LecturerModel mLecturerModel;
 

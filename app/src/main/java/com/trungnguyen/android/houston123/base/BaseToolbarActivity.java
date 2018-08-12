@@ -2,7 +2,6 @@ package com.trungnguyen.android.houston123.base;
 
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 public abstract class BaseToolbarActivity<V extends ViewDataBinding, VM extends BaseViewModel>
         extends BaseActivity<V, VM> {
