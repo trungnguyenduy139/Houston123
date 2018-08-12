@@ -78,7 +78,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
         initViewObservable();
 
-        viewModel.onCreate();
+        viewModel.onCreate(this);
 
         viewModel.registerRxBus();
     }
