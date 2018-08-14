@@ -9,7 +9,7 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
-import com.trungnguyen.android.houston123.ui.userdetail.LecturerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 
 import java.util.ArrayList;
 import java.util.List;

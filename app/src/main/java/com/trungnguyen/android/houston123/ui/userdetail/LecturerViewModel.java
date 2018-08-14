@@ -3,7 +3,10 @@ package com.trungnguyen.android.houston123.ui.userdetail;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +17,19 @@ import java.util.List;
 public class LecturerViewModel extends BaseViewModel<ILecturerView> {
 
     @Nullable
-    public LecturerModel mLecturerModel;
+    public BaseUserModel mUserModel;
 
-    public void setLecturerModel(@Nullable LecturerModel lecturerModel) {
-        if (lecturerModel == null) {
+    private List<ItemDetailModel> mItemDetailList = new ArrayList<>();
+
+    public void setLecturerModel(@Nullable BaseUserModel userModel) {
+        if (userModel == null) {
             return;
         }
-        mLecturerModel = lecturerModel;
+        if (userModel instanceof LecturerModel) {
+            mItemDetailList.addAll(((LecturerModel) userModel).convert());
+        } else if (userModel instanceof ManagerModel) {
+            mItemDetailList.addAll(((ManagerModel) userModel).convert());
+        }
     }
 
     public LecturerViewModel(Context context) {
@@ -29,20 +38,9 @@ public class LecturerViewModel extends BaseViewModel<ILecturerView> {
         getDataManagerComponent().inject(this);
     }
 
-    public List<ItemDetailModel> getListItemDetail() {
-
-        // Using mLecturerModel to convert -> List<ItemDetailModel> to show on List View for dynamic User Detail types
-
-        List<ItemDetailModel> listItemDetail = new ArrayList<>();
-
-        // convert from Lecturer Model to List of Detail Model
-
-        return listItemDetail;
-    }
-
     @Override
     public void onDestroy() {
-        mLecturerModel = null;
+        mUserModel = null;
         super.onDestroy();
     }
 }

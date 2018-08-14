@@ -33,7 +33,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     UserListViewModel(Context context, int userListType) {
         super(context);
-        Injector.getInstance().getDataManagerComponent().inject(this);
+        getDataManagerComponent().inject(this);
         mUserListLiveData = new MutableLiveData<>();
 
         mTypeOfUserList = userListType;
