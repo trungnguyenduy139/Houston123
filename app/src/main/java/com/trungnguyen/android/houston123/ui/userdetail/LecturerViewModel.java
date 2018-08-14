@@ -19,17 +19,23 @@ public class LecturerViewModel extends BaseViewModel<ILecturerView> {
     @Nullable
     public BaseUserModel mUserModel;
 
-    private List<ItemDetailModel> mItemDetailList = new ArrayList<>();
-
     public void setLecturerModel(@Nullable BaseUserModel userModel) {
         if (userModel == null) {
             return;
         }
-        if (userModel instanceof LecturerModel) {
-            mItemDetailList.addAll(((LecturerModel) userModel).convert());
-        } else if (userModel instanceof ManagerModel) {
-            mItemDetailList.addAll(((ManagerModel) userModel).convert());
+        mUserModel = userModel;
+    }
+
+    public List<ItemDetailModel> initDetailList(BaseUserModel baseUserModel) {
+
+        List<ItemDetailModel> itemDetailModelList = new ArrayList<>();
+
+        if (baseUserModel instanceof LecturerModel) {
+            itemDetailModelList.addAll(((LecturerModel) baseUserModel).convert());
+        } else if (baseUserModel instanceof ManagerModel) {
+            itemDetailModelList.addAll(((ManagerModel) baseUserModel).convert());
         }
+        return itemDetailModelList;
     }
 
     public LecturerViewModel(Context context) {

@@ -20,7 +20,6 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
     protected Context context;
     protected Fragment fragment;
     protected final CompositeDisposable mSubscription = new CompositeDisposable();
-    @Nullable
     protected View mView;
 
     public BaseViewModel() {

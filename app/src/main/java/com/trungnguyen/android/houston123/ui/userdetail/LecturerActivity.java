@@ -11,7 +11,14 @@ import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityLecturerBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 
-public class LecturerActivity extends BaseToolbarActivity<ActivityLecturerBinding, LecturerViewModel> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class LecturerActivity extends BaseToolbarActivity<ActivityLecturerBinding, LecturerViewModel>
+        implements ILecturerView {
+
+    private List<ItemDetailModel> mItemDetailList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,7 @@ public class LecturerActivity extends BaseToolbarActivity<ActivityLecturerBindin
         }
         if (baseUserModel != null) {
             viewModel.setLecturerModel(baseUserModel);
+            mItemDetailList.addAll(viewModel.initDetailList(baseUserModel));
         }
     }
 
