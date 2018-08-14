@@ -24,7 +24,7 @@ public class LecturerViewModel extends BaseViewModel<ILecturerView> {
     public LecturerViewModel(Context context) {
 
         super(context);
-        Injector.getInstance().getDataManagerComponent().inject(this);
+        getDataManagerComponent().inject(this);
     }
 
     @Override

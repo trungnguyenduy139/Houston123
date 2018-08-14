@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
-import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.Navigator;
 
 import javax.inject.Inject;
@@ -22,7 +21,7 @@ public class MainViewModel extends BaseViewModel<IMainView> {
 
         super(context);
         mContext = context;
-        Injector.getInstance().getDataManagerComponent().inject(this);
+        getDataManagerComponent().inject(this);
     }
 
     @OnClick

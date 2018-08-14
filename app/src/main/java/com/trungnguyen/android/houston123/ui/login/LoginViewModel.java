@@ -35,7 +35,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
         isLoggedIn.setValue(true);
         mContext = context;
         mLoginModel = new LoginModel();
-        Injector.getInstance().getDataManagerComponent().inject(this);
+        getDataManagerComponent().inject(this);
     }
 
     @NonNull

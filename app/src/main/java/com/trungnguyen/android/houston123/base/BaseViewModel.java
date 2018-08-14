@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
+import com.trungnguyen.android.houston123.injection.DataManagerComponent;
 import com.trungnguyen.android.houston123.injection.Injector;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -53,6 +54,10 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    protected DataManagerComponent getDataManagerComponent() {
+        return Injector.getInstance().getDataManagerComponent();
     }
 
 

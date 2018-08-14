@@ -23,7 +23,10 @@ public class LecturerActivity extends BaseToolbarActivity<ActivityLecturerBindin
         }
         if (baseUserModel != null && baseUserModel instanceof LecturerModel) {
             viewModel.setLecturerModel((LecturerModel) baseUserModel);
-        }
+        } // check for other types of user extended BaseUserModel
+        // Mock: else if (baseUserModel != null && baseUserModel instanceof ManagerModel) {
+        //  do some stuff for ManagerModel type
+        // }
     }
 
     @Override
