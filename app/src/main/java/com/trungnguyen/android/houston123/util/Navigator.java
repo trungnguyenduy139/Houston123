@@ -9,7 +9,7 @@ import com.trungnguyen.android.houston123.anotation.UserListType;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
-import com.trungnguyen.android.houston123.ui.userdetail.lecturer.LecturerActivity;
+import com.trungnguyen.android.houston123.ui.userdetail.LecturerActivity;
 
 import javax.inject.Inject;
 

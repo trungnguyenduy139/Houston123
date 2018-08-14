@@ -1,4 +1,4 @@
-package com.trungnguyen.android.houston123.ui.userdetail.lecturer;
+package com.trungnguyen.android.houston123.ui.userdetail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

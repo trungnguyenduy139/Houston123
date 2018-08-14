@@ -1,4 +1,4 @@
-package com.trungnguyen.android.houston123.ui.userdetail.lecturer;
+package com.trungnguyen.android.houston123.ui.userdetail;
 
 /**
  * Created by trungnd4 on 13/08/2018.

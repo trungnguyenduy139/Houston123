@@ -1,4 +1,4 @@
-package com.trungnguyen.android.houston123.ui.userdetail.lecturer;
+package com.trungnguyen.android.houston123.ui.userdetail;
 
 import android.databinding.Bindable;
 
@@ -18,4 +18,5 @@ public class LecturerModel extends BaseUserModel {
     public void setLectureCount(String lectureCount) {
         this.lectureCount = lectureCount;
     }
+
 }
