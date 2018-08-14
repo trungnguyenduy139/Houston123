@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.util;
 
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.HoustonApplication;
 
@@ -39,6 +40,7 @@ public final class AndroidUtils {
     }
 
     //
+    @NonNull
     public static List<Long> convertArrToList(int[] pArrData) {
         List<Long> excludeAppID = new ArrayList<>();
         for (int appId : pArrData) {
@@ -48,6 +50,7 @@ public final class AndroidUtils {
         return excludeAppID;
     }
 
+    @NonNull
     public static String getAndroidVersion() {
         try {
             String release = Build.VERSION.RELEASE;

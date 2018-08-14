@@ -1,5 +1,7 @@
 package com.trungnguyen.android.houston123.rx;
 
+import android.support.annotation.NonNull;
+
 import com.trungnguyen.android.houston123.util.AppLogger;
 
 import java.util.concurrent.Callable;
@@ -13,7 +15,7 @@ import io.reactivex.ObservableTransformer;
  */
 public final class ObservableHelper {
 
-    public static <T> Observable<Optional<T>> makeObservableOptional(final Callable<T> func) {
+    public static <T> Observable<Optional<T>> makeObservableOptional(@NonNull final Callable<T> func) {
         return Observable.create(emitter -> {
             try {
                 Optional<T> ret = Optional.ofNullable(func.call());
@@ -36,7 +38,7 @@ public final class ObservableHelper {
         });
     }
 
-    public static <T> Observable<T> makeObservableStrict(final Callable<T> func) {
+    public static <T> Observable<T> makeObservableStrict(@NonNull final Callable<T> func) {
         return Observable.create(emitter -> {
             try {
                 T ret = func.call();

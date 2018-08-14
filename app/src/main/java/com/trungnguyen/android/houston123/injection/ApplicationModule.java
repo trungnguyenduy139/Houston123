@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.injection;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 
 import com.trungnguyen.android.houston123.util.Navigator;
@@ -21,6 +22,7 @@ public class ApplicationModule {
         return application;
     }
 
+    @NonNull
     @Provides
     @Singleton
     protected PrefsUtil providePrefsUtil() {

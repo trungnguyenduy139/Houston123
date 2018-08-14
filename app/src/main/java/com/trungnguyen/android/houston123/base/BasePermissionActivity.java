@@ -16,7 +16,7 @@ public abstract class BasePermissionActivity<V extends ViewDataBinding, VM exten
 
     protected abstract void permissionGranted(int permissionRequestCode, boolean isGranted);
 
-    protected boolean isPermissionGrantedAndRequest(String[] permissions, int requestPermissionCode) {
+    protected boolean isPermissionGrantedAndRequest(@NonNull String[] permissions, int requestPermissionCode) {
         if (!PermissionUtil.checkAndroidMVersion()) {
             return true;
         }
@@ -36,7 +36,7 @@ public abstract class BasePermissionActivity<V extends ViewDataBinding, VM exten
         return isPermissionGrantedAndRequest(new String[]{permissions}, requestPermissionCode);
     }
 
-    protected boolean isPermissionGranted(String[] permissions) {
+    protected boolean isPermissionGranted(@NonNull String[] permissions) {
         if (!PermissionUtil.checkAndroidMVersion()) {
             return true;
         }

@@ -25,6 +25,9 @@ package com.trungnguyen.android.houston123.rx;
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.NoSuchElementException;
 
 import io.reactivex.functions.Consumer;
@@ -58,6 +61,7 @@ public final class Optional<T> {
     /**
      * If non-null, the value; if null, indicates no value is present
      */
+    @Nullable
     private final T value;
 
     /**
@@ -82,6 +86,7 @@ public final class Optional<T> {
      * @param <T> Type of the non-existent value
      * @return an empty {@code Optional}
      */
+    @NonNull
     public static<T> Optional<T> empty() {
         @SuppressWarnings("unchecked")
         Optional<T> t = (Optional<T>) EMPTY;
@@ -119,7 +124,8 @@ public final class Optional<T> {
      * @return an {@code Optional} with a present value if the specified value
      * is non-null, otherwise an empty {@code Optional}
      */
-    public static <T> Optional<T> ofNullable(T value) {
+    @NonNull
+    public static <T> Optional<T> ofNullable(@Nullable T value) {
         Optional<T> empty = empty();
         return value == null ? empty : of(value);
     }
@@ -133,6 +139,7 @@ public final class Optional<T> {
      *
      * @see Optional#isPresent()
      */
+    @Nullable
     public T get() {
         if (value == null) {
             throw new NoSuchElementException("No value present");
@@ -157,7 +164,7 @@ public final class Optional<T> {
      * @throws NullPointerException if value is present and {@code consumer} is
      * null
      */
-    public void ifPresent(Consumer<? super T> consumer) throws Exception {
+    public void ifPresent(@NonNull Consumer<? super T> consumer) throws Exception {
         if (value != null)
             consumer.accept(value);
     }
@@ -173,7 +180,8 @@ public final class Optional<T> {
      * otherwise an empty {@code Optional}
      * @throws NullPointerException if the predicate is null
      */
-    public Optional<T> filter(Predicate<? super T> predicate) throws Exception {
+    @NonNull
+    public Optional<T> filter(@NonNull Predicate<? super T> predicate) throws Exception {
         requireNonNull(predicate);
         if (!isPresent()) {
             return this;
@@ -212,7 +220,8 @@ public final class Optional<T> {
      * otherwise an empty {@code Optional}
      * @throws NullPointerException if the mapping function is null
      */
-    public <U> Optional<U> map(Function<? super T, ? extends U> mapper) throws Exception {
+    @NonNull
+    public <U> Optional<U> map(@NonNull Function<? super T, ? extends U> mapper) throws Exception {
         requireNonNull(mapper);
         Optional<U> empty = empty();
 
@@ -240,7 +249,8 @@ public final class Optional<T> {
      * @throws NullPointerException if the mapping function is null or returns
      * a null result
      */
-    public<U> Optional<U> flatMap(Function<? super T, Optional<U>> mapper) throws Exception {
+    @Nullable
+    public<U> Optional<U> flatMap(@NonNull Function<? super T, Optional<U>> mapper) throws Exception {
         requireNonNull(mapper);
         if (!isPresent())
             return empty();
@@ -256,6 +266,7 @@ public final class Optional<T> {
      * be null
      * @return the value, if present, otherwise {@code other}
      */
+    @Nullable
     public T orElse(T other) {
         return value != null ? value : other;
     }
@@ -270,7 +281,8 @@ public final class Optional<T> {
      * @throws NullPointerException if value is not present and {@code other} is
      * null
      */
-    public T orElseGet(Optional<? extends T> other) {
+    @Nullable
+    public T orElseGet(@NonNull Optional<? extends T> other) {
         return value != null ? value : other.get();
     }
 
@@ -290,6 +302,7 @@ public final class Optional<T> {
      * @throws NullPointerException if no value is present and
      * {@code exceptionSupplier} is null
      */
+    @Nullable
     public <X extends Throwable> T orElseThrow(X exceptionSupplier) throws X {
         requireNonNull(exceptionSupplier);
 
@@ -349,6 +362,7 @@ public final class Optional<T> {
      *
      * @return the string representation of this instance
      */
+    @NonNull
     @Override
     public String toString() {
         return value != null
@@ -356,7 +370,8 @@ public final class Optional<T> {
                 : "Optional.empty";
     }
 
-    public static <T> T requireNonNull(T o) {
+    @Nullable
+    public static <T> T requireNonNull(@Nullable T o) {
         if (o == null) {
             throw new NullPointerException();
         }

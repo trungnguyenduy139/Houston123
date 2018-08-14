@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -38,7 +39,7 @@ public class ContainerActivity extends RxAppCompatActivity {
         }
     }
 
-    protected void initFromIntent(Intent data) {
+    protected void initFromIntent(@Nullable Intent data) {
         if (data == null) {
             throw new RuntimeException(
                     "you must provide a page info to display");

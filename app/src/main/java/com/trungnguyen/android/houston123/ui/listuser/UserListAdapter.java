@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.ui.listuser;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
         return mListUser.size();
     }
 
-    public void addItems(List<U> lecturerModels) {
+    public void addItems(@Nullable List<U> lecturerModels) {
         if (lecturerModels == null) {
             return;
         }

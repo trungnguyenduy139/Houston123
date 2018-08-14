@@ -30,5 +30,6 @@ public interface ApplicationComponent {
         ApplicationComponent build();
     }
 
+    @NonNull
     DataManagerComponent.Builder dataManagerComponentBuilder();
 }

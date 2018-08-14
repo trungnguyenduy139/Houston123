@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.listuser;
 
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
@@ -10,10 +11,13 @@ import com.trungnguyen.android.houston123.base.BaseViewModel;
  */
 public class UserItemViewModel extends BaseViewModel {
 
+    @NonNull
     public final ObservableField<String> mImgUrl;
 
+    @NonNull
     public final ObservableField<String> mName;
 
+    @NonNull
     public final ObservableField<String> mPosition;
 
     private final BaseUserModel mLecturerModel;

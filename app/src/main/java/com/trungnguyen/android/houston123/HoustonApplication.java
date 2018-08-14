@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -55,6 +56,7 @@ public class HoustonApplication extends Application {
         return mInstance;
     }
 
+    @NonNull
     private ActivityLifecycleCallbacks mCallbacks = new ActivityLifecycleCallbacks() {
 
         @Override

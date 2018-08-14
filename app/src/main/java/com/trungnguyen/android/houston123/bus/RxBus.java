@@ -1,6 +1,9 @@
 package com.trungnguyen.android.houston123.bus;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,9 +14,12 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 public class RxBus {
+    @Nullable
     private static volatile RxBus mDefaultInstance;
+    @NonNull
     private final Subject<Object> mBus;
 
+    @NonNull
     private final Map<Class<?>, Object> mStickyEventMap;
 
     public RxBus() {
@@ -21,6 +27,7 @@ public class RxBus {
         mStickyEventMap = new ConcurrentHashMap<>();
     }
 
+    @Nullable
     public static RxBus getDefault() {
         if (mDefaultInstance == null) {
             synchronized (RxBus.class) {
@@ -37,7 +44,7 @@ public class RxBus {
     }
 
 
-    public <T> Observable<T> toObservable(Class<T> eventType) {
+    public <T> Observable<T> toObservable(@NonNull Class<T> eventType) {
         return mBus.ofType(eventType);
     }
 
@@ -50,7 +57,7 @@ public class RxBus {
     }
 
 
-    public void postSticky(Object event) {
+    public void postSticky(@NonNull Object event) {
         synchronized (mStickyEventMap) {
             mStickyEventMap.put(event.getClass(), event);
         }
@@ -58,7 +65,7 @@ public class RxBus {
     }
 
 
-    public <T> Observable<T> toObservableSticky(final Class<T> eventType) {
+    public <T> Observable<T> toObservableSticky(@NonNull final Class<T> eventType) {
         synchronized (mStickyEventMap) {
             Observable<T> observable = mBus.ofType(eventType);
             final Object event = mStickyEventMap.get(eventType);
@@ -66,7 +73,7 @@ public class RxBus {
             if (event != null) {
                 return Observable.merge(observable, Observable.create(new ObservableOnSubscribe<T>() {
                     @Override
-                    public void subscribe(ObservableEmitter<T> emitter) throws Exception {
+                    public void subscribe(@NonNull ObservableEmitter<T> emitter) throws Exception {
                         emitter.onNext(eventType.cast(event));
                     }
                 }));
@@ -77,14 +84,14 @@ public class RxBus {
     }
 
 
-    public <T> T getStickyEvent(Class<T> eventType) {
+    public <T> T getStickyEvent(@NonNull Class<T> eventType) {
         synchronized (mStickyEventMap) {
             return eventType.cast(mStickyEventMap.get(eventType));
         }
     }
 
 
-    public <T> T removeStickyEvent(Class<T> eventType) {
+    public <T> T removeStickyEvent(@NonNull Class<T> eventType) {
         synchronized (mStickyEventMap) {
             return eventType.cast(mStickyEventMap.remove(eventType));
         }

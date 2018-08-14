@@ -17,6 +17,7 @@
 
 package com.trungnguyen.android.houston123.util;
 
+import android.support.annotation.NonNull;
 import android.util.Base64;
 
 import javax.crypto.*;
@@ -65,7 +66,7 @@ public final class Security {
             cipher.init(Cipher.ENCRYPT_MODE, key);
             encrypedValue = Base64.encodeToString(cipher.doFinal(clearText), Base64.DEFAULT);
             return encrypedValue;
-        } catch (InvalidKeyException | NoSuchPaddingException | InvalidKeySpecException | BadPaddingException |
+        } catch (@NonNull InvalidKeyException | NoSuchPaddingException | InvalidKeySpecException | BadPaddingException |
                 IllegalBlockSizeException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
             AppLogger.d(e, "Something is gone wrong encrypting");
         }
@@ -87,7 +88,7 @@ public final class Security {
             byte[] decrypedValueBytes = (cipher.doFinal(encrypedPwdBytes));
 
             decryptedValue = new String(decrypedValueBytes);
-        } catch (InvalidKeyException | UnsupportedEncodingException | InvalidKeySpecException |
+        } catch (@NonNull InvalidKeyException | UnsupportedEncodingException | InvalidKeySpecException |
                 NoSuchAlgorithmException | BadPaddingException | NoSuchPaddingException | IllegalBlockSizeException
                 e) {
             AppLogger.e(TAG, "Error decrypting");

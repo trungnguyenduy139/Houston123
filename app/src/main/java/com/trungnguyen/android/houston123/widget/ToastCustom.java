@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.widget;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ public class ToastCustom {
     public static final int LENGTH_LONG = 1;
 
     @UiThread
-    public static void makeText(final Context context, final CharSequence text, final int duration, final @ToastType String type) {
+    public static void makeText(@NonNull final Context context, final CharSequence text, final int duration, @NonNull final @ToastType String type) {
         Toast toast = Toast.makeText(context, text, duration);
 
         LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

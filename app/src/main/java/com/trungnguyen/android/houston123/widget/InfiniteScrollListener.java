@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListener {
 
+    @NonNull
     private Runnable mLoadMoreRunnable = () -> onLoadMore();
 
     @Override

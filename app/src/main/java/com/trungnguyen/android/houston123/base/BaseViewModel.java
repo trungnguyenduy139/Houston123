@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
@@ -18,6 +19,7 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
     protected Context context;
     protected Fragment fragment;
     protected final CompositeDisposable mSubscription = new CompositeDisposable();
+    @Nullable
     protected View mView;
 
     public BaseViewModel() {
@@ -58,7 +60,7 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
         context.startActivity(new Intent(context, clz));
     }
 
-    public void startActivity(Class<?> clz, Bundle bundle) {
+    public void startActivity(Class<?> clz, @Nullable Bundle bundle) {
         Intent intent = new Intent(context, clz);
         if (bundle != null) {
             intent.putExtras(bundle);
@@ -67,7 +69,7 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
     }
 
 
-    public void startContainerActivity(String canonicalName, Bundle bundle) {
+    public void startContainerActivity(String canonicalName, @Nullable Bundle bundle) {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
         if (bundle != null) {
@@ -84,7 +86,7 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
     }
 
     @Override
-    public void onCreate(View view) {
+    public void onCreate(@Nullable View view) {
         if (view != null) {
             mView = view;
         }

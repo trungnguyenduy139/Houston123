@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,9 @@ import com.trungnguyen.android.houston123.bus.Messenger;
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
 
     protected V binding;
+    @Nullable
     protected VM viewModel;
+    @Nullable
     private BaseActivity mActivity;
 
     @Override
@@ -39,6 +42,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         super.onDetach();
     }
 
+    @Nullable
     public BaseActivity getBaseActivity() {
         if (mActivity == null || mActivity.isFinishing()) {
             return null;
@@ -101,6 +105,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     public abstract int initVariableId();
 
 
+    @NonNull
     public abstract VM initViewModel();
 
     @Override

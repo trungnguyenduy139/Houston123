@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.listuser;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.trungnguyen.android.houston123.R;
@@ -44,6 +45,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         mListAdapter.releaseListener();
     }
 
+    @NonNull
     private List<BaseUserModel> initTemporaryData() {
         List<BaseUserModel> userList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -65,6 +67,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         return BR.viewModel;
     }
 
+    @NonNull
     @Override
     public UserListViewModel initViewModel() {
         return new UserListViewModel(this, 1);

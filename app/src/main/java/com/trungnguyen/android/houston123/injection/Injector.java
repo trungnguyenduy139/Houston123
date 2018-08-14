@@ -1,6 +1,8 @@
 package com.trungnguyen.android.houston123.injection;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public enum Injector {
 
@@ -8,8 +10,10 @@ public enum Injector {
 
     private ApplicationComponent mApplicationComponent;
 
+    @Nullable
     private DataManagerComponent mDataManagerComponent;
 
+    @NonNull
     public static Injector getInstance() {
         return INSTANCE;
     }
@@ -32,6 +36,7 @@ public enum Injector {
         return mApplicationComponent;
     }
 
+    @Nullable
     public DataManagerComponent getDataManagerComponent() {
         if (mDataManagerComponent == null) {
             mDataManagerComponent = mApplicationComponent.dataManagerComponentBuilder().build();

@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.trungnguyen.android.houston123.BR;
@@ -26,6 +27,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         return BR.viewModel;
     }
 
+    @NonNull
     @Override
     public MainViewModel initViewModel() {
         return new MainViewModel(this);

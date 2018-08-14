@@ -4,6 +4,7 @@ package com.trungnguyen.android.houston123.network;
  * @author : Trung Nguyen
  */
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 
@@ -37,7 +38,7 @@ public class NetworkError extends Throwable {
                 ((HttpException) error).code() == HTTP_UNAUTHORIZED;
     }
 
-    public boolean isResponseNull(Response response) {
+    public boolean isResponseNull(@Nullable Response response) {
         return error instanceof HttpException && response == null;
     }
 
@@ -62,7 +63,7 @@ public class NetworkError extends Throwable {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 

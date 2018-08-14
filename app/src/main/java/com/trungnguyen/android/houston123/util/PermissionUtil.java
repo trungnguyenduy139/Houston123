@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.util;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 public final class PermissionUtil {
@@ -29,7 +30,8 @@ public final class PermissionUtil {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    public static int[] getSelfPermission(Context context, String[] permission) {
+    @NonNull
+    public static int[] getSelfPermission(@NonNull Context context, String[] permission) {
         int[] selfPermission = new int[permission.length];
         for (int i = 0; i < permission.length; i++) {
             selfPermission[i] = ContextCompat.checkSelfPermission(context, permission[i]);
@@ -39,7 +41,7 @@ public final class PermissionUtil {
     }
 
 
-    public static boolean verifyPermission(Context context, String[] permission) {
+    public static boolean verifyPermission(@NonNull Context context, String[] permission) {
         int[] selfPermission = new int[permission.length];
         for (int i = 0; i < permission.length; i++) {
             selfPermission[i] = ContextCompat.checkSelfPermission(context, permission[i]);

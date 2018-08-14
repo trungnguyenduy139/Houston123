@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.ui.login;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
@@ -25,6 +26,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
     @Inject
     Navigator mNavigator;
 
+    @NonNull
     private MutableLiveData isLoggedIn = new MutableLiveData<Boolean>();
 
     public LoginViewModel(Context context) {
@@ -36,6 +38,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
         Injector.getInstance().getDataManagerComponent().inject(this);
     }
 
+    @NonNull
     public MutableLiveData<Boolean> getIsLoggedIn() {
         return isLoggedIn;
     }

@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.base;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import java.util.Stack;
@@ -38,7 +39,7 @@ public class AppManager {
     }
 
 
-    public void removeActivity(Activity activity) {
+    public void removeActivity(@Nullable Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
         }
@@ -64,7 +65,7 @@ public class AppManager {
     }
 
 
-    public void finishActivity(Activity activity) {
+    public void finishActivity(@Nullable Activity activity) {
         if (activity != null) {
             if (!activity.isFinishing()) {
                 activity.finish();
@@ -112,7 +113,7 @@ public class AppManager {
     }
 
 
-    public void removeFragment(Fragment fragment) {
+    public void removeFragment(@Nullable Fragment fragment) {
         if (fragment != null) {
             fragmentStack.remove(fragment);
         }
@@ -128,6 +129,7 @@ public class AppManager {
     }
 
 
+    @Nullable
     public Fragment currentFragment() {
         if (fragmentStack != null) {
             Fragment fragment = fragmentStack.lastElement();

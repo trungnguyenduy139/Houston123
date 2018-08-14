@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.trungnguyen.android.houston123.anotation.InfinityAdapterType;
 public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends RecyclerView.Adapter<BaseViewHolder> {
 
     protected Context context;
+    @Nullable
     protected L mListener;
 
     @Override
@@ -29,12 +31,13 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
         return InfinityAdapterType.TYPE_NORMAL;
     }
 
+    @NonNull
     protected BaseViewHolder getLoadingViewHolder(@NonNull ViewGroup parent) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.loading_more, parent, false);
         return new LoaderViewHolder(rootView);
     }
 
-    public void setListener(L listener) {
+    public void setListener(@Nullable L listener) {
         if (listener == null) {
             return;
         }
@@ -65,7 +68,7 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
 
         ProgressBar progressBar;
 
-        LoaderViewHolder(View root) {
+        LoaderViewHolder(@NonNull View root) {
             super(root);
             progressBar = root.findViewById(R.id.loading_more_progress_bar);
         }

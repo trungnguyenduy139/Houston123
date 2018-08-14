@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.userdetail.lecturer;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
@@ -35,6 +36,7 @@ public class LecturerActivity extends BaseToolbarActivity<ActivityLecturerBindin
         return BR.viewModel;
     }
 
+    @NonNull
     @Override
     public LecturerViewModel initViewModel() {
         return new LecturerViewModel(this);

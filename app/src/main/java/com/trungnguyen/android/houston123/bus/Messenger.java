@@ -1,6 +1,9 @@
 package com.trungnguyen.android.houston123.bus;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.trungnguyen.android.houston123.binding.BindingAction;
 import com.trungnguyen.android.houston123.binding.BindingConsumer;
 
@@ -16,12 +19,14 @@ import java.util.List;
  */
 public class Messenger {
 
+    @Nullable
     private static Messenger defaultInstance;
 
     private HashMap<Type, List<WeakActionAndToken>> recipientsOfSubclassesAction;
 
     private HashMap<Type, List<WeakActionAndToken>> recipientsStrictAction;
 
+    @Nullable
     public static Messenger getDefault() {
         if (defaultInstance == null) {
             defaultInstance = new Messenger();
@@ -150,25 +155,25 @@ public class Messenger {
     }
 
 
-    public void sendNoMsgToTarget(Object target) {
+    public void sendNoMsgToTarget(@NonNull Object target) {
         sendToTargetOrType(target.getClass(), null);
     }
 
 
-    public void sendNoMsgToTargetWithToken(Object token, Object target) {
+    public void sendNoMsgToTargetWithToken(Object token, @NonNull Object target) {
         sendToTargetOrType(target.getClass(), token);
     }
 
-    public <T> void send(T message) {
+    public <T> void send(@NonNull T message) {
         sendToTargetOrType(message, null, null);
     }
 
-    public <T> void send(T message, Object token) {
+    public <T> void send(@NonNull T message, Object token) {
         sendToTargetOrType(message, null, token);
     }
 
 
-    public <T, R> void sendToTarget(T message, R target) {
+    public <T, R> void sendToTarget(@NonNull T message, @NonNull R target) {
         sendToTargetOrType(message, target.getClass(), null);
     }
 
@@ -189,9 +194,9 @@ public class Messenger {
 
     private static <T> void sendToList(
             T message,
-            Collection<WeakActionAndToken> list,
-            Type messageTargetType,
-            Object token) {
+            @Nullable Collection<WeakActionAndToken> list,
+            @Nullable Type messageTargetType,
+            @Nullable Object token) {
         if (list != null) {
             // Clone to protect from people registering in a "receive message" method
             // Bug correction Messaging BL0004.007
@@ -214,7 +219,7 @@ public class Messenger {
         }
     }
 
-    private static void unregisterFromLists(Object recipient, HashMap<Type, List<WeakActionAndToken>> lists) {
+    private static void unregisterFromLists(@Nullable Object recipient, @Nullable HashMap<Type, List<WeakActionAndToken>> lists) {
         if (recipient == null
                 || lists == null
                 || lists.size() == 0) {
@@ -236,9 +241,9 @@ public class Messenger {
     }
 
     private static <T> void unregisterFromLists(
-            Object recipient,
-            BindingConsumer<T> action,
-            HashMap<Type, List<WeakActionAndToken>> lists,
+            @Nullable Object recipient,
+            @Nullable BindingConsumer<T> action,
+            @Nullable HashMap<Type, List<WeakActionAndToken>> lists,
             Class<T> tClass) {
         Type messageType = tClass;
 
@@ -264,9 +269,9 @@ public class Messenger {
     }
 
     private static void unregisterFromLists(
-            Object recipient,
-            BindingAction action,
-            HashMap<Type, List<WeakActionAndToken>> lists
+            @Nullable Object recipient,
+            @Nullable BindingAction action,
+            @Nullable HashMap<Type, List<WeakActionAndToken>> lists
     ) {
         Type messageType = NotMsgType.class;
 
@@ -293,10 +298,10 @@ public class Messenger {
 
 
     private static <T> void unregisterFromLists(
-            Object recipient,
-            Object token,
-            BindingConsumer<T> action,
-            HashMap<Type, List<WeakActionAndToken>> lists, Class<T> tClass) {
+            @Nullable Object recipient,
+            @Nullable Object token,
+            @Nullable BindingConsumer<T> action,
+            @Nullable HashMap<Type, List<WeakActionAndToken>> lists, Class<T> tClass) {
         Type messageType = tClass;
 
         if (recipient == null
@@ -323,10 +328,10 @@ public class Messenger {
     }
 
     private static void unregisterFromLists(
-            Object recipient,
-            Object token,
-            BindingAction action,
-            HashMap<Type, List<WeakActionAndToken>> lists) {
+            @Nullable Object recipient,
+            @Nullable Object token,
+            @Nullable BindingAction action,
+            @Nullable HashMap<Type, List<WeakActionAndToken>> lists) {
         Type messageType = NotMsgType.class;
 
         if (recipient == null
@@ -352,7 +357,7 @@ public class Messenger {
         }
     }
 
-    private static boolean classImplements(Type instanceType, Type interfaceType) {
+    private static boolean classImplements(@Nullable Type instanceType, @Nullable Type interfaceType) {
         if (interfaceType == null
                 || instanceType == null) {
             return false;
@@ -367,7 +372,7 @@ public class Messenger {
         return false;
     }
 
-    private static void cleanupList(HashMap<Type, List<WeakActionAndToken>> lists) {
+    private static void cleanupList(@Nullable HashMap<Type, List<WeakActionAndToken>> lists) {
         if (lists == null) {
             return;
         }
@@ -420,9 +425,9 @@ public class Messenger {
     }
 
     private static void sendToList(
-            Collection<WeakActionAndToken> list,
-            Type messageTargetType,
-            Object token) {
+            @Nullable Collection<WeakActionAndToken> list,
+            @Nullable Type messageTargetType,
+            @Nullable Object token) {
         if (list != null) {
             // Clone to protect from people registering in a "receive message" method
             // Bug correction Messaging BL0004.007

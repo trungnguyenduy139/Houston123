@@ -4,6 +4,8 @@ import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trungnguyen.android.houston123.bus.Messenger;
@@ -13,6 +15,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         extends RxAppCompatActivity implements IBaseActivity, BaseFragment.Callback {
 
     protected V binding;
+    @Nullable
     protected VM viewModel;
 
     @Override
@@ -65,6 +68,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 
     public abstract int initVariableId();
 
+    @NonNull
     public abstract VM initViewModel();
 
     @Override

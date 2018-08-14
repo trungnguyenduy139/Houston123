@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.ui.listuser;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
@@ -27,6 +28,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     @Inject
     Navigator mNavigator;
 
+    @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
 
     UserListViewModel(Context context, int userListType) {
@@ -37,22 +39,23 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
         mTypeOfUserList = userListType;
     }
 
+    @NonNull
     public MutableLiveData<List<BaseViewModel>> getUserListLiveData() {
         return mUserListLiveData;
     }
 
-    public void attachAdapter(UserListAdapter<BaseUserModel> adapter) {
+    public void attachAdapter(@NonNull UserListAdapter<BaseUserModel> adapter) {
         adapter.setListener(this);
     }
 
     @Override
-    public void onItemClick(BaseUserModel baseUserModel) {
+    public void onItemClick(@NonNull BaseUserModel baseUserModel) {
         try {
             Bundle bundle = new BundleBuilder()
                     .putValue(BundleConstants.KEY_USER_DETAIL, baseUserModel)
                     .build();
             mNavigator.startDetailActivity(context, bundle, mTypeOfUserList);
-        } catch (ClassCastException | NullPointerException e) {
+        } catch (@NonNull ClassCastException | NullPointerException e) {
             AppLogger.w("UserListViewModel onItemClick() [%s]", e.getMessage());
         }
     }

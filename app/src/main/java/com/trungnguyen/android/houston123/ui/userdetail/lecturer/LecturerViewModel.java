@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.userdetail.lecturer;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.injection.Injector;
@@ -10,9 +11,10 @@ import com.trungnguyen.android.houston123.injection.Injector;
  */
 public class LecturerViewModel extends BaseViewModel<ILecturerView> {
 
+    @Nullable
     public LecturerModel mLecturerModel;
 
-    public void setLecturerModel(LecturerModel lecturerModel) {
+    public void setLecturerModel(@Nullable LecturerModel lecturerModel) {
         if (lecturerModel == null) {
             return;
         }

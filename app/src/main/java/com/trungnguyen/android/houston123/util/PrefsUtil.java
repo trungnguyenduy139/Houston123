@@ -3,6 +3,8 @@ package com.trungnguyen.android.houston123.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.Collection;
@@ -14,7 +16,7 @@ public final class PrefsUtil implements PersistentPrefs {
         return context.getSharedPreferences(Constants.APP_NAME, Activity.MODE_PRIVATE);
     }
 
-    public static void saveListPreferences(String key, Context context, Collection<Object> collection) {
+    public static void saveListPreferences(String key, @NonNull Context context, Collection<Object> collection) {
         StringBuilder builder = new StringBuilder();
         for (Object object : collection) {
             builder.append(object);
@@ -25,7 +27,7 @@ public final class PrefsUtil implements PersistentPrefs {
         editor.apply();
     }
 
-    public static String[] getListPreferences(Context context, String key) {
+    public static String[] getListPreferences(@NonNull Context context, String key) {
         SharedPreferences preferences = getSharedPreferenceUtil(context);
         String setData = preferences.getString(key, EMPTY_STR);
         if (!TextUtils.isEmpty(setData))
@@ -35,44 +37,46 @@ public final class PrefsUtil implements PersistentPrefs {
         }
     }
 
-    public static void saveStringPreferences(Context context, String key, String value) {
+    public static void saveStringPreferences(@NonNull Context context, String key, String value) {
         SharedPreferences.Editor editor = getSharedPreferenceUtil(context).edit();
         editor.putString(key, value);
         editor.apply();
     }
 
-    public static String getStringPreferences(Context context, String key, String defaultValue) {
+    @Nullable
+    public static String getStringPreferences(@NonNull Context context, String key, String defaultValue) {
         SharedPreferences preferences = getSharedPreferenceUtil(context);
         return preferences.getString(key, defaultValue);
     }
 
-    public static String getStringPreferences(Context context, String key) {
+    @Nullable
+    public static String getStringPreferences(@NonNull Context context, String key) {
         return getStringPreferences(context, key, EMPTY_STR);
     }
 
-    public static void saveIntPreferences(Context context, String key, int value) {
+    public static void saveIntPreferences(@NonNull Context context, String key, int value) {
         SharedPreferences.Editor editor = getSharedPreferenceUtil(context).edit();
         editor.putInt(key, value);
         editor.apply();
     }
 
-    public static int getIntPreferences(Context context, String key, int defaultValue) {
+    public static int getIntPreferences(@NonNull Context context, String key, int defaultValue) {
         SharedPreferences preferences = getSharedPreferenceUtil(context);
         return preferences.getInt(key, defaultValue);
     }
 
-    public static void saveBoolPreferences(Context context, String key, boolean value) {
+    public static void saveBoolPreferences(@NonNull Context context, String key, boolean value) {
         SharedPreferences.Editor editor = getSharedPreferenceUtil(context).edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
-    public static boolean getBoolPreferences(Context context, String key, boolean defaultValue) {
+    public static boolean getBoolPreferences(@NonNull Context context, String key, boolean defaultValue) {
         SharedPreferences preferences = getSharedPreferenceUtil(context);
         return preferences.getBoolean(key, defaultValue);
     }
 
-    public static boolean getBoolPreferences(Context context, String key) {
+    public static boolean getBoolPreferences(@NonNull Context context, String key) {
         return getBoolPreferences(context, key, DEFAULT_BOOL_VALUE);
     }
 

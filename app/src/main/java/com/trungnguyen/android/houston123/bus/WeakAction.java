@@ -1,5 +1,7 @@
 package com.trungnguyen.android.houston123.bus;
 
+import android.support.annotation.Nullable;
+
 import com.trungnguyen.android.houston123.binding.BindingAction;
 import com.trungnguyen.android.houston123.binding.BindingConsumer;
 
@@ -10,10 +12,13 @@ import java.lang.ref.WeakReference;
  * About : kelin的WeakBindingAction
  */
 public class WeakAction<T> {
+    @Nullable
     private BindingAction action;
+    @Nullable
     private BindingConsumer<T> consumer;
     private boolean isLive;
     private Object target;
+    @Nullable
     private WeakReference reference;
 
     public WeakAction(Object target, BindingAction action) {
@@ -47,10 +52,12 @@ public class WeakAction<T> {
         consumer = null;
     }
 
+    @Nullable
     public BindingAction getBindingAction() {
         return action;
     }
 
+    @Nullable
     public BindingConsumer getBindingConsumer() {
         return consumer;
     }
@@ -66,6 +73,7 @@ public class WeakAction<T> {
     }
 
 
+    @Nullable
     public Object getTarget() {
         if (reference != null) {
             return reference.get();

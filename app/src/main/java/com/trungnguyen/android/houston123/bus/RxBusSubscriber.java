@@ -1,6 +1,8 @@
 package com.trungnguyen.android.houston123.bus;
 
 
+import android.support.annotation.NonNull;
+
 import io.reactivex.observers.DisposableObserver;
 
 /**
@@ -21,7 +23,7 @@ public abstract class RxBusSubscriber<T> extends DisposableObserver<T> {
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(@NonNull Throwable e) {
         e.printStackTrace();
     }
 

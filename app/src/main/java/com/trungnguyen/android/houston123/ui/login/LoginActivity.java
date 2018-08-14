@@ -1,6 +1,8 @@
 package com.trungnguyen.android.houston123.ui.login;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseActivity;
@@ -43,6 +45,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         return BR.viewModel;
     }
 
+    @NonNull
     @Override
     public LoginViewModel initViewModel() {
         return new LoginViewModel(this);

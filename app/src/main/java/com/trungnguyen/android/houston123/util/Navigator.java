@@ -19,12 +19,12 @@ public final class Navigator {
     public Navigator() {
     }
 
-    public void startLoginActivity(Context context) {
+    public void startLoginActivity(@NonNull Context context) {
         Intent intent = getIntent(context, LoginActivity.class);
         context.startActivity(intent);
     }
 
-    public void startDetailActivity(Context context, Bundle bundle, int userType) {
+    public void startDetailActivity(@NonNull Context context, @NonNull Bundle bundle, int userType) {
         try {
             Intent intent = getIntent(context, getDetailClazz(userType));
             intent.putExtras(bundle);
@@ -55,13 +55,13 @@ public final class Navigator {
         return clazz;
     }
 
-    public void startMainActivity(Context context, Bundle bundle) {
+    public void startMainActivity(@NonNull Context context, @NonNull Bundle bundle) {
         Intent intent = getIntent(context, MainActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
 
-    public void startUserListActivity(Context context, Bundle bundle) {
+    public void startUserListActivity(@NonNull Context context, @NonNull Bundle bundle) {
         Intent intent = getIntent(context, UserListActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
