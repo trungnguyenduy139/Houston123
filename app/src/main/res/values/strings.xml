@@ -3,4 +3,5 @@
     <string name="login_screen">Đăng nhập</string>
     <string name="main_screen">Houston</string>
     <string name="user_list">Danh sách</string>
+    <string name="user_detail">Chi tiết</string>
 </resources>

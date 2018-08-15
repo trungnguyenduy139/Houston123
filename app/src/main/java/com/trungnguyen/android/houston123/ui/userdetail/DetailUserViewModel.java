@@ -5,8 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
+import com.trungnguyen.android.houston123.util.AppLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 /**
  * Created by trungnd4 on 20/07/2018.
  */
-public class LecturerViewModel extends BaseViewModel<ILecturerView> {
+public class DetailUserViewModel extends BaseViewModel<IDetailUserView> implements UserDetailListener {
 
     @Nullable
     public BaseUserModel mUserModel;
@@ -27,18 +26,19 @@ public class LecturerViewModel extends BaseViewModel<ILecturerView> {
     }
 
     public List<ItemDetailModel> initDetailList(BaseUserModel baseUserModel) {
-
-        List<ItemDetailModel> itemDetailModelList = new ArrayList<>();
-
-        if (baseUserModel instanceof LecturerModel) {
-            itemDetailModelList.addAll(((LecturerModel) baseUserModel).convert());
-        } else if (baseUserModel instanceof ManagerModel) {
-            itemDetailModelList.addAll(((ManagerModel) baseUserModel).convert());
+        try {
+            return new ArrayList<>(baseUserModel.convert());
+        } catch (Exception e) {
+            AppLogger.w("init Dynamic detail list error", e.getMessage());
+            return new ArrayList<>();
         }
-        return itemDetailModelList;
     }
 
-    public LecturerViewModel(Context context) {
+    public void attachAdapter(UserDetailAdapter userDetailAdapter) {
+        userDetailAdapter.setListener(this);
+    }
+
+    public DetailUserViewModel(Context context) {
 
         super(context);
         getDataManagerComponent().inject(this);

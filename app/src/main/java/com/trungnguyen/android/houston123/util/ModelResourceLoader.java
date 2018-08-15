@@ -12,6 +12,6 @@ public final class ModelResourceLoader {
     }
 
     public static List<String> loadResourceManager() {
-        return Arrays.asList("Họ và Tên");
+        return Arrays.asList("Họ và Tên", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh", "Ngày tháng năm sinh");
     }
 }

@@ -33,6 +33,11 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
     }
 
     @Override
+    public boolean enableInfinity() {
+        return true;
+    }
+
+    @Override
     public int getLayoutResource() {
         return R.layout.user_list_item;
     }

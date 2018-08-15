@@ -9,7 +9,8 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
+//import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     private List<BaseUserModel> initTemporaryData() {
         List<BaseUserModel> userList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            BaseUserModel userModel = new LecturerModel();
+            BaseUserModel userModel = new ManagerModel();
             userModel.setName("Samantha "+i);
             userModel.setPosition("Senior QC Engineer");
             userList.add(userModel);

@@ -24,7 +24,7 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
         // loader can't be at position 0
         // loader can only be at the last position
 
-        if (position != 0 && position == getItemCount() - 1) {
+        if (position != 0 && position == getItemCount() - 1 && enableInfinity()) {
             return InfinityAdapterType.TYPE_LOADING;
         }
 
@@ -54,10 +54,12 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
         if (getDataSize() == 0) {
             return 0;
         }
-
+        int dataSize = getDataSize();
         // +1 for loader
-        return getDataSize() + 1;
+        return enableInfinity() ? dataSize + 1 : dataSize;
     }
+
+    public abstract boolean enableInfinity();
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder baseViewHolder, int position) {

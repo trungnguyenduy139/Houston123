@@ -9,7 +9,7 @@ import com.trungnguyen.android.houston123.anotation.UserListType;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
-import com.trungnguyen.android.houston123.ui.userdetail.LecturerActivity;
+import com.trungnguyen.android.houston123.ui.userdetail.DetailUserActivity;
 
 import javax.inject.Inject;
 
@@ -39,15 +39,15 @@ public final class Navigator {
 
         switch (userType) {
             case UserListType.LECTURER:
-                clazz = LecturerActivity.class;
+                clazz = DetailUserActivity.class;
                 break;
             case UserListType.MANAGER:
                 // update for manager type
-                clazz = LecturerActivity.class;
+                clazz = DetailUserActivity.class;
                 break;
             case UserListType.STUDENT:
                 // update for student type
-                clazz = LecturerActivity.class;
+                clazz = DetailUserActivity.class;
                 break;
             default:
                 throw new IllegalArgumentException();

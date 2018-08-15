@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.userdetail.LecturerActivity"
+        <activity android:name=".ui.userdetail.DetailUserActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
         </activity>
