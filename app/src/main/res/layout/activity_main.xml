@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.trungnguyen.android.houston123.ui.main.MainViewModel" />
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"

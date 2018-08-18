@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trungnguyen.android.houston123.bus.Messenger;
 
+import java.util.Objects;
+
 
 public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel>
         extends RxAppCompatActivity implements IBaseActivity, BaseFragment.Callback {
@@ -39,7 +41,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Messenger.getDefault().unregister(this);
+        Objects.requireNonNull(Messenger.getDefault()).unregister(this);
         viewModel.removeRxBus();
         viewModel.onDestroy();
         viewModel = null;
