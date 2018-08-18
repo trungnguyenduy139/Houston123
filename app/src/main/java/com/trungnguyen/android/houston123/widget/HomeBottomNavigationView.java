@@ -7,7 +7,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -38,7 +37,6 @@ public class HomeBottomNavigationView extends BottomNavigationView implements Bo
     private void init() {
         inflateMenu(R.menu.bottom_navigation_items);
         changeBottomNavigationLayout();
-        initTabIconFont();
         addLineSeparate();
         setOnNavigationItemSelectedListener(this);
     }
@@ -57,25 +55,6 @@ public class HomeBottomNavigationView extends BottomNavigationView implements Bo
         View line = new View(getContext());
         line.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blockchain_dark_blue));
         addView(line, new LayoutParams(LayoutParams.MATCH_PARENT, AndroidUtils.dp(0.5F)));
-    }
-
-//    private StateListDrawable createStateListDrawable(@StringRes int iconNameActive,
-//                                                      @ColorRes int iconColorActive,
-//                                                      @StringRes int iconNameNormal,
-//                                                      @ColorRes int iconColorNormal) {
-//        StateListDrawable stateListDrawable = new StateListDrawable();
-//        stateListDrawable.addState(new int[]{android.R.attr.state_checked},
-//                Drawable.createFromXml(res, ));
-//        stateListDrawable.addState(new int[]{},
-//                new BottomNavigationDrawable(getContext(), iconNameNormal, iconColorNormal));
-//        return stateListDrawable;
-//    }
-
-    public void initTabIconFont() {
-        Menu menu = getMenu();
-//        menu.getItem(MainPagerAdapter.TAB_MAIN_INDEX).setIcon(createStateListDrawable());
-//        menu.getItem(MainPagerAdapter.TAB_TOOL_INDEX).setIcon(createStateListDrawable());
-//        menu.getItem(MainPagerAdapter.TAB_PERSONAL_INDEX).setIcon(createStateListDrawable());
     }
 
     public void setSelected(int position) {

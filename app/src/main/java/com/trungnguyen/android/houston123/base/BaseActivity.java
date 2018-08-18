@@ -42,6 +42,9 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     protected void onDestroy() {
         super.onDestroy();
         Objects.requireNonNull(Messenger.getDefault()).unregister(this);
+        if (viewModel == null) {
+            return;
+        }
         viewModel.removeRxBus();
         viewModel.onDestroy();
         viewModel = null;
