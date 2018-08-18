@@ -16,6 +16,8 @@ public final class AndroidUtils {
 
     private static volatile Handler mApplicationHandler;
     private static final String STR_EMPTY = "";
+    private static final int INT_EMPTY = 0;
+    public static float density = 1;
 
     static {
         mApplicationHandler = new Handler(HoustonApplication.getInstance().getMainLooper());
@@ -39,7 +41,6 @@ public final class AndroidUtils {
         mApplicationHandler.removeCallbacks(runnable);
     }
 
-    //
     @NonNull
     public static List<Long> convertArrToList(int[] pArrData) {
         List<Long> excludeAppID = new ArrayList<>();
@@ -60,5 +61,17 @@ public final class AndroidUtils {
             AppLogger.d(e, "getAndroidVersion() exception [%s]", e.getMessage());
         }
         return STR_EMPTY;
+    }
+
+    public static int dp(float value) {
+        try {
+            if (value == 0)
+                return 0;
+
+            return (int) Math.ceil(density * value);
+        } catch (Exception e) {
+            AppLogger.d(e, "dp exception [%s]", e.getMessage());
+        }
+        return INT_EMPTY;
     }
 }

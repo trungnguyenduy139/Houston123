@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_access_time_white_24dp"
+        android:title="Danh Sách" />
+
+    <item
+        android:id="@+id/menu_transaction"
+        android:icon="@drawable/ic_audiotrack_white_24dp"
+        android:title="Công Cụ" />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_favorite_white_24dp"
+        android:title="Cá Nhân" />
+</menu>

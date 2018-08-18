@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,19 +11,40 @@
             type="com.trungnguyen.android.houston123.ui.main.MainViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="@{() -> viewModel.onTextClick()}"
-            android:text="Click me" />
+        <com.trungnguyen.android.houston123.widget.NonSwipeableViewPager
+            android:id="@+id/main_view_pager"
+            android:layout_width="match_parent"
+            android:layout_above="@id/tab_main"
+            android:layout_height="match_parent" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/tab_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <com.trungnguyen.android.houston123.widget.HomeBottomNavigationView
+                android:id="@+id/main_bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingTop="0dp"
+                android:alpha="0.985"
+                app:elevation="0dp"
+                app:itemBackground="@color/colorPrimary"
+                app:itemIconTint="@drawable/nav_item_color_state"
+                app:itemTextColor="@drawable/nav_item_color_state" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
 
 </layout>

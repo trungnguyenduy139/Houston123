@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.trungnguyen.android.houston123.bus.Messenger;
 
+import java.util.Objects;
+
 /**
  * Created by goldze on 2017/6/15.
  */
@@ -54,7 +56,11 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Messenger.getDefault().unregister(this.getContext());
+        Objects.requireNonNull(Messenger.getDefault()).unregister(this.getContext());
+
+        if (viewModel == null) {
+            return;
+        }
         viewModel.removeRxBus();
         viewModel.onDestroy();
         viewModel = null;
@@ -63,7 +69,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
         binding.setVariable(initVariableId(), viewModel = initViewModel());
         return binding.getRoot();
@@ -81,6 +87,10 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         initData();
 
         initViewObservable();
+
+        if (viewModel == null) {
+            return;
+        }
 
         viewModel.onCreate(this);
 
