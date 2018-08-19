@@ -1,5 +1,7 @@
 package com.trungnguyen.android.houston123.util;
 
+import com.trungnguyen.android.houston123.ui.main.home.HomeItem;
+
 import java.util.Arrays;
 import java.util.List;
 

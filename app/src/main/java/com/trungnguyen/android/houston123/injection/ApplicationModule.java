@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 
-import com.trungnguyen.android.houston123.util.Navigator;
+import com.trungnguyen.android.houston123.util.CommonResourceLoader;
 import com.trungnguyen.android.houston123.util.PrefsUtil;
 
 import javax.inject.Singleton;
@@ -14,34 +14,25 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ApplicationModule {
+public abstract class ApplicationModule {
 
     @Provides
     @Singleton
-    protected Context provideApplicationContext(Application application) {
+    static protected Context provideApplicationContext(Application application) {
         return application;
     }
 
     @NonNull
     @Provides
     @Singleton
-    protected PrefsUtil providePrefsUtil() {
+    static protected PrefsUtil providePrefsUtil() {
         return new PrefsUtil();
     }
-//
-//    @Provides
-//    protected AccessState provideAccessState() {
-//        return AccessState.getInstance();
-//    }
-//
-//    @Provides
-//    protected AESUtilWrapper provideAesUtils() {
-//        return new AESUtilWrapper();
-//    }
-//
-//    @Provides
-//    protected StringUtils provideStringUtils() {
-//        return new StringUtils(mApplication);
-//    }
 
+    @Provides
+    @NonNull
+    @Singleton
+    static protected CommonResourceLoader providesCommonResourceLoader() {
+        return new CommonResourceLoader();
+    }
 }

@@ -2,7 +2,6 @@ package com.trungnguyen.android.houston123.ui.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
@@ -16,9 +15,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private MainPagerAdapter mMainPagerAdapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void initData() {
+        super.initData();
         mMainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         binding.mainViewPager.setAdapter(mMainPagerAdapter);
         binding.mainViewPager.setOffscreenPageLimit(mMainPagerAdapter.getCount() - 1);

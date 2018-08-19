@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.trungnguyen.android.houston123.R;
-import com.trungnguyen.android.houston123.base.BaseInfinityAdapter;
+import com.trungnguyen.android.houston123.base.AbsCommonAdapter;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.UserDetailItemBinding;
 
@@ -17,13 +17,11 @@ import java.util.Objects;
 /**
  * Created by trungnd4 on 14/08/2018.
  */
-public class UserDetailAdapter extends BaseInfinityAdapter<UserDetailListener> {
+public class UserDetailAdapter extends AbsCommonAdapter<UserDetailListener, ItemDetailModel> {
 
-    @NonNull
-    private List<ItemDetailModel> mItemDetailModels;
 
-    public UserDetailAdapter(@NonNull List<ItemDetailModel> itemDetailModels) {
-        this.mItemDetailModels = itemDetailModels;
+    public UserDetailAdapter(List<ItemDetailModel> dataList) {
+        super(dataList);
     }
 
     @NonNull
@@ -44,11 +42,6 @@ public class UserDetailAdapter extends BaseInfinityAdapter<UserDetailListener> {
         return R.layout.user_detail_item;
     }
 
-    @Override
-    public int getDataSize() {
-        return mItemDetailModels.size();
-    }
-
     public class UserDetailViewHolder extends BaseViewHolder {
 
         private UserDetailItemViewModel userDetailItemViewModel;
@@ -62,7 +55,7 @@ public class UserDetailAdapter extends BaseInfinityAdapter<UserDetailListener> {
 
         @Override
         public void onBind(int position) {
-            final ItemDetailModel itemDetailModel = mItemDetailModels.get(position);
+            final ItemDetailModel itemDetailModel = mDataList.get(position);
 
             userDetailItemViewModel = new UserDetailItemViewModel(itemDetailModel);
 

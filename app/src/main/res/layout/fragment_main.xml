@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
 
-        <import type="com.trungnguyen.android.houston123.ui.main.home.HomeViewModel" />
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -18,10 +16,10 @@
         android:orientation="vertical">
 
 
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:text="Main page"
-            android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/home_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
     </RelativeLayout>

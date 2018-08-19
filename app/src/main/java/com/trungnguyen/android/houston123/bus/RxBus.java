@@ -71,12 +71,7 @@ public class RxBus {
             final Object event = mStickyEventMap.get(eventType);
 
             if (event != null) {
-                return Observable.merge(observable, Observable.create(new ObservableOnSubscribe<T>() {
-                    @Override
-                    public void subscribe(@NonNull ObservableEmitter<T> emitter) throws Exception {
-                        emitter.onNext(eventType.cast(event));
-                    }
-                }));
+                return Observable.merge(observable, Observable.create(emitter -> emitter.onNext(eventType.cast(event))));
             } else {
                 return observable;
             }
