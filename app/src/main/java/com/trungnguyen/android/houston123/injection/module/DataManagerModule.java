@@ -1,17 +1,12 @@
-package com.trungnguyen.android.houston123.injection;
+package com.trungnguyen.android.houston123.injection.module;
 
-import com.trungnguyen.android.houston123.util.Navigator;
 
-import dagger.Binds;
 import dagger.Module;
 
 @Module
 public abstract class DataManagerModule {
 
 
-//    @Binds
-//    @ViewModelScope
-//    abstract Navigator provideNavigator(Navigator navigator);
 
 //
 //    @Provides

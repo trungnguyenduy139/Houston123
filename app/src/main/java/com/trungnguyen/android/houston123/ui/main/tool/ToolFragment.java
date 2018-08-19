@@ -40,6 +40,6 @@ public class ToolFragment extends BaseFragment<FragmentToolBinding, ToolViewMode
     @NonNull
     @Override
     public ToolViewModel initViewModel() {
-        return new ToolViewModel();
+        return new ToolViewModel(getBaseActivity());
     }
 }

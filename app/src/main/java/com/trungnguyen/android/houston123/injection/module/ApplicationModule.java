@@ -1,4 +1,4 @@
-package com.trungnguyen.android.houston123.injection;
+package com.trungnguyen.android.houston123.injection.module;
 
 import android.app.Application;
 import android.content.Context;

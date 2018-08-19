@@ -1,6 +1,8 @@
 package com.trungnguyen.android.houston123.ui.main.home;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
@@ -32,6 +34,7 @@ public class HomeViewModel extends BaseViewModel {
         getDataManagerComponent().inject(this);
     }
 
+    @NonNull
     public List<HomeItem> loadHomeResource() {
         List<HomeItem> itemList = new ArrayList<>();
         Disposable disposable = mResourceLoader.getHomeResource(mContext)

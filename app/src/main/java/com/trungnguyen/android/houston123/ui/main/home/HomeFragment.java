@@ -43,9 +43,10 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     @Override
     public void initData() {
         super.initData();
-
+        if (viewModel == null) {
+            return;
+        }
         mHomeItems = viewModel.loadHomeResource();
-
         mHomeAdapter = new HomeAdapter(mHomeItems);
         binding.homeRecyclerView.setAdapter(mHomeAdapter);
         binding.homeRecyclerView.setLayoutManager(new GridLayoutManager(getBaseActivity(), 3));

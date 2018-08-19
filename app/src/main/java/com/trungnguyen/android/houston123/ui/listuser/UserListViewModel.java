@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
-import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.AppLogger;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
@@ -24,19 +23,17 @@ import javax.inject.Inject;
  */
 public class UserListViewModel extends BaseViewModel<IUserListView> implements UserListListener {
 
-    private int mTypeOfUserList;
     @Inject
     Navigator mNavigator;
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
 
-    UserListViewModel(Context context, int userListType) {
+    UserListViewModel(Context context) {
         super(context);
         getDataManagerComponent().inject(this);
         mUserListLiveData = new MutableLiveData<>();
 
-        mTypeOfUserList = userListType;
     }
 
     @NonNull
@@ -54,7 +51,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
             Bundle bundle = new BundleBuilder()
                     .putValue(BundleConstants.KEY_USER_DETAIL, baseUserModel)
                     .build();
-            mNavigator.startDetailActivity(context, bundle, mTypeOfUserList);
+            mNavigator.startDetailActivity(context, bundle);
         } catch (@NonNull ClassCastException | NullPointerException e) {
             AppLogger.w("UserListViewModel onItemClick() [%s]", e.getMessage());
         }

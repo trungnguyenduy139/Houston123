@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.trungnguyen.android.houston123.anotation.UserListType;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
@@ -24,35 +23,14 @@ public final class Navigator {
         context.startActivity(intent);
     }
 
-    public void startDetailActivity(@NonNull Context context, @NonNull Bundle bundle, int userType) {
+    public void startDetailActivity(@NonNull Context context, @NonNull Bundle bundle) {
         try {
-            Intent intent = getIntent(context, getDetailClazz(userType));
+            Intent intent = getIntent(context, DetailUserActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
         } catch (IllegalArgumentException e) {
             AppLogger.w("Navigator startDetailActivity() [%s]", e.getMessage());
         }
-    }
-
-    private Class<?> getDetailClazz(int userType) {
-        Class<?> clazz;
-
-        switch (userType) {
-            case UserListType.LECTURER:
-                clazz = DetailUserActivity.class;
-                break;
-            case UserListType.MANAGER:
-                // update for manager type
-                clazz = DetailUserActivity.class;
-                break;
-            case UserListType.STUDENT:
-                // update for student type
-                clazz = DetailUserActivity.class;
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-        return clazz;
     }
 
     public void startMainActivity(@NonNull Context context, @NonNull Bundle bundle) {

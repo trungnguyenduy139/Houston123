@@ -4,6 +4,8 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.HoustonApplication;
+import com.trungnguyen.android.houston123.injection.module.ApiModule;
+import com.trungnguyen.android.houston123.injection.module.ApplicationModule;
 
 import javax.inject.Singleton;
 

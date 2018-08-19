@@ -9,7 +9,6 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
-//import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     @NonNull
     @Override
     public UserListViewModel initViewModel() {
-        return new UserListViewModel(this, 1);
+        return new UserListViewModel(this);
     }
 
     @Override

@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
-import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.AppUtils;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.BundleBuilder;

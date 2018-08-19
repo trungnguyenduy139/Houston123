@@ -3,10 +3,12 @@ package com.trungnguyen.android.houston123.injection;
 
 import android.support.annotation.NonNull;
 
+import com.trungnguyen.android.houston123.injection.module.DataManagerModule;
 import com.trungnguyen.android.houston123.ui.listuser.UserListViewModel;
 import com.trungnguyen.android.houston123.ui.login.LoginViewModel;
 import com.trungnguyen.android.houston123.ui.main.MainViewModel;
 import com.trungnguyen.android.houston123.ui.main.home.HomeViewModel;
+import com.trungnguyen.android.houston123.ui.main.tool.ToolViewModel;
 import com.trungnguyen.android.houston123.ui.userdetail.DetailUserViewModel;
 
 import dagger.Subcomponent;
@@ -25,14 +27,16 @@ public interface DataManagerComponent {
         DataManagerComponent build();
     }
 
-    void inject(MainViewModel mainViewModel);
+    void inject(MainViewModel viewModel);
 
-    void inject(LoginViewModel loginViewModel);
+    void inject(LoginViewModel viewModel);
 
-    void inject(UserListViewModel userListViewModel);
+    void inject(UserListViewModel viewModel);
 
-    void inject(DetailUserViewModel detailUserViewModel);
+    void inject(DetailUserViewModel viewModel);
 
-    void inject(HomeViewModel homeViewModel);
+    void inject(HomeViewModel viewModel);
+
+    void inject(ToolViewModel viewModel);
 
 }
