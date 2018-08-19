@@ -1,17 +1,13 @@
-package com.trungnguyen.android.houston123.injection;
+package com.trungnguyen.android.houston123.injection.module;
 
-import java.util.concurrent.TimeUnit;
 
-import javax.inject.Singleton;
 
 import dagger.Module;
-import dagger.Provides;
-import okhttp3.OkHttpClient;
 
 @Module
 public class ApiModule {
 
-    private static final int API_TIMEOUT = 15;
+//    private static final int API_TIMEOUT = 15;
 
 //    @Provides
 //    @Singleton
