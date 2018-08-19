@@ -1,9 +1,8 @@
 package com.trungnguyen.android.houston123.ui.main.home;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-
 import com.trungnguyen.android.houston123.base.BaseViewModel;
+import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.CommonResourceLoader;
 
@@ -11,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -31,12 +32,15 @@ public class HomeViewModel extends BaseViewModel {
         getDataManagerComponent().inject(this);
     }
 
-    @SuppressLint("CheckResult")
     public List<HomeItem> loadHomeResource() {
         List<HomeItem> itemList = new ArrayList<>();
-        mResourceLoader.getHomeResource()
+        Disposable disposable = mResourceLoader.getHomeResource(mContext)
                 .compose(SchedulerHelper.applySchedulers())
-                .doOnNext(itemList::addAll);
+                .doOnNext(itemList::addAll)
+                .subscribeWith(new DefaultSubscriber<>());
+
+        mSubscription.add(disposable);
+
         return itemList;
     }
 }
