@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by trungnd4 on 18/08/2018.
  */
-public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewModel> {
+public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewModel> implements IHomeView {
 
     private HomeAdapter mHomeAdapter;
 
@@ -46,11 +46,11 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
         if (viewModel == null) {
             return;
         }
-        mHomeItems = viewModel.loadHomeResource();
         mHomeAdapter = new HomeAdapter(mHomeItems);
         binding.homeRecyclerView.setAdapter(mHomeAdapter);
         binding.homeRecyclerView.setLayoutManager(new GridLayoutManager(getBaseActivity(), 3));
-        binding.homeRecyclerView.setHasFixedSize(true);
+
+        viewModel.loadHomeResource();
     }
 
     @Override
@@ -62,5 +62,10 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     @Override
     public HomeViewModel initViewModel() {
         return new HomeViewModel(getBaseActivity());
+    }
+
+    @Override
+    public void onLoadHomeResourcesCompleted(List<HomeItem> homeItems) {
+        mHomeAdapter.addItems(homeItems);
     }
 }

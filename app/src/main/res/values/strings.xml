@@ -4,4 +4,16 @@
     <string name="main_screen">Houston</string>
     <string name="user_list">Danh sách</string>
     <string name="user_detail">Chi tiết</string>
+
+    <string-array name="home_resources_array">
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+        <item>Giáo viên</item>
+    </string-array>
 </resources>

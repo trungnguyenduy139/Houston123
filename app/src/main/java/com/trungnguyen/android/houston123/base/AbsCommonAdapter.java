@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.base;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.List;
@@ -12,7 +13,11 @@ public abstract class AbsCommonAdapter<L extends IAdapterListener, I> extends Ba
 
     protected List<I> mDataList;
 
-    public AbsCommonAdapter(List<I> dataList) {
+    public AbsCommonAdapter() {
+
+    }
+
+    public AbsCommonAdapter(@NonNull List<I> dataList) {
         mDataList = dataList;
     }
 
@@ -23,6 +28,8 @@ public abstract class AbsCommonAdapter<L extends IAdapterListener, I> extends Ba
         if (mDataList == null) {
             return;
         }
+        clearItems();
+
         mDataList.addAll(datas);
         notifyDataSetChanged();
     }
