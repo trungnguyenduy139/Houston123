@@ -20,7 +20,10 @@ public abstract class BaseListViewModel<View, Listener extends IAdapterListener>
         super(fragment);
     }
 
-    public void attachAdapter(BaseInfinityAdapter adapter) {
+    public void attachAdapter(BaseInfinityAdapter<Listener> adapter) {
+        if (adapter == null) {
+            return;
+        }
         adapter.setListener(getListener());
     }
 
