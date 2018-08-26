@@ -37,7 +37,7 @@ public class HomeAdapter extends AbsCommonAdapter<HomeAdapterListener, HomeItem>
         return new HomeAdapter.HomeViewHolder(Objects.requireNonNull(DataBindingUtil.bind(rootView)));
     }
 
-    public class HomeViewHolder extends BaseViewHolder {
+    public class HomeViewHolder extends BaseViewHolder implements HomeItemViewModel.MainItemClick {
 
         private HomeItemViewModel homeItemViewModel;
 
@@ -52,12 +52,20 @@ public class HomeAdapter extends AbsCommonAdapter<HomeAdapterListener, HomeItem>
         public void onBind(int position) {
             final HomeItem homeItem = mDataList.get(position);
 
-            homeItemViewModel = new HomeItemViewModel(homeItem);
+            homeItemViewModel = new HomeItemViewModel(homeItem, this);
 
             mBinding.setViewModel(homeItemViewModel);
 
             mBinding.executePendingBindings();
 
+        }
+
+        @Override
+        public void onMainItemClick() {
+            if (mListener == null) {
+                return;
+            }
+            mListener.onItemClick(getAdapterPosition());
         }
     }
 }

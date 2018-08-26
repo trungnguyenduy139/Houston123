@@ -7,10 +7,9 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityLoginBinding;
-import com.trungnguyen.android.houston123.ui.userdetail.IDetailUserView;
 
 
-public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements IDetailUserView {
+public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements ILoginView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

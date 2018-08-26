@@ -3,8 +3,8 @@ package com.trungnguyen.android.houston123.ui.userdetail;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import com.trungnguyen.android.houston123.base.BaseListViewModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
-import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.util.AppLogger;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by trungnd4 on 20/07/2018.
  */
-public class DetailUserViewModel extends BaseViewModel<IDetailUserView> implements UserDetailListener {
+public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, UserDetailListener> implements UserDetailListener {
 
     @Nullable
     public BaseUserModel mUserModel;
@@ -34,14 +34,15 @@ public class DetailUserViewModel extends BaseViewModel<IDetailUserView> implemen
         }
     }
 
-    public void attachAdapter(UserDetailAdapter userDetailAdapter) {
-        userDetailAdapter.setListener(this);
-    }
-
     public DetailUserViewModel(Context context) {
 
         super(context);
         getDataManagerComponent().inject(this);
+    }
+
+    @Override
+    public UserDetailListener getListener() {
+        return this;
     }
 
     @Override
