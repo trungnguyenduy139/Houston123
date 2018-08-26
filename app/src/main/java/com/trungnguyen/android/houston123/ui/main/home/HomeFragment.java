@@ -23,8 +23,10 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
 
     private HomeAdapter mHomeAdapter;
 
+    @NonNull
     private List<HomeItem> mHomeItems = new ArrayList<>();
 
+    @NonNull
     public static HomeFragment newInstance() {
 
         Bundle args = new Bundle();

@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.ui.main;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -22,6 +23,7 @@ public class MainPagerAdapter extends AbsFragmentPagerAdapter {
         super(fm);
     }
 
+    @Nullable
     @Override
     public Fragment getItem(int position) {
 

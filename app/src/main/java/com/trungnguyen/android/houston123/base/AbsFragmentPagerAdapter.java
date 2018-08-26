@@ -16,6 +16,7 @@ import java.lang.ref.WeakReference;
 
 public abstract class AbsFragmentPagerAdapter extends FragmentPagerAdapter {
 
+    @NonNull
     private final SparseArrayCompat<WeakReference<Fragment>> holder;
 
     public AbsFragmentPagerAdapter(FragmentManager fm) {

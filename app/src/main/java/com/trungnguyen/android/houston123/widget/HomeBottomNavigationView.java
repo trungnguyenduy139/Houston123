@@ -19,15 +19,15 @@ import com.trungnguyen.android.houston123.util.AndroidUtils;
  */
 
 public class HomeBottomNavigationView extends BottomNavigationView implements BottomNavigationView.OnNavigationItemSelectedListener {
-    public HomeBottomNavigationView(Context context) {
+    public HomeBottomNavigationView(@NonNull Context context) {
         this(context, null);
     }
 
-    public HomeBottomNavigationView(Context context, AttributeSet attrs) {
+    public HomeBottomNavigationView(@NonNull Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public HomeBottomNavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HomeBottomNavigationView(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

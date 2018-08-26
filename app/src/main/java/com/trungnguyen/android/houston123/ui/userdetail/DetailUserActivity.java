@@ -18,6 +18,7 @@ import java.util.List;
 public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBinding, DetailUserViewModel>
         implements IDetailUserView {
 
+    @NonNull
     private List<ItemDetailModel> mItemDetailList = new ArrayList<>();
     private UserDetailAdapter mUserDetailAdapter;
 

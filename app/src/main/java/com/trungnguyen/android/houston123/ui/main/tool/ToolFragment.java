@@ -16,6 +16,7 @@ import com.trungnguyen.android.houston123.databinding.FragmentToolBinding;
  */
 public class ToolFragment extends BaseFragment<FragmentToolBinding, ToolViewModel> {
 
+    @NonNull
     public static ToolFragment newInstance() {
 
         Bundle args = new Bundle();

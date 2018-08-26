@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.ui.main.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
 import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
@@ -35,6 +36,7 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
         getDataManagerComponent().inject(this);
     }
 
+    @NonNull
     @Override
     public HomeAdapterListener getListener() {
         return this;

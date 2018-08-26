@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class HomeAdapter extends AbsCommonAdapter<HomeAdapterListener, HomeItem> {
 
-    public HomeAdapter(List<HomeItem> dataList) {
+    public HomeAdapter(@NonNull List<HomeItem> dataList) {
         super(dataList);
     }
 

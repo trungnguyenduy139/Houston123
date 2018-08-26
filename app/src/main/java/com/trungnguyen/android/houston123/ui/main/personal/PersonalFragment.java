@@ -16,6 +16,7 @@ import com.trungnguyen.android.houston123.databinding.FragmentPersonalBinding;
  */
 public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, PersonalViewModel> {
 
+    @NonNull
     public static PersonalFragment newInstance() {
 
         Bundle args = new Bundle();

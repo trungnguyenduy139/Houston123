@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.userdetail;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
@@ -25,7 +26,8 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         mUserModel = userModel;
     }
 
-    public List<ItemDetailModel> initDetailList(BaseUserModel baseUserModel) {
+    @NonNull
+    public List<ItemDetailModel> initDetailList(@NonNull BaseUserModel baseUserModel) {
         try {
             return new ArrayList<>(baseUserModel.convert());
         } catch (Exception e) {
@@ -40,6 +42,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         getDataManagerComponent().inject(this);
     }
 
+    @NonNull
     @Override
     public UserDetailListener getListener() {
         return this;

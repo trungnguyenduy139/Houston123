@@ -20,7 +20,7 @@ import java.util.Objects;
 public class UserDetailAdapter extends AbsCommonAdapter<UserDetailListener, ItemDetailModel> {
 
 
-    public UserDetailAdapter(List<ItemDetailModel> dataList) {
+    public UserDetailAdapter(@NonNull List<ItemDetailModel> dataList) {
         super(dataList);
     }
 
