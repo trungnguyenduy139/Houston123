@@ -4,6 +4,7 @@
     <string name="main_screen">Houston</string>
     <string name="user_list">Danh sách</string>
     <string name="user_detail">Chi tiết</string>
+    <string name="update_user_detail">Cập nhật thông tin</string>
 
     <string-array name="home_resources_array">
         <item>Giáo viên</item>

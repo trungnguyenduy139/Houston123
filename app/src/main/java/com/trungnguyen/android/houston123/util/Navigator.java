@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
-import com.trungnguyen.android.houston123.ui.userdetail.DetailUserActivity;
+import com.trungnguyen.android.houston123.ui.userdetail.UpdateDetailUserActivity;
 
 import javax.inject.Inject;
 
@@ -25,7 +25,7 @@ public final class Navigator {
 
     public void startDetailActivity(@NonNull Context context, @NonNull Bundle bundle) {
         try {
-            Intent intent = getIntent(context, DetailUserActivity.class);
+            Intent intent = getIntent(context, UpdateDetailUserActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
         } catch (IllegalArgumentException e) {
