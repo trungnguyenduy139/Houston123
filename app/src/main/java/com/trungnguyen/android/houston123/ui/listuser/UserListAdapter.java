@@ -82,7 +82,7 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
         }
 
         @Override
-        public void onUserClick() {
+        public void onItemClick() {
             ToastCustom.makeText(context, "Clicked position " +
                     getAdapterPosition(), ToastCustom.LENGTH_SHORT, ToastType.TYPE_GENERAL);
             if (mListener == null) {

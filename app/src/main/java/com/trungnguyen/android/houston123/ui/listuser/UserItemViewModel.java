@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.ui.listuser;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
+import com.trungnguyen.android.houston123.base.BaseItemViewModelListener;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 
@@ -43,11 +44,10 @@ public class UserItemViewModel extends BaseViewModel {
         if (mListener == null) {
             return;
         }
-        mListener.onUserClick();
+        mListener.onItemClick();
     }
 
-    interface OnUserClickListener {
-        void onUserClick();
+    interface OnUserClickListener extends BaseItemViewModelListener{
 
         boolean onUserLongClick();
     }

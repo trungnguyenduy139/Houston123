@@ -4,6 +4,7 @@ import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
+import com.trungnguyen.android.houston123.base.BaseItemViewModelListener;
 
 /**
  * Created by trungnd4 on 20/08/2018.
@@ -17,9 +18,9 @@ public class HomeItemViewModel {
 
     private final HomeItem mHomeItem;
 
-    private MainItemClick mListener;
+    private BaseItemViewModelListener mListener;
 
-    public HomeItemViewModel(HomeItem homeItem, MainItemClick listener) {
+    public HomeItemViewModel(HomeItem homeItem, BaseItemViewModelListener listener) {
         this.mHomeItem = homeItem;
         mTitle = new ObservableField<>(mHomeItem.getTitle());
         mImgRes = new ObservableField<>(mHomeItem.getResourceId());
@@ -28,10 +29,6 @@ public class HomeItemViewModel {
 
     @OnClick
     public void onItemClick() {
-        mListener.onMainItemClick();
-    }
-
-    interface MainItemClick {
-        void onMainItemClick();
+        mListener.onItemClick();
     }
 }

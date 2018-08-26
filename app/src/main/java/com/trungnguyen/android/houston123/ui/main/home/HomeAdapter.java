@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.AbsCommonAdapter;
+import com.trungnguyen.android.houston123.base.BaseItemViewModelListener;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.HomeRowItemBinding;
 
@@ -37,7 +38,7 @@ public class HomeAdapter extends AbsCommonAdapter<HomeAdapterListener, HomeItem>
         return new HomeAdapter.HomeViewHolder(Objects.requireNonNull(DataBindingUtil.bind(rootView)));
     }
 
-    public class HomeViewHolder extends BaseViewHolder implements HomeItemViewModel.MainItemClick {
+    public class HomeViewHolder extends BaseViewHolder implements BaseItemViewModelListener {
 
         private HomeItemViewModel homeItemViewModel;
 
@@ -61,7 +62,7 @@ public class HomeAdapter extends AbsCommonAdapter<HomeAdapterListener, HomeItem>
         }
 
         @Override
-        public void onMainItemClick() {
+        public void onItemClick() {
             if (mListener == null) {
                 return;
             }
