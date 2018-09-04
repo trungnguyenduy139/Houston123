@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
-import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.CommonResourceLoader;
 import com.trungnguyen.android.houston123.util.Navigator;
@@ -13,6 +12,7 @@ import com.trungnguyen.android.houston123.util.Navigator;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 
 /**
@@ -45,8 +45,11 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     public void loadHomeResource() {
         Disposable disposable = mResourceLoader.getHomeResource(mContext)
                 .compose(SchedulerHelper.applySchedulers())
-                .doOnNext(homeItems -> mView.onLoadHomeResourcesCompleted(homeItems))
-                .subscribeWith(new DefaultSubscriber<>());
+                .subscribe(homeItems -> {
+                    if (mView != null) {
+                        mView.onLoadHomeResourcesCompleted(homeItems);
+                    }
+                }, Timber::d);
 
         mSubscription.add(disposable);
     }
