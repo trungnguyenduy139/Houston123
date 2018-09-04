@@ -60,4 +60,9 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     public DetailUserViewModel initViewModel() {
         return new DetailUserViewModel(this);
     }
+
+    @Override
+    public BaseUserModel getUserModel() {
+        return null;
+    }
 }

@@ -26,7 +26,7 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
         Bundle bundle = getIntent().getExtras();
         BaseUserModel baseUserModel = null;
         if (bundle != null) {
-            baseUserModel = (BaseUserModel) bundle.getSerializable(BundleConstants.KEY_USER_DETAIL);
+            baseUserModel = (BaseUserModel) bundle.getSerializable(BundleConstants.KEY_UPDATE_USER_DETAIL);
         }
         if (baseUserModel != null) {
             viewModel.setLecturerModel(baseUserModel);

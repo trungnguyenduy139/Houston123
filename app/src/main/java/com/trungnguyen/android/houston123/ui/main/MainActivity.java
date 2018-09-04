@@ -7,10 +7,9 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityMainBinding;
-import com.trungnguyen.android.houston123.ui.userdetail.IDetailUserView;
 
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements IDetailUserView {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements IMainView {
 
     private MainPagerAdapter mMainPagerAdapter;
 
