@@ -1,10 +1,10 @@
 package com.trungnguyen.android.houston123.rx;
 
-import io.reactivex.observers.DefaultObserver;
-
 /**
+ * Created by trungnd4
  */
-public abstract class RxBusSubscriber<T> extends DefaultObserver<T> {
+
+public abstract class RxBusSubscriber<T> extends DefaultSubscriber<T> {
 
     @Override
     public void onNext(T t) {

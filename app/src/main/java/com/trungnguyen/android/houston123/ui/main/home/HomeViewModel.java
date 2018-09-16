@@ -30,7 +30,6 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     Navigator mNavigator;
 
     public HomeViewModel(Context context) {
-
         super(context);
         mContext = context;
         getDataManagerComponent().inject(this);
@@ -58,6 +57,4 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     public void onItemClick(int position) {
         mNavigator.startUserListActivity(mContext, new Bundle());
     }
-
-
 }

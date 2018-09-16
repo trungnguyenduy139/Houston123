@@ -36,7 +36,7 @@ public enum Injector {
         return mApplicationComponent;
     }
 
-    @Nullable
+    @NonNull
     public DataManagerComponent getDataManagerComponent() {
         if (mDataManagerComponent == null) {
             mDataManagerComponent = mApplicationComponent.dataManagerComponentBuilder().build();
