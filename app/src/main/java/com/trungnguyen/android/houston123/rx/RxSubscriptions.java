@@ -1,4 +1,4 @@
-package com.trungnguyen.android.houston123.bus;
+package com.trungnguyen.android.houston123.rx;
 
 
 import android.support.annotation.NonNull;

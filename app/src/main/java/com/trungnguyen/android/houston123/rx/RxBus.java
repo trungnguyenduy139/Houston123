@@ -1,4 +1,4 @@
-package com.trungnguyen.android.houston123.bus;
+package com.trungnguyen.android.houston123.rx;
 
 
 import android.support.annotation.NonNull;
@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
