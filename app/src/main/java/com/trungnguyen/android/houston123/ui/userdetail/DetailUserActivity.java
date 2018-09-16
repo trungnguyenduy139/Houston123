@@ -65,4 +65,14 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     public BaseUserModel getUserModel() {
         return null;
     }
+
+    @Override
+    public void showLoading() {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        hideLoadingDialog();
+    }
 }

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trungnguyen.android.houston123.bus.Messenger;
+import com.trungnguyen.android.houston123.widget.MaterialProgressDialog;
 
 import java.util.Objects;
 
@@ -18,6 +19,8 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     protected V binding;
 
     protected VM viewModel;
+
+    private MaterialProgressDialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         viewModel.onCreate(this);
 
         viewModel.registerRxBus();
+
+        mLoadingDialog = new MaterialProgressDialog(this);
     }
 
     @Override
@@ -61,6 +66,20 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         if (viewModel != null) {
             binding.setVariable(initVariableId(), viewModel);
         }
+    }
+
+    public void showLoadingDialog() {
+        if (mLoadingDialog == null || mLoadingDialog.isShowing()) {
+            return;
+        }
+        mLoadingDialog.show();
+    }
+
+    public void hideLoadingDialog() {
+        if (mLoadingDialog == null || !mLoadingDialog.isShowing()) {
+            return;
+        }
+        mLoadingDialog.dismiss();
     }
 
     @Override
