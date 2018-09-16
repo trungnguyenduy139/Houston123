@@ -19,6 +19,10 @@ public final class AndroidUtils {
     private static final int INT_EMPTY = 0;
     public static float density = 1;
 
+    private AndroidUtils() {
+
+    }
+
     static {
         mApplicationHandler = new Handler(HoustonApplication.getInstance().getMainLooper());
     }

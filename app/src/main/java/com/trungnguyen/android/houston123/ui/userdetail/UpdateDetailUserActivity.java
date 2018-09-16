@@ -36,6 +36,7 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
         mUserDetailAdapter = new UpdateUserAdapter(mItemDetailList);
 
         viewModel.attachAdapter(mUserDetailAdapter);
+        viewModel.setApply(true);
 
         binding.detailUserRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.detailUserRecycler.setAdapter(mUserDetailAdapter);

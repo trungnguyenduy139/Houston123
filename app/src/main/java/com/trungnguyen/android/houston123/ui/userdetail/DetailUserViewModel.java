@@ -29,6 +29,8 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     @Inject
     Navigator mNavigator;
 
+    public boolean mIsApply = false;
+
     public void setLecturerModel(@Nullable BaseUserModel userModel) {
         if (userModel == null) {
             return;
@@ -53,12 +55,20 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
     @OnClick
-    public void onUpdateClick() {
+    public void onUpdateClick(boolean isApplyApi) {
         if (mUserModel == null) {
             return;
         }
-        Bundle bundle = new BundleBuilder().putValue(BundleConstants.KEY_UPDATE_USER_DETAIL, mUserModel).build();
-        mNavigator.startEditDetailActivity(context, bundle);
+        if (!isApplyApi) {
+            Bundle bundle = new BundleBuilder().putValue(BundleConstants.KEY_UPDATE_USER_DETAIL, mUserModel).build();
+            mNavigator.startEditDetailActivity(context, bundle);
+        } else {
+            // make repository call
+        }
+    }
+
+    public void setApply(boolean apply) {
+        mIsApply = apply;
     }
 
     @NonNull
@@ -71,5 +81,8 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     public void onDestroy() {
         mUserModel = null;
         super.onDestroy();
+    }
+
+    public void applyUpdateInfoUser() {
     }
 }

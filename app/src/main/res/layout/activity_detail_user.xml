@@ -13,26 +13,26 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:weightSum="10"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/detail_user_recycler"
             android:layout_width="match_parent"
-            android:layout_weight="9"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="9" />
 
 
         <Button
-            android:onClick="@{() -> viewModel.onUpdateClick()}"
             android:id="@+id/btnUpdateDetail"
-            android:layout_gravity="center_horizontal"
-            android:text="Cập nhật thông tin"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:onClick="@{() -> viewModel.onUpdateClick(viewModel.mIsApply)}"
+            android:text="Cập nhật thông tin" />
 
     </LinearLayout>
 </layout>

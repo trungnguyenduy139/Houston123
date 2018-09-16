@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.ToastType;
 
-public class ToastCustom {
+public final class ToastCustom {
 
 
     public static final int LENGTH_SHORT = 0;
