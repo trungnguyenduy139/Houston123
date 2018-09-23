@@ -23,6 +23,7 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding.btnUpdateDetail.setText(getString(R.string.apply_update));
         Bundle bundle = getIntent().getExtras();
         BaseUserModel baseUserModel = null;
         if (bundle != null) {

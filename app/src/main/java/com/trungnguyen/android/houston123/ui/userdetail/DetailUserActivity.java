@@ -25,6 +25,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding.btnUpdateDetail.setText(getString(R.string.edit_user_info));
         Bundle bundle = getIntent().getExtras();
         BaseUserModel baseUserModel = null;
         if (bundle != null) {

@@ -6,6 +6,7 @@
     <string name="user_detail">Chi tiết</string>
     <string name="update_user_detail">Cập nhật thông tin</string>
     <string name="apply_update">Xác nhận cập nhật</string>
+    <string name="edit_user_info">Chỉnh sửa thông tin</string>
 
     <string-array name="home_resources_array">
         <item>Giáo viên</item>
