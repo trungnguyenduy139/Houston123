@@ -62,9 +62,9 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
         String userName = mLoginModel.getUserName();
         String password = mLoginModel.getPassword();
 
-        Disposable disposable = mAuthRequestService.loginService(userName, password)
+        Disposable subscription = mAuthRequestService.loginService(userName, password)
                 .compose(SchedulerHelper.applySchedulers())
-                .doOnSubscribe(disposable1 -> {
+                .doOnSubscribe(disposable -> {
                     if (mView != null) {
                         mView.showLoading();
                     }
@@ -84,7 +84,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
                     }
                 });
 
-        mSubscription.add(disposable);
+        mSubscription.add(subscription);
     }
 
 
