@@ -2,55 +2,52 @@ package com.trungnguyen.android.houston123.ui.login;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
+import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.AppUtils;
-import com.trungnguyen.android.houston123.util.BundleConstants;
-import com.trungnguyen.android.houston123.util.BundleBuilder;
-import com.trungnguyen.android.houston123.util.Navigator;
-import com.trungnguyen.android.houston123.util.ServerCode;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class LoginViewModel extends BaseViewModel<ILoginView> {
 
     private Context mContext;
     public LoginModel mLoginModel;
-    @Inject
-    Navigator mNavigator;
 
     private boolean mLoginState = false;
 
-    @Inject
-    AuthenticateStore.RequestService mAuthRequestService;
+    private AuthenticateStore.RequestService mAuthRequestService;
 
-    @Inject
-    AuthenticateStore.LocalStorage mAuthRepository;
+    private AuthenticateStore.LocalStorage mAuthLocalStorage;
 
     @NonNull
     private MutableLiveData isLoggedIn = new MutableLiveData<Boolean>();
 
-    public LoginViewModel(Context context) {
+    @Inject
+    public LoginViewModel(Context context,
+                          AuthenticateStore.LocalStorage localStorage,
+                          AuthenticateStore.RequestService requestService) {
 
         super(context);
         isLoggedIn.setValue(mLoginState);
-        mContext = context;
+        this.mContext = context;
+        this.mAuthLocalStorage = localStorage;
+        this.mAuthRequestService = requestService;
         mLoginModel = new LoginModel();
-        getDataManagerComponent().inject(this);
     }
 
     @NonNull
     public MutableLiveData<Boolean> getIsLoggedIn() {
-        Disposable disposable = mAuthRepository.getLoginStatus()
+        Disposable disposable = mAuthLocalStorage.getLoginStatus()
                 .compose(SchedulerHelper.applySchedulers())
                 .subscribe(isLoggedIn::setValue, Timber::d);
         mSubscription.add(disposable);
@@ -59,36 +56,33 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
 
     @OnClick
     public void onLoginButtonClick() {
-
-        if (!AppUtils.isNetworkAvailable(mContext)) {
+        if (!AppUtils.isNetworkAvailable(mContext) && mView != null) {
             mView.showNetworkDialog();
         }
-
         String userName = mLoginModel.getUserName();
         String password = mLoginModel.getPassword();
 
         Disposable disposable = mAuthRequestService.loginService(userName, password)
                 .compose(SchedulerHelper.applySchedulers())
-                .flatMap(authenticateResponse -> {
-                    boolean isSuccess = authenticateResponse.status.authResponseCode == ServerCode.SUCCESSFUL;
-                    return mAuthRepository.setLoginState(isSuccess);
-                })
-                .subscribe(aBoolean -> {
-                    mLoginState = aBoolean;
-                    if (aBoolean) {
-                        isLoggedIn.setValue(true);
-                        Bundle bundle = new BundleBuilder()
-                                .putValue(BundleConstants.USER_NAME, mLoginModel.getPassword())
-                                .putValue(BundleConstants.PASSWORD, mLoginModel.getPassword())
-                                .build();
-
-                        mNavigator.startMainActivity(mContext, bundle);
-
-                    }
+                .doOnSubscribe(disposable1 -> {
                     if (mView != null) {
-                        mView.onAuthFinish(mLoginState);
+                        mView.showLoading();
                     }
-                }, Timber::d);
+                })
+                .doOnTerminate(() -> {
+                    if (mView != null) {
+                        mView.hideLoading();
+                    }
+                })
+                .subscribe(authenticateResponse -> {
+                    if (mView != null) {
+                        mView.onAuthSuccess(userName);
+                    }
+                }, throwable -> {
+                    if (mView != null) {
+                        mView.onAuthFailed();
+                    }
+                });
 
         mSubscription.add(disposable);
     }
@@ -99,7 +93,10 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
         Toast.makeText(mContext, "onRegisterClick", Toast.LENGTH_SHORT).show();
     }
 
-    public void startMainActivity() {
-        mNavigator.startMainActivity(mContext, new Bundle());
+    public void putLoginStateToLocal(boolean loginState) {
+        Disposable disposable = mAuthLocalStorage.setLoginState(loginState)
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(new DefaultSubscriber<>());
+        mSubscription.add(disposable);
     }
 }

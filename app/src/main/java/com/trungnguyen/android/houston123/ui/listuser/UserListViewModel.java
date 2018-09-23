@@ -23,17 +23,16 @@ import javax.inject.Inject;
  */
 public class UserListViewModel extends BaseViewModel<IUserListView> implements UserListListener {
 
-    @Inject
-    Navigator mNavigator;
+    private Navigator mNavigator;
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
 
-    UserListViewModel(Context context) {
+    @Inject
+    UserListViewModel(Context context, Navigator navigator) {
         super(context);
-        getDataManagerComponent().inject(this);
         mUserListLiveData = new MutableLiveData<>();
-
+        this.mNavigator = navigator;
     }
 
     @NonNull

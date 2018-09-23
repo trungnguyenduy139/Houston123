@@ -56,12 +56,6 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         return BR.viewModel;
     }
 
-    @NonNull
-    @Override
-    public DetailUserViewModel initViewModel() {
-        return new DetailUserViewModel(this);
-    }
-
     @Override
     public BaseUserModel getUserModel() {
         return null;
@@ -75,5 +69,10 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     @Override
     public void hideLoading() {
         hideLoadingDialog();
+    }
+
+    @Override
+    public void initParam() {
+        getDataManagerComponent().inject(this);
     }
 }

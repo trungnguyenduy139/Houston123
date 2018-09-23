@@ -38,9 +38,8 @@ public class ToolFragment extends BaseFragment<FragmentToolBinding, ToolViewMode
         return BR.viewModel;
     }
 
-    @NonNull
     @Override
-    public ToolViewModel initViewModel() {
-        return new ToolViewModel(getBaseActivity());
+    public void initParam() {
+        getDataManagerComponent().inject(this);
     }
 }

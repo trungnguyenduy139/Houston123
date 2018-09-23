@@ -1,7 +1,6 @@
 package com.trungnguyen.android.houston123.ui.main;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
@@ -12,6 +11,11 @@ import com.trungnguyen.android.houston123.databinding.ActivityMainBinding;
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements IMainView {
 
     private MainPagerAdapter mMainPagerAdapter;
+
+    @Override
+    public void initParam() {
+        getDataManagerComponent().inject(this);
+    }
 
     @Override
     public void initData() {
@@ -30,11 +34,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public int initVariableId() {
         return BR.viewModel;
-    }
-
-    @NonNull
-    @Override
-    public MainViewModel initViewModel() {
-        return new MainViewModel(this);
     }
 }

@@ -26,7 +26,6 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     @Nullable
     public BaseUserModel mUserModel;
 
-    @Inject
     Navigator mNavigator;
 
     public boolean mIsApply = false;
@@ -48,10 +47,10 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         }
     }
 
-    public DetailUserViewModel(Context context) {
-
+    @Inject
+    public DetailUserViewModel(Context context, Navigator navigator) {
         super(context);
-        getDataManagerComponent().inject(this);
+        this.mNavigator = navigator;
     }
 
     @OnClick
@@ -81,8 +80,5 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     public void onDestroy() {
         mUserModel = null;
         super.onDestroy();
-    }
-
-    public void applyUpdateInfoUser() {
     }
 }

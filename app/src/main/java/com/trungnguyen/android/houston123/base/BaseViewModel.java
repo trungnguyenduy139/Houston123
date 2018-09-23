@@ -57,11 +57,6 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
         }
     }
 
-    @NonNull
-    protected DataManagerComponent getDataManagerComponent() {
-        return Injector.getInstance().getDataManagerComponent();
-    }
-
 
     public void startActivity(Class<?> clz) {
         context.startActivity(new Intent(context, clz));

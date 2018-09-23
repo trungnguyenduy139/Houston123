@@ -23,16 +23,18 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
     private Context mContext;
 
-    @Inject
-    CommonResourceLoader mResourceLoader;
+    private CommonResourceLoader mResourceLoader;
+
+    private Navigator mNavigator;
 
     @Inject
-    Navigator mNavigator;
-
-    public HomeViewModel(Context context) {
+    public HomeViewModel(Context context,
+                         CommonResourceLoader resourceLoader,
+                         Navigator navigator) {
         super(context);
         mContext = context;
-        getDataManagerComponent().inject(this);
+        mNavigator = navigator;
+        mResourceLoader = resourceLoader;
     }
 
     @NonNull

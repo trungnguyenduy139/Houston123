@@ -14,14 +14,13 @@ public class MainViewModel extends BaseViewModel<IMainView> {
 
     private Context mContext;
 
+    private Navigator mNavigator;
+
     @Inject
-    Navigator mNavigator;
-
-    public MainViewModel(Context context) {
-
+    public MainViewModel(Context context, Navigator navigator) {
         super(context);
         mContext = context;
-        getDataManagerComponent().inject(this);
+        mNavigator = navigator;
     }
 
     @OnClick

@@ -38,9 +38,8 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Pers
         return BR.viewModel;
     }
 
-    @NonNull
     @Override
-    public PersonalViewModel initViewModel() {
-        return new PersonalViewModel();
+    public void initParam() {
+        getDataManagerComponent().inject(this);
     }
 }

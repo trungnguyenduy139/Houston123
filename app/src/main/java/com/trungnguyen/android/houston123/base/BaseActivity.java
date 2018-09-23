@@ -8,9 +8,13 @@ import android.support.annotation.NonNull;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trungnguyen.android.houston123.bus.Messenger;
+import com.trungnguyen.android.houston123.injection.DataManagerComponent;
+import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.widget.MaterialProgressDialog;
 
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 
 public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel>
@@ -18,9 +22,10 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 
     protected V binding;
 
+    @Inject
     protected VM viewModel;
 
-    private MaterialProgressDialog mLoadingDialog;
+    protected MaterialProgressDialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +61,14 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         binding.unbind();
     }
 
+    @NonNull
+    protected DataManagerComponent getDataManagerComponent() {
+        return Injector.getInstance().getDataManagerComponent();
+    }
 
-    private void initViewDataBinding(Bundle savedInstanceState) {
+    protected void initViewDataBinding(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState));
-        binding.setVariable(initVariableId(), viewModel = initViewModel());
+        binding.setVariable(initVariableId(), viewModel);
     }
 
     public void refreshLayout() {
@@ -82,17 +91,10 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         mLoadingDialog.dismiss();
     }
 
-    @Override
-    public void initParam() {
-
-    }
 
     public abstract int initContentView(Bundle savedInstanceState);
 
     public abstract int initVariableId();
-
-    @NonNull
-    public abstract VM initViewModel();
 
     @Override
     public void initData() {

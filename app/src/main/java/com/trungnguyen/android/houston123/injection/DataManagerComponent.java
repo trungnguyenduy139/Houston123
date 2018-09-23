@@ -5,12 +5,13 @@ import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.injection.module.DataManagerModule;
 import com.trungnguyen.android.houston123.injection.module.LoginModule;
-import com.trungnguyen.android.houston123.ui.listuser.UserListViewModel;
-import com.trungnguyen.android.houston123.ui.login.LoginViewModel;
-import com.trungnguyen.android.houston123.ui.main.MainViewModel;
-import com.trungnguyen.android.houston123.ui.main.home.HomeViewModel;
-import com.trungnguyen.android.houston123.ui.main.tool.ToolViewModel;
-import com.trungnguyen.android.houston123.ui.userdetail.DetailUserViewModel;
+import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
+import com.trungnguyen.android.houston123.ui.login.LoginActivity;
+import com.trungnguyen.android.houston123.ui.main.MainActivity;
+import com.trungnguyen.android.houston123.ui.main.home.HomeFragment;
+import com.trungnguyen.android.houston123.ui.main.personal.PersonalFragment;
+import com.trungnguyen.android.houston123.ui.main.tool.ToolFragment;
+import com.trungnguyen.android.houston123.ui.userdetail.DetailUserActivity;
 
 import dagger.Subcomponent;
 
@@ -31,16 +32,18 @@ public interface DataManagerComponent {
         DataManagerComponent build();
     }
 
-    void inject(MainViewModel viewModel);
+    void inject(UserListActivity activity);
 
-    void inject(LoginViewModel viewModel);
+    void inject(MainActivity activity);
 
-    void inject(UserListViewModel viewModel);
+    void inject(LoginActivity activity);
 
-    void inject(DetailUserViewModel viewModel);
+    void inject(DetailUserActivity activity);
 
-    void inject(HomeViewModel viewModel);
+    void inject(HomeFragment fragment);
 
-    void inject(ToolViewModel viewModel);
+    void inject(ToolFragment fragment);
+
+    void inject(PersonalFragment fragment);
 
 }

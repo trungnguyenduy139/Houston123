@@ -21,6 +21,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
 
     private UserListAdapter<BaseUserModel> mListAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         List<BaseUserModel> userList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             BaseUserModel userModel = new ManagerModel();
-            userModel.setName("Samantha "+i);
+            userModel.setName("Samantha " + i);
             userModel.setPosition("Senior QC Engineer");
             userList.add(userModel);
         }
@@ -67,14 +68,13 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         return BR.viewModel;
     }
 
-    @NonNull
-    @Override
-    public UserListViewModel initViewModel() {
-        return new UserListViewModel(this);
-    }
-
     @Override
     public void makeSomeUpdateToUI() {
         // handle some Change on UI from ViewModel
+    }
+
+    @Override
+    public void initParam() {
+        getDataManagerComponent().inject(this);
     }
 }

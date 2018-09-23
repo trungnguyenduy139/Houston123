@@ -12,8 +12,12 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.trungnguyen.android.houston123.bus.Messenger;
+import com.trungnguyen.android.houston123.injection.DataManagerComponent;
+import com.trungnguyen.android.houston123.injection.Injector;
 
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 /**
  * Created by goldze on 2017/6/15.
@@ -21,8 +25,10 @@ import java.util.Objects;
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
 
     protected V binding;
-    @Nullable
+
+    @Inject
     protected VM viewModel;
+
     @Nullable
     private BaseActivity mActivity;
 
@@ -71,7 +77,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
-        binding.setVariable(initVariableId(), viewModel = initViewModel());
+        binding.setVariable(initVariableId(), viewModel);
         return binding.getRoot();
     }
 
@@ -97,9 +103,8 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         viewModel.registerRxBus();
     }
 
-    @Override
-    public void initParam() {
-
+    protected DataManagerComponent getDataManagerComponent() {
+        return Injector.getInstance().getDataManagerComponent();
     }
 
     public void refreshLayout() {
@@ -113,10 +118,6 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
 
     public abstract int initVariableId();
-
-
-    @NonNull
-    public abstract VM initViewModel();
 
     @Override
     public void initData() {

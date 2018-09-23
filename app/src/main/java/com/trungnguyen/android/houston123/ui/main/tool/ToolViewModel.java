@@ -15,12 +15,12 @@ import javax.inject.Inject;
 public class ToolViewModel extends BaseViewModel {
 
     private Context mContext;
-    @Inject
-    Navigator mNavigator;
+    private Navigator mNavigator;
 
-    public ToolViewModel(Context context) {
+    @Inject
+    public ToolViewModel(Context context, Navigator navigator) {
         mContext = context;
-        getDataManagerComponent().inject(this);
+        this.mNavigator = navigator;
     }
 
     @OnClick

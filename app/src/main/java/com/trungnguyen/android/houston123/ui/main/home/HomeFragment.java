@@ -53,6 +53,11 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     }
 
     @Override
+    public void initParam() {
+        getDataManagerComponent().inject(this);
+    }
+
+    @Override
     public void initData() {
         super.initData();
         if (viewModel == null) {
@@ -68,12 +73,6 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     @Override
     public int initVariableId() {
         return BR.viewModel;
-    }
-
-    @NonNull
-    @Override
-    public HomeViewModel initViewModel() {
-        return new HomeViewModel(getBaseActivity());
     }
 
     @Override

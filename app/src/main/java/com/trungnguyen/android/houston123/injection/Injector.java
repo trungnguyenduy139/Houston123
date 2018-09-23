@@ -19,12 +19,6 @@ public enum Injector {
     }
 
     public void init(Application applicationContext) {
-
-        initAppComponent(applicationContext);
-    }
-
-    protected void initAppComponent(Application applicationContext) {
-
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .application(applicationContext)
                 .build();
