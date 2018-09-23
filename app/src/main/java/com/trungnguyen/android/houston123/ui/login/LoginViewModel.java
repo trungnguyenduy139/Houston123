@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
+import com.trungnguyen.android.houston123.repository.interceptor.Authenticate;
 import com.trungnguyen.android.houston123.util.AppUtils;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
@@ -24,6 +25,9 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
     public LoginModel mLoginModel;
     @Inject
     Navigator mNavigator;
+
+    @Inject
+    Authenticate.RequestService mAuthRequestService;
 
     @NonNull
     private MutableLiveData isLoggedIn = new MutableLiveData<Boolean>();

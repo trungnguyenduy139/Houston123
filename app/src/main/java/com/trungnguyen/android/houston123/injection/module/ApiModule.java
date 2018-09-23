@@ -1,36 +1,21 @@
 package com.trungnguyen.android.houston123.injection.module;
 
+import com.trungnguyen.android.houston123.repository.interceptor.Authenticate;
+import com.trungnguyen.android.houston123.util.NamedRetrofitConstants;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
+import dagger.Provides;
+import retrofit2.Retrofit;
 
 @Module
-public class ApiModule {
+public abstract class ApiModule {
 
-//    private static final int API_TIMEOUT = 15;
-
-//    @Provides
-//    @Singleton
-//    protected TransactionListStore provideTransactionListStore() {
-//        return new TransactionListStore();
-//    }
-
-//    @Provides
-//    @Singleton
-//    protected OkHttpClient provideOkHttpClient() {
-//        return new OkHttpClient.Builder()
-//                .connectTimeout(API_TIMEOUT, TimeUnit.SECONDS)
-//                .readTimeout(API_TIMEOUT, TimeUnit.SECONDS)
-//                .writeTimeout(API_TIMEOUT, TimeUnit.SECONDS)
-//                .retryOnConnectionFailure(false)
-//                .addInterceptor(new ApiInterceptor())
-//                .build();
-//    }
-
-//    @Provides
-//    @Singleton
-//    protected JacksonConverterFactory provideJacksonConverterFactory() {
-//        return JacksonConverterFactory.create();
-//    }
-
+    @Provides
+    @Singleton
+    static protected Authenticate.RequestService provideAuthRetrofitApi(@Named(NamedRetrofitConstants.AUTH_RETROFIT_API) Retrofit retrofit) {
+        return retrofit.create(Authenticate.RequestService.class);
+    }
 }

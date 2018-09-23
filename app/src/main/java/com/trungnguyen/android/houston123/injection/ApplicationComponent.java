@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.trungnguyen.android.houston123.HoustonApplication;
 import com.trungnguyen.android.houston123.injection.module.ApiModule;
 import com.trungnguyen.android.houston123.injection.module.ApplicationModule;
+import com.trungnguyen.android.houston123.injection.module.NetworkModule;
 
 import javax.inject.Singleton;
 
@@ -15,6 +16,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
+        NetworkModule.class,
         ApiModule.class
 })
 public interface ApplicationComponent {
