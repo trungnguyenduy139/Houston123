@@ -78,15 +78,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void showLoading() {
-        if (mLoadingDialog != null) {
-            mLoadingDialog.show();
-        }
+        showLoadingDialog();
     }
 
     @Override
     public void hideLoading() {
-        if (mLoadingDialog != null) {
-            mLoadingDialog.dismiss();
-        }
+       hideLoadingDialog();
     }
 }

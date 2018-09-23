@@ -12,6 +12,7 @@
     <!--Login screen-->
     <string name="login_success">Đăng nhập thành công</string>
     <string name="login_failed">Đăng nhập thất bại, vui lòng thử lại</string>
+    <string name="wating_dialog_loading">Xin vui lòng chờ</string>
 
     <string-array name="home_resources_array">
         <item>Giáo viên</item>

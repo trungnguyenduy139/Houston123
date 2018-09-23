@@ -10,7 +10,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trungnguyen.android.houston123.bus.Messenger;
 import com.trungnguyen.android.houston123.injection.DataManagerComponent;
 import com.trungnguyen.android.houston123.injection.Injector;
-import com.trungnguyen.android.houston123.widget.MaterialProgressDialog;
+import com.trungnguyen.android.houston123.widget.LoadingDialog;
 
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     @Inject
     protected VM viewModel;
 
-    protected MaterialProgressDialog mLoadingDialog;
+    private LoadingDialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,9 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 
         viewModel.registerRxBus();
 
-        mLoadingDialog = new MaterialProgressDialog(this);
+        LoadingDialog.Builder dialogBuilder = new LoadingDialog.Builder(this);
+
+        mLoadingDialog = dialogBuilder.create();
     }
 
     @Override
