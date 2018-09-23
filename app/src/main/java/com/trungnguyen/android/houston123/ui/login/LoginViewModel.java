@@ -7,17 +7,19 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
-import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
-import com.trungnguyen.android.houston123.repository.interceptor.Authenticate;
+import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
+import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.AppUtils;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
-import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Navigator;
-import com.trungnguyen.android.houston123.widget.ToastCustom;
+import com.trungnguyen.android.houston123.util.ServerCode;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 public class LoginViewModel extends BaseViewModel<ILoginView> {
 
@@ -26,8 +28,13 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
     @Inject
     Navigator mNavigator;
 
+    private boolean mLoginState = false;
+
     @Inject
-    Authenticate.RequestService mAuthRequestService;
+    AuthenticateStore.RequestService mAuthRequestService;
+
+    @Inject
+    AuthenticateStore.LocalStorage mAuthRepository;
 
     @NonNull
     private MutableLiveData isLoggedIn = new MutableLiveData<Boolean>();
@@ -35,7 +42,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
     public LoginViewModel(Context context) {
 
         super(context);
-        isLoggedIn.setValue(true);
+        isLoggedIn.setValue(mLoginState);
         mContext = context;
         mLoginModel = new LoginModel();
         getDataManagerComponent().inject(this);
@@ -43,26 +50,47 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
 
     @NonNull
     public MutableLiveData<Boolean> getIsLoggedIn() {
+        Disposable disposable = mAuthRepository.getLoginStatus()
+                .compose(SchedulerHelper.applySchedulers())
+                .subscribe(isLoggedIn::setValue, Timber::d);
+        mSubscription.add(disposable);
         return isLoggedIn;
     }
 
     @OnClick
     public void onLoginButtonClick() {
-        String userName = mLoginModel.getUserName();
-        String password = mLoginModel.getPassword();
-        if (!AppUtils.isAuthValid(userName, password)) {
-            ToastCustom.makeText(mContext, Constants.SOMETHING_WRONG, ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR);
-            return;
+
+        if (!AppUtils.isNetworkAvailable(mContext)) {
+            mView.showNetworkDialog();
         }
 
-//        Toast.makeText(mContext, mLoginModel.getUserName() + "\n" + mLoginModel.getPassword(), Toast.LENGTH_SHORT).show();
+        String userName = mLoginModel.getUserName();
+        String password = mLoginModel.getPassword();
 
-        Bundle bundle = new BundleBuilder()
-                .putValue(BundleConstants.USER_NAME, mLoginModel.getPassword())
-                .putValue(BundleConstants.PASSWORD, mLoginModel.getPassword())
-                .build();
+        Disposable disposable = mAuthRequestService.loginService(userName, password)
+                .compose(SchedulerHelper.applySchedulers())
+                .flatMap(authenticateResponse -> {
+                    boolean isSuccess = authenticateResponse.status.authResponseCode == ServerCode.SUCCESSFUL;
+                    return mAuthRepository.setLoginState(isSuccess);
+                })
+                .subscribe(aBoolean -> {
+                    mLoginState = aBoolean;
+                    if (aBoolean) {
+                        isLoggedIn.setValue(true);
+                        Bundle bundle = new BundleBuilder()
+                                .putValue(BundleConstants.USER_NAME, mLoginModel.getPassword())
+                                .putValue(BundleConstants.PASSWORD, mLoginModel.getPassword())
+                                .build();
 
-        mNavigator.startMainActivity(mContext, bundle);
+                        mNavigator.startMainActivity(mContext, bundle);
+
+                    }
+                    if (mView != null) {
+                        mView.onAuthFinish(mLoginState);
+                    }
+                }, Timber::d);
+
+        mSubscription.add(disposable);
     }
 
 

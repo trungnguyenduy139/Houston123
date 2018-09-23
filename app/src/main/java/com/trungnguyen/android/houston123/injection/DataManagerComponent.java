@@ -4,6 +4,7 @@ package com.trungnguyen.android.houston123.injection;
 import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.injection.module.DataManagerModule;
+import com.trungnguyen.android.houston123.injection.module.LoginModule;
 import com.trungnguyen.android.houston123.ui.listuser.UserListViewModel;
 import com.trungnguyen.android.houston123.ui.login.LoginViewModel;
 import com.trungnguyen.android.houston123.ui.main.MainViewModel;
@@ -18,7 +19,10 @@ import dagger.Subcomponent;
  * they don't need to explicitly state their dependencies as they have access anyway
  */
 @ViewModelScope
-@Subcomponent(modules = DataManagerModule.class)
+@Subcomponent(modules = {
+        DataManagerModule.class,
+        LoginModule.class
+})
 public interface DataManagerComponent {
 
     @Subcomponent.Builder

@@ -7,6 +7,11 @@
     <string name="update_user_detail">Cập nhật thông tin</string>
     <string name="apply_update">Xác nhận cập nhật</string>
     <string name="edit_user_info">Chỉnh sửa thông tin</string>
+    <string name="network_message">Mạng không ổn định, vui lòng thử lại sau</string>
+
+    <!--Login screen-->
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="login_failed">Đăng nhập thất bại, vui lòng thử lại</string>
 
     <string-array name="home_resources_array">
         <item>Giáo viên</item>

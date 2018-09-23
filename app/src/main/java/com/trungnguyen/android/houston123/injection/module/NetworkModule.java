@@ -45,7 +45,7 @@ import timber.log.Timber;
 @Module
 public class NetworkModule {
 
-    public static final String BASE_URL = "https://google.com/";
+    public static final String BASE_URL = "http://192.168.0.107:8080/";
 
     private static final HttpUrl API_HTTP_URL = HttpUrl.parse(BASE_URL);
 

@@ -3,81 +3,86 @@ package com.trungnguyen.android.houston123.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import java.util.Collection;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public final class PrefsUtil implements PersistentPrefs {
 
-    private static SharedPreferences getSharedPreferenceUtil(Context context) {
+    private SharedPreferences getSharedPreferenceUtil(Context context) {
         return context.getSharedPreferences(Constants.APP_NAME, Activity.MODE_PRIVATE);
     }
 
-    public static void saveListPreferences(String key, @NonNull Context context, Collection<Object> collection) {
-        StringBuilder builder = new StringBuilder();
-        for (Object object : collection) {
-            builder.append(object);
-            builder.append(DIVIDER_CHAR);
-        }
-        SharedPreferences.Editor editor = getSharedPreferenceUtil(context).edit();
-        editor.putString(key, builder.toString());
-        editor.apply();
+    private SharedPreferences mPreferences;
+
+    public PrefsUtil(Context context) {
+        mPreferences = getSharedPreferenceUtil(context);
     }
 
-    public static String[] getListPreferences(@NonNull Context context, String key) {
-        SharedPreferences preferences = getSharedPreferenceUtil(context);
-        String setData = preferences.getString(key, EMPTY_STR);
-        if (!TextUtils.isEmpty(setData))
-            return setData.split(DIVIDER_CHAR);
-        else {
-            return new String[]{};
+    public List<Object> getListPreferences(String key) {
+        String sCache = mPreferences.getString(key, StringUtils.EMPTY);
+        if (TextUtils.isEmpty(sCache)) {
+            return new ArrayList<>();
         }
+        Type type = new TypeToken<List<Object>>() {
+        }.getType();
+        return GsonUtils.fromJsonString(sCache, type);
     }
 
-    public static void saveStringPreferences(@NonNull Context context, String key, String value) {
-        SharedPreferences.Editor editor = getSharedPreferenceUtil(context).edit();
+    public void putListPreferences(String key, final List<Object> notify) {
+        String jsonPromotion = GsonUtils.toJsonString(notify);
+        mPreferences.edit()
+                .putString(key, jsonPromotion)
+                .apply();
+    }
+
+    public void saveStringPreferences(String key, String value) {
+        SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
     @Nullable
-    public static String getStringPreferences(@NonNull Context context, String key, String defaultValue) {
-        SharedPreferences preferences = getSharedPreferenceUtil(context);
+    public String getStringPreferences(String key, String defaultValue) {
+        SharedPreferences preferences = mPreferences;
         return preferences.getString(key, defaultValue);
     }
 
     @Nullable
-    public static String getStringPreferences(@NonNull Context context, String key) {
-        return getStringPreferences(context, key, EMPTY_STR);
+    public String getStringPreferences(String key) {
+        return getStringPreferences(key, EMPTY_STR);
     }
 
-    public static void saveIntPreferences(@NonNull Context context, String key, int value) {
-        SharedPreferences.Editor editor = getSharedPreferenceUtil(context).edit();
+    public void saveIntPreferences(String key, int value) {
+        SharedPreferences.Editor editor = mPreferences.edit();
         editor.putInt(key, value);
         editor.apply();
     }
 
-    public static int getIntPreferences(@NonNull Context context, String key, int defaultValue) {
-        SharedPreferences preferences = getSharedPreferenceUtil(context);
+    public int getIntPreferences(String key, int defaultValue) {
+        SharedPreferences preferences = mPreferences;
         return preferences.getInt(key, defaultValue);
     }
 
-    public static void saveBoolPreferences(@NonNull Context context, String key, boolean value) {
-        SharedPreferences.Editor editor = getSharedPreferenceUtil(context).edit();
+    public void saveBoolPreferences(String key, boolean value) {
+        SharedPreferences.Editor editor = mPreferences.edit();
         editor.putBoolean(key, value);
         editor.apply();
     }
 
-    public static boolean getBoolPreferences(@NonNull Context context, String key, boolean defaultValue) {
-        SharedPreferences preferences = getSharedPreferenceUtil(context);
+    public boolean getBoolPreferences(String key, boolean defaultValue) {
+        SharedPreferences preferences = mPreferences;
         return preferences.getBoolean(key, defaultValue);
     }
 
-    public static boolean getBoolPreferences(@NonNull Context context, String key) {
-        return getBoolPreferences(context, key, DEFAULT_BOOL_VALUE);
+    public boolean getBoolPreferences(String key) {
+        return getBoolPreferences(key, DEFAULT_BOOL_VALUE);
     }
 
 }

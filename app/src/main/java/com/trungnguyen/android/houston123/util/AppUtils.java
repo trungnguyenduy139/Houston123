@@ -25,7 +25,7 @@ public final class AppUtils {
     }
 
     //is network available?
-    public static boolean isNetworkAvailable(Activity a) {
+    public static boolean isNetworkAvailable(Context a) {
 
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 a.getSystemService(Context.CONNECTIVITY_SERVICE);

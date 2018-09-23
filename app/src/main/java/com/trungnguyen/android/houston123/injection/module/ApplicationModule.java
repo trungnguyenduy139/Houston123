@@ -25,8 +25,8 @@ public abstract class ApplicationModule {
     @NonNull
     @Provides
     @Singleton
-    static protected PrefsUtil providePrefsUtil() {
-        return new PrefsUtil();
+    static protected PrefsUtil providePrefsUtil(Context context) {
+        return new PrefsUtil(context);
     }
 
     @Provides
