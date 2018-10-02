@@ -19,6 +19,11 @@ public class AuthenticateStore {
     }
 
     public interface Repository {
+        Observable<AuthenticateResponse> callLoginApi(String userName, String password);
+
+        Observable<Boolean> getLoginState();
+
+        Observable<Boolean> setLoginState(boolean state);
 
     }
 

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
+import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
 import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
@@ -25,29 +26,25 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
 
     private boolean mLoginState = false;
 
-    private AuthenticateStore.RequestService mAuthRequestService;
-
-    private AuthenticateStore.LocalStorage mAuthLocalStorage;
+    private AuthenticateStore.Repository mAuthRepository;
 
     @NonNull
     private MutableLiveData isLoggedIn = new MutableLiveData<Boolean>();
 
     @Inject
     public LoginViewModel(Context context,
-                          AuthenticateStore.LocalStorage localStorage,
-                          AuthenticateStore.RequestService requestService) {
+                          AuthenticateRepository authenticateRepository) {
 
         super(context);
         isLoggedIn.setValue(mLoginState);
         this.mContext = context;
-        this.mAuthLocalStorage = localStorage;
-        this.mAuthRequestService = requestService;
+        this.mAuthRepository = authenticateRepository;
         mLoginModel = new LoginModel();
     }
 
     @NonNull
     public MutableLiveData<Boolean> getIsLoggedIn() {
-        Disposable disposable = mAuthLocalStorage.getLoginStatus()
+        Disposable disposable = mAuthRepository.getLoginState()
                 .compose(SchedulerHelper.applySchedulers())
                 .subscribe(isLoggedIn::setValue, Timber::d);
         mSubscription.add(disposable);
@@ -62,7 +59,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
         String userName = mLoginModel.getUserName();
         String password = mLoginModel.getPassword();
 
-        Disposable subscription = mAuthRequestService.loginService(userName, password)
+        Disposable subscription = mAuthRepository.callLoginApi(userName, password)
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> {
                     if (mView != null) {
@@ -94,7 +91,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
     }
 
     public void putLoginStateToLocal(boolean loginState) {
-        Disposable disposable = mAuthLocalStorage.setLoginState(loginState)
+        Disposable disposable = mAuthRepository.setLoginState(loginState)
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DefaultSubscriber<>());
         mSubscription.add(disposable);
