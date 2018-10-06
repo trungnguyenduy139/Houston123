@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 
 import com.trungnguyen.android.houston123.util.CommonResourceLoader;
+import com.trungnguyen.android.houston123.util.Navigator;
 import com.trungnguyen.android.houston123.util.PrefsUtil;
 
 import javax.inject.Singleton;
@@ -34,5 +35,12 @@ public abstract class ApplicationModule {
     @Singleton
     static protected CommonResourceLoader providesCommonResourceLoader() {
         return new CommonResourceLoader();
+    }
+
+    @Provides
+    @NonNull
+    @Singleton
+    static protected Navigator providesNavigator() {
+        return new Navigator();
     }
 }

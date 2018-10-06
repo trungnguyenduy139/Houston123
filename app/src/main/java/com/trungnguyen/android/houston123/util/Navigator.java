@@ -11,16 +11,11 @@ import com.trungnguyen.android.houston123.ui.main.MainActivity;
 import com.trungnguyen.android.houston123.ui.userdetail.DetailUserActivity;
 import com.trungnguyen.android.houston123.ui.userdetail.UpdateDetailUserActivity;
 
-import javax.inject.Inject;
-
 public final class Navigator {
-
-    @Inject
-    public Navigator() {
-    }
 
     public void startLoginActivity(@NonNull Context context) {
         Intent intent = getIntent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
 

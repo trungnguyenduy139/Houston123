@@ -48,9 +48,8 @@ public class AuthenticateLocalStorage implements AuthenticateStore.LocalStorage 
     }
 
     @Override
-    public Observable<Boolean> getLoginStatus() {
-        boolean state = mPreferences.getBoolPreferences(PreferencesConst.LOGIN_STATUS);
-        return Observable.just(state);
+    public boolean getLoginStatus() {
+        return mPreferences.getBoolPreferences(PreferencesConst.LOGIN_STATUS);
     }
 
     @Override

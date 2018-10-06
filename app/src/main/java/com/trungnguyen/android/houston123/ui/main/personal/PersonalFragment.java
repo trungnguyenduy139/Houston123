@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.ui.main.personal;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +11,17 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseFragment;
 import com.trungnguyen.android.houston123.databinding.FragmentPersonalBinding;
+import com.trungnguyen.android.houston123.util.Navigator;
+
+import javax.inject.Inject;
 
 /**
  * Created by trungnd4 on 18/08/2018.
  */
-public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, PersonalViewModel> {
+public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, PersonalViewModel> implements IPersonalView {
+
+    @Inject
+    Navigator mNavigator;
 
     @NonNull
     public static PersonalFragment newInstance() {
@@ -41,5 +48,15 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Pers
     @Override
     public void initParam() {
         getDataManagerComponent().inject(this);
+    }
+
+    @Override
+    public void navigateToLoginScreen() {
+        Activity activity = getBaseActivity();
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+        mNavigator.startLoginActivity(activity);
+        activity.finish();
     }
 }

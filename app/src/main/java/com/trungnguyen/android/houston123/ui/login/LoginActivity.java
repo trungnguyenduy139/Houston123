@@ -60,6 +60,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 .putValue(BundleConstants.USER_NAME, accessToken)
                 .build();
         mNavigator.startMainActivity(this, bundle);
+        finish();
     }
 
     @Override

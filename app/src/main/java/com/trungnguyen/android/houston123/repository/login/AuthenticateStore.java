@@ -32,7 +32,7 @@ public class AuthenticateStore {
 
         String getSafeAccessToken();
 
-        Observable<Boolean> getLoginStatus();
+        boolean getLoginStatus();
 
         Observable<Boolean> setLoginState(boolean state);
     }

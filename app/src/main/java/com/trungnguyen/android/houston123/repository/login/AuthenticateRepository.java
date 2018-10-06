@@ -4,7 +4,9 @@ package com.trungnguyen.android.houston123.repository.login;
 import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
+import com.trungnguyen.android.houston123.rx.ObservableHelper;
 import com.trungnguyen.android.houston123.rx.ObservableRetryPattern;
+import com.trungnguyen.android.houston123.rx.Optional;
 
 import javax.inject.Inject;
 
@@ -42,16 +44,16 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
 
     @Override
     public Observable<Boolean> getLoginState() {
-        return mLocalStorage.getLoginStatus();
+        return ObservableHelper.makeObservableOptional(() -> mLocalStorage.getLoginStatus()).map(Optional::get);
     }
 
     @Override
     public Observable<Boolean> putAuthInfoLocal(boolean state, final String accessToken) {
         return mLocalStorage.setLoginState(state)
-                .filter(aBoolean -> !TextUtils.isEmpty(accessToken))
-                .filter(aBoolean -> aBoolean)
                 .flatMap(aBoolean -> {
-                    mLocalStorage.putSafeAccessToken(accessToken);
+                    if (aBoolean && !TextUtils.isEmpty(accessToken)) {
+                        mLocalStorage.putSafeAccessToken(accessToken);
+                    }
                     return Observable.just(aBoolean);
                 });
     }
