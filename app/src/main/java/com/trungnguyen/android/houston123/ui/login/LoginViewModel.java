@@ -90,8 +90,8 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
         Toast.makeText(mContext, "onRegisterClick", Toast.LENGTH_SHORT).show();
     }
 
-    public void putLoginStateToLocal(boolean loginState) {
-        Disposable disposable = mAuthRepository.setLoginState(loginState)
+    public void putAuthInfoToLocal(boolean loginState, String accessToken) {
+        Disposable disposable = mAuthRepository.putAuthInfoLocal(loginState, accessToken)
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(new DefaultSubscriber<>());
         mSubscription.add(disposable);

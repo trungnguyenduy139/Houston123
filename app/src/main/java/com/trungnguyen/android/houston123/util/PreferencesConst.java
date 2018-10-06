@@ -6,4 +6,5 @@ package com.trungnguyen.android.houston123.util;
 public interface PreferencesConst {
     // login key
     String LOGIN_STATUS = "login-status";
+    String ACCESS_TOKEN_PREF = "access_token_pref";
 }

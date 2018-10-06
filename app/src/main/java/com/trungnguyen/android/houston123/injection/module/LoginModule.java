@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.injection.ViewModelScope;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateLocalStorage;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
 import com.trungnguyen.android.houston123.util.PrefsUtil;
+import com.trungnguyen.android.houston123.util.Security;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,8 +18,8 @@ public abstract class LoginModule {
 
     @Provides
     @ViewModelScope
-    static protected AuthenticateStore.LocalStorage provideAuthenticateRepository(PrefsUtil prefsUtil) {
-        return new AuthenticateLocalStorage(prefsUtil);
+    static protected AuthenticateStore.LocalStorage provideAuthenticateRepository(PrefsUtil prefsUtil, Security security) {
+        return new AuthenticateLocalStorage(prefsUtil, security);
     }
 
 }

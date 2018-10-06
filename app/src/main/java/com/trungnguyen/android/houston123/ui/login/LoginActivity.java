@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void onAuthSuccess(String accessToken) {
         String message = getString(R.string.login_success);
-        viewModel.putLoginStateToLocal(true);
+        viewModel.putAuthInfoToLocal(true, accessToken);
         ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR);
         Bundle bundle = new BundleBuilder()
                 .putValue(BundleConstants.USER_NAME, accessToken)
@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void onAuthFailed() {
-        viewModel.putLoginStateToLocal(false);
+        viewModel.putAuthInfoToLocal(false, "");
         String message = getString(R.string.login_failed);
         ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR);
     }
@@ -83,6 +83,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void hideLoading() {
-       hideLoadingDialog();
+        hideLoadingDialog();
     }
 }

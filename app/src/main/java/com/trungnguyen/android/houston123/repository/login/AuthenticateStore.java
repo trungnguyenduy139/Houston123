@@ -23,11 +23,15 @@ public class AuthenticateStore {
 
         Observable<Boolean> getLoginState();
 
-        Observable<Boolean> setLoginState(boolean state);
+        Observable<Boolean> putAuthInfoLocal(boolean state, String accessToken);
 
     }
 
     public interface LocalStorage {
+        void putSafeAccessToken(String accessToken);
+
+        String getSafeAccessToken();
+
         Observable<Boolean> getLoginStatus();
 
         Observable<Boolean> setLoginState(boolean state);
