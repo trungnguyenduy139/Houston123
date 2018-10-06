@@ -58,6 +58,11 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
         notifyDataSetChanged();
     }
 
+    public void removeUser(int position) {
+        mListUser.remove(position);
+        notifyDataSetChanged();
+    }
+
     public class UserListViewHolder extends BaseViewHolder implements UserItemViewModel.OnUserClickListener {
 
         private UserItemViewModel userItemViewModel;
@@ -93,13 +98,10 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
 
         @Override
         public boolean onUserLongClick() {
-            if (mListUser == null) {
+            if (mListener == null) {
                 return false;
             }
             int position = getAdapterPosition();
-//            mListUser.remove(position);
-            mListUser.get(position).setName("Jersey");
-            notifyDataSetChanged();
             mListener.onItemLongClick(position);
             return true;
         }

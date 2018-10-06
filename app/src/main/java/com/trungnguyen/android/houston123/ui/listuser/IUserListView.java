@@ -6,5 +6,5 @@ import com.trungnguyen.android.houston123.base.IBaseView;
  * Created by trungnd4 on 12/08/2018.
  */
 public interface IUserListView extends IBaseView {
-    void makeSomeUpdateToUI();
+    void showConfirmDeleteUserDialog(int position);
 }

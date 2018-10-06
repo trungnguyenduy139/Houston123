@@ -35,8 +35,8 @@ public final class PrefsUtil implements PersistentPrefs {
         return GsonUtils.fromJsonString(sCache, type);
     }
 
-    public void putListPreferences(String key, final List<Object> notify) {
-        String jsonPromotion = GsonUtils.toJsonString(notify);
+    public void putListPreferences(String key, final List<Object> objects) {
+        String jsonPromotion = GsonUtils.toJsonString(objects);
         mPreferences.edit()
                 .putString(key, jsonPromotion)
                 .apply();

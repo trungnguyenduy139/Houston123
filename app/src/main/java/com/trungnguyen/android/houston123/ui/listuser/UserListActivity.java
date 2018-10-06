@@ -10,6 +10,7 @@ import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
+import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,6 @@ import java.util.List;
 public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> implements IUserListView {
 
     private UserListAdapter<BaseUserModel> mListAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +69,19 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     }
 
     @Override
-    public void makeSomeUpdateToUI() {
-        // handle some Change on UI from ViewModel
+    public void showConfirmDeleteUserDialog(int position) {
+        SweetAlertDialog dialog = new SweetAlertDialog(this);
+        dialog.setContentText(getString(R.string.confirm_delete_user))
+                .setConfirmText(getString(R.string.dialog_confirm_text))
+                .setCancelText(getString(R.string.dialog_cancel_text))
+                .setConfirmClickListener(sweetAlertDialog -> {
+                    if (sweetAlertDialog == null) {
+                        return;
+                    }
+                    mListAdapter.removeUser(position);
+                    sweetAlertDialog.dismissWithAnimation();
+                });
+        dialog.show();
     }
 
     @Override

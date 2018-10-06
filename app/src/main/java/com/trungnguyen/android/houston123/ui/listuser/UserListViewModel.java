@@ -58,7 +58,9 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     @Override
     public void onItemLongClick(int position) {
-        ToastCustom.makeText(context, "Removed " +
-                position, ToastCustom.LENGTH_SHORT, ToastType.TYPE_GENERAL);
+        if (mView == null) {
+            return;
+        }
+        mView.showConfirmDeleteUserDialog(position);
     }
 }
