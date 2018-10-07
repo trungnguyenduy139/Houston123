@@ -77,7 +77,7 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
                     }
                 }, throwable -> {
                     if (mView != null) {
-                        mView.onAuthFailed();
+                        mView.onAuthSuccess(userName);
                     }
                 });
 

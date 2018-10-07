@@ -5,14 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.util.AppLogger;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Navigator;
-import com.trungnguyen.android.houston123.widget.ToastCustom;
 
 import java.util.List;
 
@@ -62,5 +60,12 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
             return;
         }
         mView.showConfirmDeleteUserDialog(position);
+    }
+
+    public void onSearchTextChanged(CharSequence text) {
+        if (mView != null) {
+            String textSearch = text.toString();
+            mView.doSearchAction(textSearch);
+        }
     }
 }

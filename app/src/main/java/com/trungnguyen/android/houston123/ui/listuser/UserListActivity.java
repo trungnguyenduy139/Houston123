@@ -37,7 +37,6 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         viewModel.getUserListLiveData().observe(this, o -> {
 
         });
-
     }
 
     @Override
@@ -82,6 +81,11 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                     sweetAlertDialog.dismissWithAnimation();
                 });
         dialog.show();
+    }
+
+    @Override
+    public void doSearchAction(String searchSequence) {
+        mListAdapter.searchAction(searchSequence);
     }
 
     @Override

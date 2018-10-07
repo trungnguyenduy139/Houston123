@@ -1,9 +1,5 @@
 package com.trungnguyen.android.houston123.rx;
 
-/**
- * Created by trungnd4 on 06/10/2018.
- */
-
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.exception.NetworkConnectionException;
 
@@ -18,11 +14,8 @@ import io.reactivex.ObservableTransformer;
 import retrofit2.HttpException;
 import timber.log.Timber;
 
-/**
- * Created by chucvv on 9/13/18.
- */
 public class ObservableRetryPattern {
-    public static final List<Class<?>> NETWORK_EXCEPTION_CLAZZ =
+    private static final List<Class<?>> NETWORK_EXCEPTION_CLAZZ =
             Arrays.asList(HttpEmptyResponseException.class,
                     HttpException.class,
                     NetworkConnectionException.class,

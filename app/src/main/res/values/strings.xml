@@ -23,6 +23,7 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="LOADING">Loading...</string>
     <string name="logout">Đăng xuất</string>
+    <string name="search_hint">Tìm kiếm</string>
     <string-array name="home_resources_array">
         <item>Giáo viên</item>
         <item>Giáo viên</item>

@@ -7,4 +7,6 @@ import com.trungnguyen.android.houston123.base.IBaseView;
  */
 public interface IUserListView extends IBaseView {
     void showConfirmDeleteUserDialog(int position);
+
+    void doSearchAction(String text);
 }

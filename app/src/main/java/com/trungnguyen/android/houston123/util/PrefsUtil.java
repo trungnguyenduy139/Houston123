@@ -26,7 +26,7 @@ public final class PrefsUtil implements PersistentPrefs {
     }
 
     public List<Object> getListPreferences(String key) {
-        String sCache = mPreferences.getString(key, StringUtils.EMPTY);
+        String sCache = mPreferences.getString(key, EMPTY_STR);
         if (TextUtils.isEmpty(sCache)) {
             return new ArrayList<>();
         }
