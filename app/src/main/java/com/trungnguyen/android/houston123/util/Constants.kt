@@ -15,4 +15,8 @@ object Constants {
     object LoginApi {
         const val LOGIN_API = "login"
     }
+
+    object Api {
+        const val LECTURER = "giaovien"
+    }
 }

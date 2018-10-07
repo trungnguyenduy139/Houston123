@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.injection.module;
 
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
+import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.util.NamedRetrofitConstants;
 
 import javax.inject.Named;
@@ -17,5 +18,12 @@ public abstract class ApiModule {
     @Singleton
     static protected AuthenticateStore.RequestService provideAuthRetrofitApi(@Named(NamedRetrofitConstants.AUTH_RETROFIT_API) Retrofit retrofit) {
         return retrofit.create(AuthenticateStore.RequestService.class);
+    }
+
+
+    @Provides
+    @Singleton
+    static protected UserListStore.RequestService provideUserListRetrofitApi(@Named(NamedRetrofitConstants.USER_LIST_RETROFIT_API) Retrofit retrofit) {
+        return retrofit.create(UserListStore.RequestService.class);
     }
 }

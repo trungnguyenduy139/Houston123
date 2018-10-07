@@ -45,7 +45,7 @@ import timber.log.Timber;
 @Module
 public class NetworkModule {
 
-    public static final String BASE_URL = "http://127.0.0.1:8000/api/";
+    public static final String BASE_URL = "http://10.0.2.2:8000/api/";
 
     private static final HttpUrl API_HTTP_URL = HttpUrl.parse(BASE_URL);
 
@@ -167,6 +167,19 @@ public class NetworkModule {
     @Singleton
     @Named(NamedRetrofitConstants.AUTH_RETROFIT_API)
     Retrofit provideAuthRetrofit(Gson gson, OkHttpClient okHttpClient, CallAdapter.Factory callAdapter) {
+        return new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(callAdapter)
+                .baseUrl(BASE_URL)
+                .validateEagerly(BuildConfig.DEBUG)
+                .client(okHttpClient)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    @Named(NamedRetrofitConstants.USER_LIST_RETROFIT_API)
+    Retrofit provideUserListRetrofit(Gson gson, OkHttpClient okHttpClient, CallAdapter.Factory callAdapter) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(callAdapter)

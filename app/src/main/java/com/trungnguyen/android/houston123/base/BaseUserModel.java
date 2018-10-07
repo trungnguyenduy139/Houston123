@@ -20,6 +20,10 @@ public abstract class BaseUserModel extends BaseObservable implements Serializab
     private String userId;
     private String address;
 
+    public BaseUserModel(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getUserImg() {
         return userImg;

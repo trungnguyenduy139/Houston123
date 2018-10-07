@@ -17,7 +17,7 @@
     <string name="confirm_delete_user">Bạn có muốn xóa người dùng này không?</string>
     <string name="dialog_confirm_text">    ĐỒNG Ý    </string>
     <string name="dialog_cancel_text">    ĐÓNG    </string>
-
+    <string name="default_api_error_msg">Gặp sự cố khi kết nối. Vui lòng thử lại</string>
     <string name="dialog_default_title">    THÔNG BÁO    </string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>

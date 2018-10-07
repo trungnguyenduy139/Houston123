@@ -1,13 +1,14 @@
 package com.trungnguyen.android.houston123.ui.main.home;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
+import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
+import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.CommonResourceLoader;
-import com.trungnguyen.android.houston123.util.Navigator;
+
 
 import javax.inject.Inject;
 
@@ -25,16 +26,16 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
     private CommonResourceLoader mResourceLoader;
 
-    private Navigator mNavigator;
+    private UserListStore.Repository mUserListRepository;
 
     @Inject
     public HomeViewModel(Context context,
                          CommonResourceLoader resourceLoader,
-                         Navigator navigator) {
+                         UserListRepository userListRepository) {
         super(context);
         mContext = context;
-        mNavigator = navigator;
         mResourceLoader = resourceLoader;
+        this.mUserListRepository = userListRepository;
     }
 
     @NonNull
@@ -57,6 +58,30 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
     @Override
     public void onItemClick(int position) {
-        mNavigator.startUserListActivity(mContext, new Bundle());
+        Disposable subscription = mUserListRepository.handleLecturerService()
+                .compose(SchedulerHelper.applySchedulers())
+                .doOnSubscribe(disposable -> {
+                    if (mView != null) {
+                        mView.showLoading();
+                    }
+                })
+                .doOnTerminate(() -> {
+                    if (mView != null) {
+                        mView.hideLoading();
+                    }
+                })
+                .subscribe(lecturerModels -> {
+                    if (mView != null) {
+                        mView.successToLoadUsers(lecturerModels);
+                    }
+                }, throwable -> {
+                    if (mView != null) {
+                        mView.failedToLoadUsers(throwable);
+                    }
+                });
+
+        mSubscription.add(subscription);
     }
+
+
 }

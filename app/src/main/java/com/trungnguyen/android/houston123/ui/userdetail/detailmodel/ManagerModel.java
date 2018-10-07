@@ -14,6 +14,10 @@ import java.util.List;
 public class ManagerModel extends BaseUserModel {
     private String lectureCount = "7";
 
+    public ManagerModel(String name, String phoneNumber) {
+        super(name, phoneNumber);
+    }
+
     @Bindable
     public String getLectureCount() {
         return lectureCount;

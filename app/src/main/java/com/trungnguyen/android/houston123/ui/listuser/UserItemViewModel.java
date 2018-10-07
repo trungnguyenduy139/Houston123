@@ -19,7 +19,7 @@ public class UserItemViewModel extends BaseViewModel {
     public final ObservableField<String> mName;
 
     @NonNull
-    public final ObservableField<String> mPosition;
+    public final ObservableField<String> mPhoneNumber;
 
     private final BaseUserModel mLecturerModel;
 
@@ -27,9 +27,9 @@ public class UserItemViewModel extends BaseViewModel {
 
     public UserItemViewModel(BaseUserModel lecturerModel, OnUserClickListener listener) {
         this.mLecturerModel = lecturerModel;
-        mImgUrl = new ObservableField<>(mLecturerModel.getUserImg());
+        mImgUrl = new ObservableField<>(mLecturerModel.getName());
         mName = new ObservableField<>(mLecturerModel.getName());
-        mPosition = new ObservableField<>(mLecturerModel.getPosition());
+        mPhoneNumber = new ObservableField<>(mLecturerModel.getPhoneNumber());
         mListener = listener;
     }
 
@@ -47,7 +47,7 @@ public class UserItemViewModel extends BaseViewModel {
         mListener.onItemClick();
     }
 
-    interface OnUserClickListener extends BaseItemViewModelListener{
+    interface OnUserClickListener extends BaseItemViewModelListener {
 
         boolean onUserLongClick();
     }

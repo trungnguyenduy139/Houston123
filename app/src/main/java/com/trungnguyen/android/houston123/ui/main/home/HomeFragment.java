@@ -10,11 +10,19 @@ import android.view.ViewGroup;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
+import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.base.BaseFragment;
 import com.trungnguyen.android.houston123.databinding.FragmentMainBinding;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
+import com.trungnguyen.android.houston123.util.BundleBuilder;
+import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Navigator;
+import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by trungnd4 on 18/08/2018.
@@ -22,6 +30,9 @@ import java.util.List;
 public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewModel> implements IHomeView {
 
     private HomeAdapter mHomeAdapter;
+
+    @Inject
+    Navigator mNavigator;
 
     @NonNull
     private List<HomeItem> mHomeItems = new ArrayList<>();
@@ -78,5 +89,45 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     @Override
     public void onLoadHomeResourcesCompleted(List<HomeItem> homeItems) {
         mHomeAdapter.addItems(homeItems);
+    }
+
+    @Override
+    public void failedToLoadUsers(Throwable throwable) {
+        if (getBaseActivity() == null || getBaseActivity().isFinishing()) {
+            return;
+        }
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getBaseActivity(), SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setContentText(getString(R.string.default_api_error_msg));
+        sweetAlertDialog.show();
+    }
+
+    @Override
+    public void successToLoadUsers(List<LecturerModel> lecturerModels) {
+        if (mNavigator == null || getBaseActivity() == null || getBaseActivity().isFinishing()) {
+            return;
+        }
+        Bundle bundle = new BundleBuilder().putValue(BundleConstants.LIST_LECTURER_BUNDLE, lecturerModels).build();
+        if (bundle == null) {
+            return;
+        }
+        mNavigator.startUserListActivity(getBaseActivity(), bundle);
+    }
+
+    @Override
+    public void showLoading() {
+        BaseActivity baseActivity = getBaseActivity();
+        if (baseActivity == null || baseActivity.isFinishing()) {
+            return;
+        }
+        baseActivity.showLoadingDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        BaseActivity baseActivity = getBaseActivity();
+        if (baseActivity == null || baseActivity.isFinishing()) {
+            return;
+        }
+        baseActivity.hideLoadingDialog();
     }
 }

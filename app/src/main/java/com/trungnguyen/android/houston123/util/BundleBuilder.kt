@@ -1,6 +1,8 @@
 package com.trungnguyen.android.houston123.util
 
 import android.os.Bundle
+import org.jetbrains.annotations.NonNls
+import org.jetbrains.annotations.Nullable
 import java.io.Serializable
 
 /**
@@ -24,11 +26,12 @@ class BundleBuilder {
             is String -> mBundle?.putString(key, value)
             is Int -> mBundle?.putInt(key, value)
             is Serializable -> mBundle?.putSerializable(key, value)
-        // continue update for others type
+            // continue update for others type
         }
         return this
     }
 
+    @Nullable
     fun build(): Bundle? {
         return if (mBundle != null) mBundle else null
     }
