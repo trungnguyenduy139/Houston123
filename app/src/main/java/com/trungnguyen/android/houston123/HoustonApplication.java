@@ -33,6 +33,7 @@ public class HoustonApplication extends Application {
             StrictMode.enableDefaults();
         }
 
+        /// add comment
         initLeakCanary();
 
     }
