@@ -106,11 +106,14 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     }
 
     @Override
-    public void successToLoadUsers(Collection<? extends BaseUserModel> userModels) {
+    public void successToLoadUsers(int code, Collection<? extends BaseUserModel> userModels) {
         if (getBaseActivity() == null || getBaseActivity().isFinishing()) {
             return;
         }
-        Bundle bundle = new BundleBuilder().putValue(BundleConstants.LIST_LECTURER_BUNDLE, userModels).build();
+        Bundle bundle = new BundleBuilder()
+                .putValue(BundleConstants.LIST_USER_BUNDLE, userModels)
+                .putValue(BundleConstants.USER_CODE_BUNDLE, code)
+                .build();
         if (bundle == null) {
             return;
         }

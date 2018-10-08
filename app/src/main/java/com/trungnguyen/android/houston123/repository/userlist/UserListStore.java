@@ -38,6 +38,14 @@ public class UserListStore {
 
         Observable<List<ManagerModel>> handleManagerService();
 
-        Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code);
+        Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code, int page);
+
+        Observable<Integer> getPageFromLocal();
+    }
+
+    public interface LocalStorage {
+        void putCurrentListPageLocal(int page);
+
+        int getCurrentPage();
     }
 }

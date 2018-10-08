@@ -14,5 +14,5 @@ public interface IHomeView extends IBaseLoadingView {
 
     void failedToLoadUsers(Throwable throwable);
 
-    void successToLoadUsers(Collection<? extends BaseUserModel> userModels);
+    void successToLoadUsers(int code, Collection<? extends BaseUserModel> userModels);
 }

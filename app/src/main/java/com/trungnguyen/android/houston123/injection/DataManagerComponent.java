@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.injection.module.DataManagerModule;
 import com.trungnguyen.android.houston123.injection.module.LoginModule;
+import com.trungnguyen.android.houston123.injection.module.UserListModule;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
@@ -22,7 +23,8 @@ import dagger.Subcomponent;
 @ViewModelScope
 @Subcomponent(modules = {
         DataManagerModule.class,
-        LoginModule.class
+        LoginModule.class,
+        UserListModule.class
 })
 public interface DataManagerComponent {
 

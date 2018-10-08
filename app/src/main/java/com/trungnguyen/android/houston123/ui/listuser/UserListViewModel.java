@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
+import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
+import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
+import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.AppLogger;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
@@ -16,21 +19,25 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by trungnd4 on 13/07/2018.
  */
 public class UserListViewModel extends BaseViewModel<IUserListView> implements UserListListener {
 
     private Navigator mNavigator;
+    private UserListStore.Repository mUserListRepository;
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
 
     @Inject
-    UserListViewModel(Context context, Navigator navigator) {
+    UserListViewModel(Context context, Navigator navigator, UserListRepository userListRepository) {
         super(context);
         mUserListLiveData = new MutableLiveData<>();
         this.mNavigator = navigator;
+        this.mUserListRepository = userListRepository;
     }
 
     @NonNull
@@ -67,5 +74,21 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
             String textSearch = text.toString();
             mView.doSearchAction(textSearch);
         }
+    }
+
+    public void nextPage(int code) {
+        Disposable subscription = mUserListRepository.getPageFromLocal()
+                .map(integer -> integer++)
+                .flatMap(newInt -> mUserListRepository.handleUserServiceFlow(code, newInt))
+                .compose(SchedulerHelper.applySchedulers())
+                .subscribe(usersModels -> {
+                    if (mView == null) {
+                        return;
+                    }
+                    mView.doLoadMore(usersModels);
+                }, throwable -> {
+
+                });
+        mSubscription.add(subscription);
     }
 }

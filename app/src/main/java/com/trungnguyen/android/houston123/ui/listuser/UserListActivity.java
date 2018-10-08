@@ -10,9 +10,11 @@ import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.widget.InfiniteScrollListener;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import timber.log.Timber;
@@ -23,16 +25,24 @@ import timber.log.Timber;
 public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> implements IUserListView {
 
     private UserListAdapter<BaseUserModel> mListAdapter;
+    private int mUserCode;
+    public static final int DEFAULT_CODE_VALUE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, DEFAULT_CODE_VALUE);
         mListAdapter = new UserListAdapter<>(getData(intent));
         viewModel.attachAdapter(mListAdapter);
         binding.userListRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.userListRecycler.setAdapter(mListAdapter);
-
+        binding.userListRecycler.addOnScrollListener(new InfiniteScrollListener() {
+            @Override
+            protected void onLoadMore() {
+                viewModel.nextPage(mUserCode);
+            }
+        });
         setTitle(getResources().getString(R.string.user_list));
 
         viewModel.getUserListLiveData().observe(this, o -> {
@@ -44,7 +54,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     private List<BaseUserModel> getData(Intent intent) {
         List<BaseUserModel> data;
         try {
-            data = (List<BaseUserModel>) intent.getSerializableExtra(BundleConstants.LIST_LECTURER_BUNDLE);
+            data = (List<BaseUserModel>) intent.getSerializableExtra(BundleConstants.LIST_USER_BUNDLE);
         } catch (Exception e) {
             data = new ArrayList<>();
             Timber.d("Failed to parse list of Users");
@@ -90,6 +100,13 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     public void doSearchAction(String searchSequence) {
         if (mListAdapter != null) {
             mListAdapter.searchAction(searchSequence);
+        }
+    }
+
+    @Override
+    public void doLoadMore(Collection<? extends BaseUserModel> userModels) {
+        if (mListAdapter != null) {
+            mListAdapter.addItems(userModels);
         }
     }
 

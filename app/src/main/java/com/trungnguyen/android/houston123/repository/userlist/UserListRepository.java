@@ -19,7 +19,6 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 07/10/2018.
@@ -27,10 +26,13 @@ import timber.log.Timber;
 public class UserListRepository implements UserListStore.Repository {
 
     private UserListStore.RequestService mRequestService;
+    private UserListStore.LocalStorage mLocalStorage;
 
     @Inject
-    public UserListRepository(UserListStore.RequestService requestService) {
+    public UserListRepository(UserListStore.RequestService requestService,
+                              UserListStore.LocalStorage localStorage) {
         this.mRequestService = requestService;
+        this.mLocalStorage = localStorage;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -38,7 +40,7 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<LecturerModel>> handleLecturerService() {
         return mRequestService.getListLecturer()
                 .filter(Objects::nonNull)
-                .doOnNext(studentResponseListBaseResponse -> Timber.d("Request service is processing - Lecturer"))
+                .doOnNext(lecturerResponseListBaseResponse -> mLocalStorage.putCurrentListPageLocal(lecturerResponseListBaseResponse.getPage()))
                 .flatMap(lecturerResponseListBaseResponse -> Observable.just(lecturerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(lecturerResponses -> lecturerResponses)
@@ -53,7 +55,7 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<StudentModel>> handleStudentService() {
         return mRequestService.getListStudents()
                 .filter(Objects::nonNull)
-                .doOnNext(studentResponseListBaseResponse -> Timber.d("Request service is processing - Student"))
+                .doOnNext(studentResponseListBaseResponse -> mLocalStorage.putCurrentListPageLocal(studentResponseListBaseResponse.getPage()))
                 .flatMap(studentResponseListBaseResponse -> Observable.just(studentResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(studentResponses -> studentResponses)
@@ -68,7 +70,7 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<ManagerModel>> handleManagerService() {
         return mRequestService.getListManager()
                 .filter(Objects::nonNull)
-                .doOnNext(studentResponseListBaseResponse -> Timber.d("Request service is processing - Student"))
+                .doOnNext(managerResponseListBaseResponse -> mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(managerResponses -> managerResponses)
@@ -80,7 +82,7 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code) {
+    public Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code, int page) {
         switch (code) {
             case UserType.STUDENT:
                 return this.handleLecturerService();
@@ -91,5 +93,10 @@ public class UserListRepository implements UserListStore.Repository {
             default:
                 return this.handleLecturerService();
         }
+    }
+
+    @Override
+    public Observable<Integer> getPageFromLocal() {
+        return Observable.just(mLocalStorage.getCurrentPage());
     }
 }

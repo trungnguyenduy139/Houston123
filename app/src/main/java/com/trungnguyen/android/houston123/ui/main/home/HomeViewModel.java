@@ -28,6 +28,8 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
     private UserListStore.Repository mUserListRepository;
 
+    public static final int FIRST_PAGE = 1;
+
     @Inject
     public HomeViewModel(Context context,
                          CommonResourceLoader resourceLoader,
@@ -62,7 +64,7 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     }
 
     private void processUserFlow(int code) {
-        Disposable subscription = mUserListRepository.handleUserServiceFlow(code)
+        Disposable subscription = mUserListRepository.handleUserServiceFlow(code, FIRST_PAGE)
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> {
                     if (mView != null) {
@@ -74,9 +76,9 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
                         mView.hideLoading();
                     }
                 })
-                .subscribe(lecturerModels -> {
+                .subscribe(userModels -> {
                     if (mView != null) {
-                        mView.successToLoadUsers(lecturerModels);
+                        mView.successToLoadUsers(code, userModels);
                     }
                 }, throwable -> {
                     if (mView != null) {

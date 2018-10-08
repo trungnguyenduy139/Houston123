@@ -11,15 +11,14 @@ import android.view.ViewGroup;
 
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.InfinityAdapterType;
-import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseInfinityAdapter;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.UserListItemBinding;
 import com.trungnguyen.android.houston123.util.Lists;
-import com.trungnguyen.android.houston123.widget.ToastCustom;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -51,14 +50,14 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
 
     @Override
     public int getDataSize() {
-        if (mListUser == null) {
+        if (Lists.isEmptyOrNull(mListUser)) {
             return 0;
         }
         return mListUser.size();
     }
 
-    public void addItems(@Nullable List<U> lecturerModels) {
-        if (lecturerModels == null) {
+    public void addItems(@Nullable Collection<? extends U> lecturerModels) {
+        if (Lists.isEmptyOrNull(lecturerModels)) {
             return;
         }
         mListUser.addAll(lecturerModels);
@@ -66,6 +65,9 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
     }
 
     public void removeUser(int position) {
+        if (Lists.isEmptyOrNull(mListUser)) {
+            return;
+        }
         mListUser.remove(position);
         notifyDataSetChanged();
     }
@@ -113,8 +115,6 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
 
         @Override
         public void onItemClick() {
-            ToastCustom.makeText(context, "Clicked position " +
-                    getAdapterPosition(), ToastCustom.LENGTH_SHORT, ToastType.TYPE_GENERAL);
             if (mListener == null) {
                 return;
             }
