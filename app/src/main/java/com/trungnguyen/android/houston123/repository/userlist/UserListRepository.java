@@ -38,4 +38,10 @@ public class UserListRepository implements UserListStore.Repository {
                 .toList()
                 .toObservable();
     }
+
+    private void testDiscordNotify() {
+        /**
+         * Create new method on new branch for Discord notify testing
+         */
+    }
 }
