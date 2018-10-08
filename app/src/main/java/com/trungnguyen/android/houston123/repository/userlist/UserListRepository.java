@@ -68,6 +68,7 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<ManagerModel>> handleManagerService() {
         return mRequestService.getListManager()
                 .filter(Objects::nonNull)
+                .doOnNext(studentResponseListBaseResponse -> Timber.d("Request service is processing - Student"))
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(managerResponses -> managerResponses)

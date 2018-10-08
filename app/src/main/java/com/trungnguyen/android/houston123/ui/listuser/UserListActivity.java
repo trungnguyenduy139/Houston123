@@ -55,7 +55,9 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mListAdapter.releaseListener();
+        if (mListAdapter != null) {
+            mListAdapter.releaseListener();
+        }
     }
 
     @Override
@@ -75,7 +77,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                 .setConfirmText(getString(R.string.dialog_confirm_text))
                 .setCancelText(getString(R.string.dialog_cancel_text))
                 .setConfirmClickListener(sweetAlertDialog -> {
-                    if (sweetAlertDialog == null) {
+                    if (sweetAlertDialog == null || mListAdapter == null) {
                         return;
                     }
                     mListAdapter.removeUser(position);
@@ -86,7 +88,9 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
 
     @Override
     public void doSearchAction(String searchSequence) {
-        mListAdapter.searchAction(searchSequence);
+        if (mListAdapter != null) {
+            mListAdapter.searchAction(searchSequence);
+        }
     }
 
     @Override

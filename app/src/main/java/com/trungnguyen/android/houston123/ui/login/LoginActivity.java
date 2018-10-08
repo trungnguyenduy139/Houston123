@@ -1,6 +1,5 @@
 package com.trungnguyen.android.houston123.ui.login;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import com.trungnguyen.android.houston123.BR;
@@ -55,7 +54,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void onAuthSuccess(String accessToken) {
         String message = getString(R.string.login_success);
         viewModel.putAuthInfoToLocal(true, accessToken);
-        ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR);
+        ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_OK);
         Bundle bundle = new BundleBuilder()
                 .putValue(BundleConstants.USER_NAME, accessToken)
                 .build();
@@ -72,9 +71,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void showNetworkDialog() {
-        String msg = getString(R.string.network_message);
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setMessage(msg).create();
-        alertDialog.show();
+        showNetworkErrorDialog();
     }
 
     @Override

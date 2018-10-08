@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.bus.Messenger;
 import com.trungnguyen.android.houston123.injection.DataManagerComponent;
 import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.widget.LoadingDialog;
+import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import java.util.Objects;
 
@@ -91,6 +93,13 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
             return;
         }
         mLoadingDialog.dismiss();
+    }
+
+    protected void showNetworkErrorDialog() {
+        String msg = getString(R.string.network_message);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setContentText(msg);
+        sweetAlertDialog.show();
     }
 
 

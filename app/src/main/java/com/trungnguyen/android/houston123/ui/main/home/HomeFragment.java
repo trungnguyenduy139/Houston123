@@ -89,6 +89,9 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
 
     @Override
     public void onLoadHomeResourcesCompleted(List<HomeItem> homeItems) {
+        if (mHomeAdapter == null) {
+            return;
+        }
         mHomeAdapter.addItems(homeItems);
     }
 
@@ -104,7 +107,7 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
 
     @Override
     public void successToLoadUsers(Collection<? extends BaseUserModel> userModels) {
-        if (mNavigator == null || getBaseActivity() == null || getBaseActivity().isFinishing()) {
+        if (getBaseActivity() == null || getBaseActivity().isFinishing()) {
             return;
         }
         Bundle bundle = new BundleBuilder().putValue(BundleConstants.LIST_LECTURER_BUNDLE, userModels).build();

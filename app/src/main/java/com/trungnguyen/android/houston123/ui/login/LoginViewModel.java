@@ -3,7 +3,7 @@ package com.trungnguyen.android.houston123.ui.login;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
+import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
@@ -59,6 +59,10 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
         String userName = mLoginModel.getUserName();
         String password = mLoginModel.getPassword();
 
+        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
+            return;
+        }
+
         Disposable subscription = mAuthRepository.callLoginApi(userName, password)
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> {
@@ -82,12 +86,6 @@ public class LoginViewModel extends BaseViewModel<ILoginView> {
                 });
 
         mSubscription.add(subscription);
-    }
-
-
-    @OnClick
-    public void onRegisterClick() {
-        Toast.makeText(mContext, "onRegisterClick", Toast.LENGTH_SHORT).show();
     }
 
     public void putAuthInfoToLocal(boolean loginState, String accessToken) {
