@@ -58,7 +58,11 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
     @Override
     public void onItemClick(int position) {
-        Disposable subscription = mUserListRepository.handleLecturerService()
+        processUserFlow(position);
+    }
+
+    private void processUserFlow(int code) {
+        Disposable subscription = mUserListRepository.handleUserServiceFlow(code)
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> {
                     if (mView != null) {
@@ -82,6 +86,5 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
         mSubscription.add(subscription);
     }
-
 
 }

@@ -12,14 +12,15 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.base.BaseFragment;
+import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.FragmentMainBinding;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Navigator;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -102,11 +103,11 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     }
 
     @Override
-    public void successToLoadUsers(List<LecturerModel> lecturerModels) {
+    public void successToLoadUsers(Collection<? extends BaseUserModel> userModels) {
         if (mNavigator == null || getBaseActivity() == null || getBaseActivity().isFinishing()) {
             return;
         }
-        Bundle bundle = new BundleBuilder().putValue(BundleConstants.LIST_LECTURER_BUNDLE, lecturerModels).build();
+        Bundle bundle = new BundleBuilder().putValue(BundleConstants.LIST_LECTURER_BUNDLE, userModels).build();
         if (bundle == null) {
             return;
         }

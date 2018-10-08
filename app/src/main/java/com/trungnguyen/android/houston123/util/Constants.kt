@@ -18,5 +18,8 @@ object Constants {
 
     object Api {
         const val LECTURER = "giaovien"
+        const val STUDENT = "hocvien"
+        const val MANAGER = "quanly"
+
     }
 }

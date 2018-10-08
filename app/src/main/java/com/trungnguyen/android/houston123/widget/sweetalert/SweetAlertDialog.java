@@ -27,9 +27,9 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
     private AnimationSet mModalInAnim;
     private AnimationSet mModalOutAnim;
     private Animation mOverlayOutAnim;
-    private Animation mErrorInAnim;
-    private AnimationSet mErrorXInAnim;
-    private AnimationSet mSuccessLayoutAnimSet;
+//    private Animation mErrorInAnim;
+//    private AnimationSet mErrorXInAnim;
+//    private AnimationSet mSuccessLayoutAnimSet;
     private TextView mTitleTextView;
     private TextView mContentTextView;
     private String mTitleText;
@@ -76,18 +76,18 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         mAlertType = alertType;
         // 2.3.x system don't support alpha-animation on layer-list drawable
         // remove it from animation set
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-            List<Animation> childAnims = mErrorXInAnim.getAnimations();
-            int idx = 0;
-            for (; idx < childAnims.size(); idx++) {
-                if (childAnims.get(idx) instanceof AlphaAnimation) {
-                    break;
-                }
-            }
-            if (idx < childAnims.size()) {
-                childAnims.remove(idx);
-            }
-        }
+//        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+//            List<Animation> childAnims = mErrorXInAnim.getAnimations();
+//            int idx = 0;
+//            for (; idx < childAnims.size(); idx++) {
+//                if (childAnims.get(idx) instanceof AlphaAnimation) {
+//                    break;
+//                }
+//            }
+//            if (idx < childAnims.size()) {
+//                childAnims.remove(idx);
+//            }
+//        }
         mModalInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.modal_in);
         mModalOutAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.modal_out);
         mModalOutAnim.setAnimationListener(new Animation.AnimationListener() {
@@ -170,8 +170,8 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
 
     private void playAnimation() {
         if (mAlertType == ERROR_TYPE) {
-            mErrorFrame.startAnimation(mErrorInAnim);
-            mErrorX.startAnimation(mErrorXInAnim);
+//            mErrorFrame.startAnimation(mErrorInAnim);
+//            mErrorX.startAnimation(mErrorXInAnim);
         } else if (mAlertType == SUCCESS_TYPE) {
 //            mSuccessRightMask.startAnimation(mSuccessBowAnim);
         }
@@ -192,8 +192,8 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
                 case SUCCESS_TYPE:
                     mSuccessFrame.setVisibility(View.VISIBLE);
                     // initial rotate layout of success mask
-                    mSuccessLeftMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(0));
-                    mSuccessRightMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(1));
+//                    mSuccessLeftMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(0));
+//                    mSuccessRightMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(1));
                     break;
                 case WARNING_TYPE:
                     mConfirmButton.setBackgroundResource(R.drawable.red_button_background);

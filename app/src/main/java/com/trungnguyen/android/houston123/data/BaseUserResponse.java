@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by trungnd4 on 07/10/2018.
  */
-class BaseUserResponse {
+public class BaseUserResponse {
     @SerializedName("Họ Và Tên")
     String userName;
     @SerializedName("Số Điện Thoại")

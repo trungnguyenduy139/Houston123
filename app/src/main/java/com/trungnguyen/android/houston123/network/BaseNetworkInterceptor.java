@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.network;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class BaseNetworkInterceptor implements Interceptor {
     }
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
         HttpUrl url = request.url().newBuilder().build();
         request = request.newBuilder().url(url).build();
