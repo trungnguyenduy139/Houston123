@@ -50,4 +50,9 @@ public class UserListRepository implements UserListStore.Repository {
          * Create new method on new branch for Discord notify testing
          */
     }
+    private void testDiscordNotify_002() {
+        /**
+         * Create new method on new branch for Discord notify testing
+         */
+    }
 }
