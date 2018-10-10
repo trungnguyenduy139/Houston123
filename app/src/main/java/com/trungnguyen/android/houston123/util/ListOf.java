@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class ListOf<T> implements ParameterizedType {
+
     private final Class<T> type;
 
     public ListOf(Class<T> type) {

@@ -5,14 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
-
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +22,24 @@ public final class PrefsUtil implements PersistentPrefs {
     }
 
     /**
-     *  Should try/catch when using PUT and GET List of Data from SharedPreferences
+     * Should try/catch when using PUT and GET List of Data from SharedPreferences
+     * <p>
+     * Put Class<T> of Object to make sure Gson parsing the correct type
      */
+
     public <T> List<T> getListPreferences(String key, Class<T> type) {
         String sCache = mPreferences.getString(key, EMPTY_STR);
         if (TextUtils.isEmpty(sCache)) {
             return new ArrayList<>();
         }
-        return GsonUtils.fromJsonString(sCache, new ListOf<>(type));
+        ListOf listOf = new ListOf<>(type);
+        return GsonUtils.fromJsonString(sCache, listOf);
     }
+
+    /**
+     * List<?> to make sure all the type of object will be worked when Gson parsing data to Json string
+     * and save it to local SharedPref
+     */
 
     public void putListPreferences(String key, final List<?> objects) {
         String jsonPromotion = GsonUtils.toJsonString(objects);
