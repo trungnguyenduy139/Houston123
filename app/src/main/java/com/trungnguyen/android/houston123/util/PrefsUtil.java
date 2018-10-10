@@ -6,9 +6,13 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +29,18 @@ public final class PrefsUtil implements PersistentPrefs {
         mPreferences = getSharedPreferenceUtil(context);
     }
 
-    public List<Object> getListPreferences(String key) {
+    /**
+     *  Should try/catch when using PUT and GET List of Data from SharedPreferences
+     */
+    public <T> List<T> getListPreferences(String key, Class<T> type) {
         String sCache = mPreferences.getString(key, EMPTY_STR);
         if (TextUtils.isEmpty(sCache)) {
             return new ArrayList<>();
         }
-        Type type = new TypeToken<List<Object>>() {
-        }.getType();
-        return GsonUtils.fromJsonString(sCache, type);
+        return GsonUtils.fromJsonString(sCache, new ListOf<>(type));
     }
 
-    public void putListPreferences(String key, final List<Object> objects) {
+    public void putListPreferences(String key, final List<?> objects) {
         String jsonPromotion = GsonUtils.toJsonString(objects);
         mPreferences.edit()
                 .putString(key, jsonPromotion)
