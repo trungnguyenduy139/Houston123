@@ -66,16 +66,8 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     private void processUserFlow(int code) {
         Disposable subscription = mUserListRepository.handleUserServiceFlow(code, FIRST_PAGE)
                 .compose(SchedulerHelper.applySchedulers())
-                .doOnSubscribe(disposable -> {
-                    if (mView != null) {
-                        mView.showLoading();
-                    }
-                })
-                .doOnTerminate(() -> {
-                    if (mView != null) {
-                        mView.hideLoading();
-                    }
-                })
+                .doOnSubscribe(disposable -> showLoading())
+                .doOnTerminate(this::hideLoading)
                 .subscribe(userModels -> {
                     if (mView != null) {
                         mView.successToLoadUsers(code, userModels);
@@ -88,5 +80,4 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
         mSubscription.add(subscription);
     }
-
 }

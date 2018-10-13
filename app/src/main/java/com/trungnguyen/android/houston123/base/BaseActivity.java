@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 
 public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel>
-        extends RxAppCompatActivity implements IBaseActivity, BaseFragment.Callback {
+        extends RxAppCompatActivity implements IBaseActivity, IBaseLoadingView, BaseFragment.Callback {
 
     protected V binding;
 
@@ -81,6 +81,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         }
     }
 
+    @Override
     public void showLoadingDialog() {
         if (mLoadingDialog == null || mLoadingDialog.isShowing()) {
             return;
@@ -88,6 +89,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         mLoadingDialog.show();
     }
 
+    @Override
     public void hideLoadingDialog() {
         if (mLoadingDialog == null || !mLoadingDialog.isShowing()) {
             return;

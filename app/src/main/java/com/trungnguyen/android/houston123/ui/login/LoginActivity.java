@@ -73,14 +73,4 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void showNetworkDialog() {
         showNetworkErrorDialog();
     }
-
-    @Override
-    public void showLoading() {
-        showLoadingDialog();
-    }
-
-    @Override
-    public void hideLoading() {
-        hideLoadingDialog();
-    }
 }

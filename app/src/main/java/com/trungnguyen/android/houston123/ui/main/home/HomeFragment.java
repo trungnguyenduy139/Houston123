@@ -121,7 +121,7 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     }
 
     @Override
-    public void showLoading() {
+    public void showLoadingDialog() {
         BaseActivity baseActivity = getBaseActivity();
         if (baseActivity == null || baseActivity.isFinishing()) {
             return;
@@ -130,7 +130,7 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     }
 
     @Override
-    public void hideLoading() {
+    public void hideLoadingDialog() {
         BaseActivity baseActivity = getBaseActivity();
         if (baseActivity == null || baseActivity.isFinishing()) {
             return;

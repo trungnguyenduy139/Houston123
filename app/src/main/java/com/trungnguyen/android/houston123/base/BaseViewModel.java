@@ -103,6 +103,18 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
         mView = null;
     }
 
+    public void showLoading() {
+        if (mView instanceof BaseActivity) {
+            ((BaseActivity) mView).showLoadingDialog();
+        }
+    }
+
+    public void hideLoading() {
+        if (mView instanceof BaseActivity) {
+            ((BaseActivity) mView).hideLoadingDialog();
+        }
+    }
+
     @Override
     public void registerRxBus() {
     }

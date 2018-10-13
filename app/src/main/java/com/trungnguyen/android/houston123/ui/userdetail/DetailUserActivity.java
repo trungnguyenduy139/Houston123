@@ -62,16 +62,6 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     }
 
     @Override
-    public void showLoading() {
-        showLoadingDialog();
-    }
-
-    @Override
-    public void hideLoading() {
-        hideLoadingDialog();
-    }
-
-    @Override
     public void initParam() {
         getDataManagerComponent().inject(this);
     }
