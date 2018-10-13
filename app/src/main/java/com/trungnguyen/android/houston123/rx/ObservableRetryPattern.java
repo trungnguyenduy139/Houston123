@@ -23,6 +23,14 @@ public class ObservableRetryPattern {
                     SocketTimeoutException.class,
                     SocketException.class);
 
+    /**
+     * onErrorResumeNext: When the main stream throw an Exception
+     * an Exception will be catch, continue doing some stuff is defined in onErrorResumeNext() ->
+     * @param defaultValue
+     * @param <R>
+     * @return a new Observable from onErrorResumeNext and merge to the main stream
+     */
+
     public static <R> ObservableTransformer<R, R> transformObservable(R defaultValue) {
         return upstream -> upstream.onErrorResumeNext(throwable -> {
             Timber.w("[RX] Stream error with type [%s %s]", defaultValue.getClass().getSimpleName(), throwable.getClass().getSimpleName());

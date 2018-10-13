@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
@@ -28,7 +29,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
     Navigator mNavigator;
 
-    public boolean mIsApply = false;
+    public int mServiceActionCode = DetailServiceType.START_UPDATE;
 
     public void setLecturerModel(@Nullable BaseUserModel userModel) {
         if (userModel == null) {
@@ -54,20 +55,22 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
     @OnClick
-    public void onUpdateClick(boolean isApplyApi) {
+    public void onUpdateClick(int code) {
         if (mUserModel == null) {
             return;
         }
-        if (!isApplyApi) {
-            Bundle bundle = new BundleBuilder().putValue(BundleConstants.KEY_UPDATE_USER_DETAIL, mUserModel).build();
-            mNavigator.startEditDetailActivity(context, bundle);
-        } else {
+        switch (code) {
+            case DetailServiceType.START_UPDATE:
+                Bundle bundle = new BundleBuilder().putValue(BundleConstants.KEY_UPDATE_USER_DETAIL, mUserModel).build();
+                mNavigator.startEditDetailActivity(context, bundle);
+                break;
             // make repository call
+            // chose repository based on action code
         }
     }
 
-    public void setApply(boolean apply) {
-        mIsApply = apply;
+    public void setApply(int apply) {
+        mServiceActionCode = apply;
     }
 
     @NonNull

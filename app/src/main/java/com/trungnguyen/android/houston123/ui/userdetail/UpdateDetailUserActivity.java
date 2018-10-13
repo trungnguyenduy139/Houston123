@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.trungnguyen.android.houston123.R;
+import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +34,14 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
         if (baseUserModel != null) {
             viewModel.setLecturerModel(baseUserModel);
             mItemDetailList.addAll(viewModel.initDetailList(baseUserModel));
+        } else {
+            mItemDetailList.addAll(ModelResourceLoader.loadEmptyManagerResources());
         }
-
         mUserDetailAdapter = new UpdateUserAdapter(mItemDetailList);
 
         viewModel.attachAdapter(mUserDetailAdapter);
-        viewModel.setApply(true);
+
+        viewModel.setApply(baseUserModel == null ? DetailServiceType.START_NEW : DetailServiceType.DO_UPDATE);
 
         binding.detailUserRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.detailUserRecycler.setAdapter(mUserDetailAdapter);

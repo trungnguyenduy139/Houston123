@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:onClick="@{() -> viewModel.onUpdateClick(viewModel.mIsApply)}"
+            android:onClick="@{() -> viewModel.onUpdateClick(viewModel.mServiceActionCode)}"
             android:text="Cập nhật thông tin" />
 
     </LinearLayout>

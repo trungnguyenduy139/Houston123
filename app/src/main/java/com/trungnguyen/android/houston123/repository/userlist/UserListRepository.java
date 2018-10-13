@@ -40,8 +40,10 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<LecturerModel>> handleLecturerService() {
         return mRequestService.getListLecturer()
                 .filter(Objects::nonNull)
-                .doOnNext(lecturerResponseListBaseResponse -> mLocalStorage.putCurrentListPageLocal(lecturerResponseListBaseResponse.getPage()))
-                .flatMap(lecturerResponseListBaseResponse -> Observable.just(lecturerResponseListBaseResponse.getDataList()))
+                .doOnNext(lecturerResponseListBaseResponse ->
+                        mLocalStorage.putCurrentListPageLocal(lecturerResponseListBaseResponse.getPage()))
+                .flatMap(lecturerResponseListBaseResponse ->
+                        Observable.just(lecturerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(lecturerResponses -> lecturerResponses)
                 .filter(Objects::nonNull)
@@ -55,7 +57,8 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<StudentModel>> handleStudentService() {
         return mRequestService.getListStudents()
                 .filter(Objects::nonNull)
-                .doOnNext(studentResponseListBaseResponse -> mLocalStorage.putCurrentListPageLocal(studentResponseListBaseResponse.getPage()))
+                .doOnNext(studentResponseListBaseResponse ->
+                        mLocalStorage.putCurrentListPageLocal(studentResponseListBaseResponse.getPage()))
                 .flatMap(studentResponseListBaseResponse -> Observable.just(studentResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(studentResponses -> studentResponses)
@@ -70,7 +73,8 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<ManagerModel>> handleManagerService() {
         return mRequestService.getListManager()
                 .filter(Objects::nonNull)
-                .doOnNext(managerResponseListBaseResponse -> mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .doOnNext(managerResponseListBaseResponse ->
+                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(managerResponses -> managerResponses)
