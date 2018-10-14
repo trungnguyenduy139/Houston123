@@ -4,6 +4,7 @@ import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import io.reactivex.Observable;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -13,9 +14,13 @@ import retrofit2.http.Query;
 public class AuthenticateStore {
 
     public interface RequestService {
+        @Headers({
+                "Content-Type: application/json",
+                "X-Requested-With: XMLHttpRequest"
+        })
         @POST(Constants.LoginApi.LOGIN_API)
-        Observable<AuthenticateResponse> loginService(@Query("username") String userName,
-                                                      @Query("password") String password);
+        Observable<AuthenticateResponse> loginService(@Query("loginID") String userName,
+                                                      @Query("loginPASS") String password);
     }
 
     public interface Repository {

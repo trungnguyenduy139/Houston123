@@ -33,7 +33,7 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
         }
         if (baseUserModel != null) {
             viewModel.setLecturerModel(baseUserModel);
-            mItemDetailList.addAll(viewModel.initDetailList(baseUserModel));
+            viewModel.initDetailList(baseUserModel);
         } else {
             mItemDetailList.addAll(ModelResourceLoader.loadEmptyManagerResources());
         }

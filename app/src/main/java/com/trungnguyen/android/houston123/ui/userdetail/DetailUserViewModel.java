@@ -9,15 +9,17 @@ import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
-import com.trungnguyen.android.houston123.util.AppLogger;
+import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Navigator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 20/07/2018.
@@ -27,7 +29,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     @Nullable
     public BaseUserModel mUserModel;
 
-    Navigator mNavigator;
+    private Navigator mNavigator;
 
     public int mServiceActionCode = DetailServiceType.START_UPDATE;
 
@@ -38,14 +40,17 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         mUserModel = userModel;
     }
 
-    @NonNull
-    public List<ItemDetailModel> initDetailList(@NonNull BaseUserModel baseUserModel) {
-        try {
-            return new ArrayList<>(baseUserModel.convert());
-        } catch (Exception e) {
-            AppLogger.w("init Dynamic detail list error", e.getMessage());
-            return new ArrayList<>();
-        }
+    public void initDetailList(@NonNull BaseUserModel baseUserModel) {
+        Disposable subscription = baseUserModel
+                .convert()
+                .compose(SchedulerHelper.applySchedulers())
+                .subscribe(items -> {
+                    if (mView != null) {
+                        mView.updateResourceList((List<ItemDetailModel>) items);
+                    }
+                }, throwable -> Timber.d("[DetailUser] Failed to load model resource %s", throwable.toString()));
+
+        mSubscription.add(subscription);
     }
 
     @Inject

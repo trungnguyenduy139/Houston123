@@ -36,12 +36,12 @@ public class LecturerModel extends BaseUserModel implements Serializable {
         this.department = department;
     }
 
-    @Override
-    public List<ItemDetailModel> convert() {
-        List<String> lecturerResources = ModelResourceLoader.loadResourceLecturer();
-        List<ItemDetailModel> itemDetailModelList = super.convert();
-        int index = 0;
-        itemDetailModelList.add(new ItemDetailModel(lecturerResources.get(index++), lecutrerStt));
-        return itemDetailModelList;
-    }
+//    @Override
+//    public List<ItemDetailModel> convert() {
+//        List<String> lecturerResources = ModelResourceLoader.loadResourceLecturer();
+//        List<ItemDetailModel> itemDetailModelList = super.convert();
+//        int index = 0;
+//        itemDetailModelList.add(new ItemDetailModel(lecturerResources.get(index++), lecutrerStt));
+//        return itemDetailModelList;
+//    }
 }

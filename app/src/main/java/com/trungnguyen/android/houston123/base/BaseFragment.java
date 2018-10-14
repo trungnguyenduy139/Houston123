@@ -22,7 +22,8 @@ import javax.inject.Inject;
 /**
  * Created by goldze on 2017/6/15.
  */
-public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
+public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel>
+        extends RxFragment implements IBaseActivity, IBaseLoadingView {
 
     protected V binding;
 
@@ -127,6 +128,24 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public void initViewObservable() {
 
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        BaseActivity baseActivity = getBaseActivity();
+        if (baseActivity == null || baseActivity.isFinishing()) {
+            return;
+        }
+        baseActivity.showLoadingDialog();
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        BaseActivity baseActivity = getBaseActivity();
+        if (baseActivity == null || baseActivity.isFinishing()) {
+            return;
+        }
+        baseActivity.hideLoadingDialog();
     }
 
     public boolean onBackPressed() {

@@ -2,11 +2,10 @@ package com.trungnguyen.android.houston123.base;
 
 import android.databinding.BaseObservable;
 
-import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Created by trungnd4 on 20/07/2018.
@@ -14,23 +13,12 @@ import java.util.List;
 public abstract class BaseUserModel extends BaseObservable implements Serializable {
 
     private String userImg;
-    private String name;
-    private String phoneNumber;
-    private String position;
-    private String userId;
-    private String address;
+    protected String name;
+    protected String phoneNumber;
 
     public BaseUserModel(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getUserImg() {
-        return userImg;
-    }
-
-    public void setUserImg(String userImg) {
-        this.userImg = userImg;
     }
 
     public String getName() {
@@ -49,15 +37,7 @@ public abstract class BaseUserModel extends BaseObservable implements Serializab
         this.phoneNumber = phomeNumber;
     }
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public List<ItemDetailModel> convert() {
-        return new ArrayList<>();
+    public Observable convert() {
+        return Observable.just(new ArrayList<>());
     }
 }

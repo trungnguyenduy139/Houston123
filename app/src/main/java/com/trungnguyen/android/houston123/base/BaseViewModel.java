@@ -103,15 +103,15 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
         mView = null;
     }
 
-    public void showLoading() {
-        if (mView instanceof BaseActivity) {
-            ((BaseActivity) mView).showLoadingDialog();
+    protected void showLoading() {
+        if (mView instanceof BaseFragment) {
+            ((BaseFragment) mView).showLoadingDialog();
         }
     }
 
-    public void hideLoading() {
-        if (mView instanceof BaseActivity) {
-            ((BaseActivity) mView).hideLoadingDialog();
+    protected void hideLoading() {
+        if (mView instanceof BaseFragment) {
+            ((BaseFragment) mView).hideLoadingDialog();
         }
     }
 

@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityDetailUserBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         }
         if (baseUserModel != null) {
             viewModel.setLecturerModel(baseUserModel);
-            mItemDetailList.addAll(viewModel.initDetailList(baseUserModel));
+            viewModel.initDetailList(baseUserModel);
         }
 
         mUserDetailAdapter = new UserDetailAdapter(mItemDetailList);
@@ -59,6 +60,15 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     @Override
     public BaseUserModel getUserModel() {
         return null;
+    }
+
+    @Override
+    public void updateResourceList(List<ItemDetailModel> list) {
+        if (Lists.isEmptyOrNull(list) || mUserDetailAdapter == null) {
+            return;
+        }
+        mItemDetailList.addAll(list);
+        mUserDetailAdapter.notifyDataSetChanged();
     }
 
     @Override

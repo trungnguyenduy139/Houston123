@@ -20,4 +20,9 @@ public final class SchedulerHelper {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public static <T> SingleTransformer<T, T> appyBackgroundSchedulers() {
+        return observable -> observable.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread());
+    }
 }

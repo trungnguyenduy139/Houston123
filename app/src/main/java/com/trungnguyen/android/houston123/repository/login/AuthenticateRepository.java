@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.rx.Optional;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 23/09/2018.
@@ -34,6 +35,8 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     public Observable<AuthenticateResponse> callLoginApi(String userName, String password) {
         return mRequestService.loginService(userName, password)
                 .compose(ObservableRetryPattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
+                .doOnNext(authenticateResponse -> Timber.d("[Auth] Authenticate api response %s", authenticateResponse.toString()))
+                .doOnError(throwable -> Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage()))
                 .flatMap(authenticateResponse -> {
                     if (authenticateResponse == null) {
                         return Observable.just(DEFAULT_AUTHENTICATE_RESPONSE);

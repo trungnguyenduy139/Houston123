@@ -119,22 +119,4 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
         }
         mNavigator.startUserListActivity(getBaseActivity(), bundle);
     }
-
-    @Override
-    public void showLoadingDialog() {
-        BaseActivity baseActivity = getBaseActivity();
-        if (baseActivity == null || baseActivity.isFinishing()) {
-            return;
-        }
-        baseActivity.showLoadingDialog();
-    }
-
-    @Override
-    public void hideLoadingDialog() {
-        BaseActivity baseActivity = getBaseActivity();
-        if (baseActivity == null || baseActivity.isFinishing()) {
-            return;
-        }
-        baseActivity.hideLoadingDialog();
-    }
 }
