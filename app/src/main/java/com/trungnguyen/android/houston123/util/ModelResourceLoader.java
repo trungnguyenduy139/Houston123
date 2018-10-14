@@ -20,26 +20,6 @@ public final class ModelResourceLoader {
     }
 
     public static List<ItemDetailModel> loadEmptyManagerResources() {
-//        List<String> resourceManager = ModelResourceLoader.loadResourceManager();
-//        int index = 0;
-//        List<ItemDetailModel> itemDetailModelList = new ArrayList<>();
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        itemDetailModelList.add(new ItemDetailModel(resourceManager.get(index++), ""));
-//        return itemDetailModelList;
-
         return new ArrayList<>();
     }
 }

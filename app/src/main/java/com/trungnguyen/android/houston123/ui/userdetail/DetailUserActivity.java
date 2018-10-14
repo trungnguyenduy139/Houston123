@@ -67,8 +67,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         if (Lists.isEmptyOrNull(list) || mUserDetailAdapter == null) {
             return;
         }
-        mItemDetailList.addAll(list);
-        mUserDetailAdapter.notifyDataSetChanged();
+        mUserDetailAdapter.addItems(list);
     }
 
     @Override

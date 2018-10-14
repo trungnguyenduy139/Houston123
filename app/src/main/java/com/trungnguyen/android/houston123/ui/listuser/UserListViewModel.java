@@ -13,6 +13,7 @@ import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.AppLogger;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.util.Navigator;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     private Navigator mNavigator;
     private UserListStore.Repository mUserListRepository;
+    public static final int FIRST_PAGE = 0;
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
@@ -76,10 +78,32 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
         }
     }
 
+    public void refreshList(int code) {
+        Disposable subscription = mUserListRepository.handleUserServiceFlow(code, FIRST_PAGE)
+                .filter(models -> !Lists.isEmptyOrNull(models))
+                .compose(SchedulerHelper.applySchedulers())
+                .doOnSubscribe(disposable -> showLoading())
+                .doOnTerminate(() -> {
+                    hideLoading();
+                    if (mView != null) {
+                        mView.setRefreshing(false);
+                    }
+                })
+                .subscribe(usersModels -> {
+                    if (mView != null) {
+                        mView.doRefreshList(usersModels);
+                    }
+                });
+        mSubscription.add(subscription);
+    }
+
     public void nextPage(int code) {
         Disposable subscription = mUserListRepository.getPageFromLocal()
                 .map(integer -> integer++)
+                .doOnSubscribe(disposable -> showLoading())
+                .doOnTerminate(this::hideLoading)
                 .flatMap(newInt -> mUserListRepository.handleUserServiceFlow(code, newInt))
+                .filter(models -> !Lists.isEmptyOrNull(models))
                 .compose(SchedulerHelper.applySchedulers())
                 .subscribe(usersModels -> {
                     if (mView == null) {

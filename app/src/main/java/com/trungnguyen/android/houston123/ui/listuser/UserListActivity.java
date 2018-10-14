@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.ui.listuser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.trungnguyen.android.houston123.R;
@@ -22,11 +23,12 @@ import timber.log.Timber;
 /**
  * Created by trungnd4 on 13/07/2018.
  */
-public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> implements IUserListView {
+public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> implements
+        IUserListView, SwipeRefreshLayout.OnRefreshListener {
 
     private UserListAdapter<BaseUserModel> mListAdapter;
+    public static final int DEFAULT_CODE_VALUE = -1;
     private int mUserCode;
-    public static final int DEFAULT_CODE_VALUE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, DEFAULT_CODE_VALUE);
         mListAdapter = new UserListAdapter<>(getData(intent));
         viewModel.attachAdapter(mListAdapter);
+        binding.swipeToRefreshUserList.setOnRefreshListener(this);
         binding.userListRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.userListRecycler.setAdapter(mListAdapter);
         binding.userListRecycler.addOnScrollListener(new InfiniteScrollListener() {
@@ -111,7 +114,28 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     }
 
     @Override
+    public void doRefreshList(Collection<? extends BaseUserModel> usersModels) {
+        if (mListAdapter == null) {
+            return;
+        }
+        mListAdapter.clearItems();
+        mListAdapter.addItems(usersModels);
+    }
+
+    @Override
+    public void setRefreshing(boolean isRefreshing) {
+        binding.swipeToRefreshUserList.post(() -> binding.swipeToRefreshUserList.setRefreshing(isRefreshing));
+    }
+
+    @Override
     public void initParam() {
         getDataManagerComponent().inject(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        if (viewModel != null) {
+            viewModel.refreshList(mUserCode);
+        }
     }
 }

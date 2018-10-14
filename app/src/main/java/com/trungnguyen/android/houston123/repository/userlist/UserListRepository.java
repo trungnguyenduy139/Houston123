@@ -12,6 +12,7 @@ import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerMode
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -95,7 +96,7 @@ public class UserListRepository implements UserListStore.Repository {
             case UserType.LECTURER:
                 return this.handleStudentService();
             default:
-                return this.handleLecturerService();
+                return Observable.just(new ArrayList<>());
         }
     }
 

@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
 import java.util.ArrayList;
@@ -47,5 +48,13 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
         binding.detailUserRecycler.setAdapter(mUserDetailAdapter);
 
         setTitle(getResources().getString(R.string.update_user_detail));
+    }
+
+    @Override
+    public void updateResourceList(List<ItemDetailModel> list) {
+        if (Lists.isEmptyOrNull(list) || mUserDetailAdapter == null) {
+            return;
+        }
+        mUserDetailAdapter.addItems(list);
     }
 }

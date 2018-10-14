@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.repository.userlist.UserListRepository
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.CommonResourceLoader;
+import com.trungnguyen.android.houston123.util.Lists;
 
 
 import javax.inject.Inject;
@@ -66,6 +67,7 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     private void processUserFlow(int code) {
         Disposable subscription = mUserListRepository.handleUserServiceFlow(code, FIRST_PAGE)
                 .compose(SchedulerHelper.applySchedulers())
+                .filter(models -> !Lists.isEmptyOrNull(models))
                 .doOnSubscribe(disposable -> showLoading())
                 .doOnTerminate(this::hideLoading)
                 .subscribe(userModels -> {
