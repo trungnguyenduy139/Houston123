@@ -95,7 +95,8 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                     if (sweetAlertDialog == null) {
                         return;
                     }
-                    viewModel.doRemoveUser(mUserCode, position, mDataList.get(position).getName()); //todo: Change with userId instead of name
+                    viewModel.doRemoveUser(mUserCode, position, "QL123456");
+                    //todo: Change with userId instead of hard coded value
                     sweetAlertDialog.dismiss();
                 });
         dialog.show();

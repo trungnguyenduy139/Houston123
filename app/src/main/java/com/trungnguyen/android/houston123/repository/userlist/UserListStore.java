@@ -17,6 +17,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 
 /**
@@ -33,6 +34,10 @@ public class UserListStore {
         @GET(Constants.Api.MANAGER)
         Observable<ListBaseResponse<ManagerResponse>> getListManager();
 
+        @Headers({
+                "Content-Type: application/json",
+                "X-Requested-With: XMLHttpRequest",
+        })
         @DELETE("{user_type}/{user_id}")
         Observable<BaseResponse> deleteUser(@Path(value = "user_type", encoded = true) String userType,
                                             @Path(value = "user_id", encoded = true) String userId);
