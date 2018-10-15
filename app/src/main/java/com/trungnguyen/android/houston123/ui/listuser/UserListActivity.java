@@ -29,13 +29,15 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     private UserListAdapter<BaseUserModel> mListAdapter;
     public static final int DEFAULT_CODE_VALUE = -1;
     private int mUserCode;
+    private List<BaseUserModel> mDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, DEFAULT_CODE_VALUE);
-        mListAdapter = new UserListAdapter<>(getData(intent));
+        mDataList = getData(intent);
+        mListAdapter = new UserListAdapter<>(mDataList);
         viewModel.attachAdapter(mListAdapter);
         binding.swipeToRefreshUserList.setOnRefreshListener(this);
         binding.userListRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -90,11 +92,11 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                 .setConfirmText(getString(R.string.dialog_confirm_text))
                 .setCancelText(getString(R.string.dialog_cancel_text))
                 .setConfirmClickListener(sweetAlertDialog -> {
-                    if (sweetAlertDialog == null || mListAdapter == null) {
+                    if (sweetAlertDialog == null) {
                         return;
                     }
-                    mListAdapter.removeUser(position);
-                    sweetAlertDialog.dismissWithAnimation();
+                    viewModel.doRemoveUser(mUserCode, position, mDataList.get(position).getName()); //todo: Change with userId instead of name
+                    sweetAlertDialog.dismiss();
                 });
         dialog.show();
     }
@@ -125,6 +127,13 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     @Override
     public void setRefreshing(boolean isRefreshing) {
         binding.swipeToRefreshUserList.post(() -> binding.swipeToRefreshUserList.setRefreshing(isRefreshing));
+    }
+
+    @Override
+    public void successToDeleteUser(int position) {
+        if (mListAdapter != null) {
+            mListAdapter.removeUser(position);
+        }
     }
 
     @Override

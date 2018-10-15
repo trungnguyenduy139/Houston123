@@ -115,4 +115,16 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
                 });
         mSubscription.add(subscription);
     }
+
+    public void doRemoveUser(int code, int position, String userId) {
+        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, userId)
+                .doOnSubscribe(disposable -> showLoading())
+                .doOnTerminate(this::hideLoading)
+                .subscribe(baseResponse -> {
+                    if (mView != null) {
+                        mView.successToDeleteUser(position);
+                    }
+                });
+        mSubscription.add(subscription);
+    }
 }

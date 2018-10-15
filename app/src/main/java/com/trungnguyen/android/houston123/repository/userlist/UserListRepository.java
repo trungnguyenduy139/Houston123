@@ -5,12 +5,16 @@ import android.support.annotation.RequiresApi;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
+import com.trungnguyen.android.houston123.exception.BodyException;
+import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
+import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,6 +24,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 07/10/2018.
@@ -85,6 +90,21 @@ public class UserListRepository implements UserListStore.Repository {
                 .toObservable();
     }
 
+    @Override
+    public Observable<BaseResponse> callApiDeleteUser(String userType, String userId) {
+        return mRequestService.deleteUser(userType, userId)
+                .doOnNext(baseResponse -> Timber.d("[DeleteManager] Success to delete record manager"))
+                .flatMap(baseResponse -> {
+                    if (baseResponse == null) {
+                        return Observable.error(new HttpEmptyResponseException());
+                    }
+                    if (baseResponse.returncode == Constants.ServerCode.SUCCESS) {
+                        return Observable.just(baseResponse);
+                    }
+                    return Observable.error(new BodyException(baseResponse.returncode, baseResponse.message));
+                });
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code, int page) {
@@ -98,6 +118,25 @@ public class UserListRepository implements UserListStore.Repository {
             default:
                 return Observable.just(new ArrayList<>());
         }
+    }
+
+    @Override
+    public Observable<BaseResponse> handleRemoveUserFlow(int code, String userId) {
+        String userType;
+        switch (code) {
+            case UserType.STUDENT:
+                userType = Constants.Api.STUDENT;
+                break;
+            case UserType.MANAGER:
+                userType = Constants.Api.MANAGER;
+                break;
+            case UserType.LECTURER:
+                userType = Constants.Api.LECTURER;
+                break;
+            default:
+                userType = Constants.EMPTY;
+        }
+        return this.callApiDeleteUser(userType, userId);
     }
 
     @Override

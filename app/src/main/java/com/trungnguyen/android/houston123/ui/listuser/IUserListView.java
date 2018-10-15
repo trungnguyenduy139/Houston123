@@ -18,4 +18,6 @@ public interface IUserListView extends IBaseView {
     void doRefreshList(Collection<? extends BaseUserModel> usersModels);
 
     void setRefreshing(boolean isRefreshing);
+
+    void successToDeleteUser(int position);
 }

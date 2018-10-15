@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.repository.userlist;
 
 import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
@@ -14,7 +15,9 @@ import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * Created by trungnd4 on 07/10/2018.
@@ -29,6 +32,10 @@ public class UserListStore {
 
         @GET(Constants.Api.MANAGER)
         Observable<ListBaseResponse<ManagerResponse>> getListManager();
+
+        @DELETE("{user_type}/{user_id}")
+        Observable<BaseResponse> deleteUser(@Path(value = "user_type", encoded = true) String userType,
+                                            @Path(value = "user_id", encoded = true) String userId);
     }
 
     public interface Repository {
@@ -38,9 +45,13 @@ public class UserListStore {
 
         Observable<List<ManagerModel>> handleManagerService();
 
+        Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
+
         Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code, int page);
 
         Observable<Integer> getPageFromLocal();
+
+        Observable<BaseResponse> handleRemoveUserFlow(int code, String userId);
     }
 
     public interface LocalStorage {
