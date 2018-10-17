@@ -4,6 +4,8 @@ import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import io.reactivex.Observable;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -18,13 +20,22 @@ public class AuthenticateStore {
                 "Content-Type: application/json",
                 "X-Requested-With: XMLHttpRequest"
         })
-        @POST(Constants.LoginApi.LOGIN_API)
+        @POST(Constants.LoginApi.LOGIN)
         Observable<AuthenticateResponse> loginService(@Query("loginID") String userName,
                                                       @Query("loginPASS") String password);
+
+        @Headers({
+                "Content-Type: application/json",
+                "X-Requested-With: XMLHttpRequest",
+        })
+        @GET(Constants.LoginApi.LOGOUT)
+        Observable<AuthenticateResponse> logoutService(@Header(value = "Authorization") String userToken);
     }
 
     public interface Repository {
         Observable<AuthenticateResponse> callLoginApi(String userName, String password);
+
+        Observable<AuthenticateResponse> callLogoutApi();
 
         Observable<Boolean> getLoginState();
 
@@ -35,7 +46,7 @@ public class AuthenticateStore {
     public interface LocalStorage {
         void putSafeAccessToken(String accessToken);
 
-        String getSafeAccessToken();
+        Observable<String> getSafeAccessToken();
 
         boolean getLoginStatus();
 

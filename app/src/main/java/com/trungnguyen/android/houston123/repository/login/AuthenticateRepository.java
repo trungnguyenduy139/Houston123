@@ -4,9 +4,12 @@ package com.trungnguyen.android.houston123.repository.login;
 import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
+import com.trungnguyen.android.houston123.exception.BodyException;
+import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservableHelper;
 import com.trungnguyen.android.houston123.rx.ObservableRetryPattern;
 import com.trungnguyen.android.houston123.rx.Optional;
+import com.trungnguyen.android.houston123.util.Constants;
 
 import javax.inject.Inject;
 
@@ -43,6 +46,24 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     }
                     return Observable.just(authenticateResponse);
                 });
+    }
+
+    @Override
+    public Observable<AuthenticateResponse> callLogoutApi() {
+        return mLocalStorage.getSafeAccessToken()
+                .doOnNext(token -> Timber.d("Get access token from Local [%s]", token))
+                .map(token -> Constants.TOKEN_PREFIX + Constants.SPACE + token)
+                .flatMap(token -> mRequestService.logoutService(token)
+                        .compose(ObservableRetryPattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
+                        .flatMap(authenticateResponse -> {
+                            if (authenticateResponse == null) {
+                                return Observable.error(new HttpEmptyResponseException());
+                            }
+                            if (!TextUtils.isEmpty(authenticateResponse.message)) {
+                                return Observable.just(authenticateResponse);
+                            }
+                            return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
+                        }));
     }
 
     @Override

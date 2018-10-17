@@ -25,24 +25,24 @@ public class AuthenticateLocalStorage implements AuthenticateStore.LocalStorage 
     @Override
     public void putSafeAccessToken(String accessToken) {
         try {
-            String encryptToken = mSecurity.encrypt(accessToken);
-            mPreferences.saveStringPreferences(PreferencesConst.ACCESS_TOKEN_PREF, encryptToken);
+//            String encryptToken = mSecurity.encrypt(accessToken);
+            mPreferences.saveStringPreferences(PreferencesConst.ACCESS_TOKEN_PREF, accessToken);
         } catch (Exception e) {
             Timber.d("Error when PUT safe Access token in Local storage");
         }
     }
 
     @Override
-    public String getSafeAccessToken() {
+    public Observable<String> getSafeAccessToken() {
         try {
             String encryptToken = mPreferences.getStringPreferences(PreferencesConst.ACCESS_TOKEN_PREF);
-            if (TextUtils.isEmpty(encryptToken)) {
-                return mPreferences.EMPTY_STR;
-            }
-            return mSecurity.decrypt(encryptToken);
+//            if (TextUtils.isEmpty(encryptToken)) {
+//                return Observable.just(mPreferences.EMPTY_STR);
+//            }
+            return Observable.just(encryptToken);
         } catch (Exception e) {
             Timber.d("Error when GET safe Access token in Local storage");
-            return mPreferences.EMPTY_STR;
+            return Observable.just(mPreferences.EMPTY_STR);
 
         }
     }

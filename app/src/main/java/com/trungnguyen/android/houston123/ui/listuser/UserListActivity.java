@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.widget.InfiniteScrollListener;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
@@ -27,7 +28,6 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         IUserListView, SwipeRefreshLayout.OnRefreshListener {
 
     private UserListAdapter<BaseUserModel> mListAdapter;
-    public static final int DEFAULT_CODE_VALUE = -1;
     private int mUserCode;
     private List<BaseUserModel> mDataList;
 
@@ -35,7 +35,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, DEFAULT_CODE_VALUE);
+        mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, Constants.DEFAULT_CODE_VALUE);
         mDataList = getData(intent);
         mListAdapter = new UserListAdapter<>(mDataList);
         viewModel.attachAdapter(mListAdapter);
@@ -45,7 +45,9 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         binding.userListRecycler.addOnScrollListener(new InfiniteScrollListener() {
             @Override
             protected void onLoadMore() {
-                viewModel.nextPage(mUserCode);
+                if (mUserCode != Constants.DEFAULT_CODE_VALUE) {
+                    viewModel.nextPage(mUserCode);
+                }
             }
         });
         setTitle(getResources().getString(R.string.user_list));
@@ -92,7 +94,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                 .setConfirmText(getString(R.string.dialog_confirm_text))
                 .setCancelText(getString(R.string.dialog_cancel_text))
                 .setConfirmClickListener(sweetAlertDialog -> {
-                    if (sweetAlertDialog == null) {
+                    if (sweetAlertDialog == null || mUserCode == Constants.DEFAULT_CODE_VALUE) {
                         return;
                     }
                     viewModel.doRemoveUser(mUserCode, position, "QL123456");
@@ -156,7 +158,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
 
     @Override
     public void onRefresh() {
-        if (viewModel != null) {
+        if (viewModel != null && mUserCode != Constants.DEFAULT_CODE_VALUE) {
             viewModel.refreshList(mUserCode);
         }
     }

@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.login;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
@@ -52,6 +53,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void onAuthSuccess(String accessToken) {
+        if (TextUtils.isEmpty(accessToken)) {
+            return;
+        }
         String message = getString(R.string.login_success);
         viewModel.putAuthInfoToLocal(true, accessToken);
         ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_OK);
