@@ -20,4 +20,6 @@ public interface IUserListView extends IBaseView {
     void setRefreshing(boolean isRefreshing);
 
     void successToDeleteUser(int position);
+
+    void failedToDeleteUser();
 }

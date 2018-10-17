@@ -138,6 +138,18 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     }
 
     @Override
+    public void failedToDeleteUser() {
+        new SweetAlertDialog(this)
+                .setContentText(getString(R.string.delete_user_failed)).
+                setConfirmText(getString(R.string.close_dialog)).
+                setConfirmClickListener(sweetAlertDialog1 -> {
+                    if (sweetAlertDialog1 != null) {
+                        sweetAlertDialog1.dismissWithAnimation();
+                    }
+                }).show();
+    }
+
+    @Override
     public void initParam() {
         getDataManagerComponent().inject(this);
     }

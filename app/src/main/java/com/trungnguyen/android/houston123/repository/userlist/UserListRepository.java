@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.repository.userlist;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
@@ -135,6 +136,9 @@ public class UserListRepository implements UserListStore.Repository {
                 break;
             default:
                 userType = Constants.EMPTY;
+        }
+        if (TextUtils.isEmpty(userType)) {
+            return Observable.error(new HttpEmptyResponseException());
         }
         return this.callApiDeleteUser(userType, userId);
     }

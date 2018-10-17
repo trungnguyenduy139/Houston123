@@ -111,7 +111,6 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
                     }
                     mView.doLoadMore(usersModels);
                 }, throwable -> {
-
                 });
         mSubscription.add(subscription);
     }
@@ -123,6 +122,10 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
                 .subscribe(baseResponse -> {
                     if (mView != null) {
                         mView.successToDeleteUser(position);
+                    }
+                }, throwable -> {
+                    if (mView != null) {
+                        mView.failedToDeleteUser();
                     }
                 });
         mSubscription.add(subscription);
