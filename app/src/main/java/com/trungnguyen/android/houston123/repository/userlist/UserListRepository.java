@@ -99,7 +99,7 @@ public class UserListRepository implements UserListStore.Repository {
                     if (baseResponse == null) {
                         return Observable.error(new HttpEmptyResponseException());
                     }
-                    if (baseResponse.returncode == Constants.ServerCode.SUCCESS) {
+                    if (TextUtils.equals(baseResponse.message, Constants.ServerCode.DELETE_SUCCESS_MESSAGE)) {
                         return Observable.just(baseResponse);
                     }
                     return Observable.error(new BodyException(baseResponse.returncode, baseResponse.message));

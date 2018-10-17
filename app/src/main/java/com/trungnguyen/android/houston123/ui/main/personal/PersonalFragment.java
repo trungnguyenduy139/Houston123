@@ -51,7 +51,7 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Pers
     }
 
     @Override
-    public void navigateToLoginScreen() {
+    public void successToLogout() {
         Activity activity = getBaseActivity();
         if (activity == null || activity.isFinishing()) {
             return;

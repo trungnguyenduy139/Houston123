@@ -16,7 +16,7 @@ public final class SchedulerHelper {
     }
 
 
-    public static <T> ObservableTransformer<T, T> applySchedulersWithLoadingPattern(Cancellable subscribeAction, Cancellable terminateAction) {
+    public static <T> ObservableTransformer<T, T> applySchedulersLoadingAction(Cancellable subscribeAction, Cancellable terminateAction) {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .doOnSubscribe(dispose -> subscribeAction.cancel())
                 .doOnTerminate(terminateAction::cancel)

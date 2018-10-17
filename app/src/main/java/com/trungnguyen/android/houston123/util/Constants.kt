@@ -25,6 +25,7 @@ object Constants {
     }
 
     object ServerCode {
+        const val DELETE_SUCCESS_MESSAGE = "Account deleted successfully"
         const val SUCCESS = 1
         const val FAILED = 0
     }

@@ -10,7 +10,6 @@ import com.trungnguyen.android.houston123.util.Constants;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import timber.log.Timber;
 
 /**
@@ -29,11 +28,11 @@ public class PersonalViewModel extends BaseViewModel<IPersonalView> {
     @OnClick
     public void onUserLogout() {
         Disposable subscription = mAuthRepository.callLogoutApi()
-                .compose(SchedulerHelper.applySchedulersWithLoadingPattern(this::showLoading, this::hideLoading))
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .doOnNext(authenticateResponse -> mAuthRepository.putAuthInfoLocal(false, Constants.EMPTY))
                 .subscribe(authenticateResponse -> {
                     if (mView != null) {
-                        mView.navigateToLoginScreen();
+                        mView.successToLogout();
                     }
                 }, throwable -> Timber.d("Failed to Logout [%s]", throwable.getMessage()));
         mSubscription.add(subscription);
