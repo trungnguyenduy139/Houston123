@@ -15,10 +15,16 @@ public abstract class BaseUserModel extends BaseObservable implements Serializab
     private String userImg;
     protected String name;
     protected String phoneNumber;
+    protected String address;
 
-    public BaseUserModel(String name, String phoneNumber) {
+    public BaseUserModel(String name, String phoneNumber, String address) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public String getName() {

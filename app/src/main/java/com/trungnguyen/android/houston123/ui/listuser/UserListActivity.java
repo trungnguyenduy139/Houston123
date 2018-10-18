@@ -12,6 +12,7 @@ import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
+import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.widget.InfiniteScrollListener;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
@@ -97,8 +98,11 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                     if (sweetAlertDialog == null || mUserCode == Constants.DEFAULT_CODE_VALUE) {
                         return;
                     }
-                    viewModel.doRemoveUser(mUserCode, position, "QL123456");
-                    //todo: Change with userId instead of hard coded value
+                    BaseUserModel baseUserModel = null;
+                    if (!Lists.isEmptyOrNull(mDataList) && position >= 0 && position < mDataList.size()) {
+                        baseUserModel = mDataList.get(position);
+                    }
+                    viewModel.doRemoveUser(mUserCode, position, baseUserModel);
                     sweetAlertDialog.dismiss();
                 });
         dialog.show();

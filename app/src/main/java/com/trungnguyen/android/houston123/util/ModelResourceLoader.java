@@ -12,7 +12,7 @@ import java.util.List;
 
 public final class ModelResourceLoader {
     public static List<String> loadResourceLecturer() {
-        return Arrays.asList("Số lượng môn học");
+        return Arrays.asList("Họ và tên", "Số điện thoại", "Địa chỉ", "Email", "CMND", "Ngày nghĩ", "Lý do nghĩ", "Cơ sở");
     }
 
     public static List<String> loadResourceManager() {

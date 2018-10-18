@@ -11,8 +11,6 @@ public class ManagerResponse extends BaseUserResponse {
     String lecturerId;
     @SerializedName("Hình Ảnh")
     String img;
-    @SerializedName("Địa Chỉ")
-    String address;
     @SerializedName("Email")
     String email;
     @SerializedName("CMND")
@@ -27,10 +25,9 @@ public class ManagerResponse extends BaseUserResponse {
     String department;
 
 
-    public ManagerResponse(String lecturerId, String img, String address, String email, String cmnd, String outDate, String outReason, String position, String department) {
+    public ManagerResponse(String lecturerId, String img, String email, String cmnd, String outDate, String outReason, String position, String department) {
         this.lecturerId = lecturerId;
         this.img = img;
-        this.address = address;
         this.email = email;
         this.cmnd = cmnd;
         this.outDate = outDate;

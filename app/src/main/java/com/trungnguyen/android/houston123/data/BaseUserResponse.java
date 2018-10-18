@@ -10,4 +10,6 @@ public class BaseUserResponse {
     String userName;
     @SerializedName("Số Điện Thoại")
     String phoneNumber;
+    @SerializedName("Địa Chỉ")
+    String address;
 }

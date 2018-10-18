@@ -20,7 +20,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 13/07/2018.
@@ -29,7 +31,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     private Navigator mNavigator;
     private UserListStore.Repository mUserListRepository;
-    public static final int FIRST_PAGE = 0;
+    public static final int FIRST_PAGE = 1;
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
@@ -98,25 +100,24 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     }
 
     public void nextPage(int code) {
-        Disposable subscription = mUserListRepository.getPageFromLocal()
-                .map(integer -> integer++)
-                .doOnSubscribe(disposable -> showLoading())
-                .doOnTerminate(this::hideLoading)
-                .flatMap(newInt -> mUserListRepository.handleUserServiceFlow(code, newInt))
-                .filter(models -> !Lists.isEmptyOrNull(models))
-                .compose(SchedulerHelper.applySchedulers())
-                .subscribe(usersModels -> {
-                    if (mView == null) {
-                        return;
+        Observable<Integer> localPageObservable = mUserListRepository.getPageFromLocal()
+                .map(integer -> ++integer);
+
+        Disposable subscription = localPageObservable
+                .doOnNext(integer -> Timber.d("current page is [%s]", integer))
+                .flatMap(integer -> mUserListRepository.handleUserServiceFlow(code, integer))
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .subscribe(baseResponse -> {
+                    if (mView != null) {
+                        mView.doLoadMore(baseResponse);
                     }
-                    mView.doLoadMore(usersModels);
-                }, throwable -> {
                 });
+
         mSubscription.add(subscription);
     }
 
-    public void doRemoveUser(int code, int position, String userId) {
-        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, userId)
+    public void doRemoveUser(int code, int position, BaseUserModel baseUserModel) {
+        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, baseUserModel)
                 .doOnSubscribe(disposable -> showLoading())
                 .doOnTerminate(this::hideLoading)
                 .subscribe(baseResponse -> {

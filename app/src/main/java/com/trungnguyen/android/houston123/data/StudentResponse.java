@@ -7,6 +7,6 @@ import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel
  */
 public class StudentResponse extends BaseUserResponse{
     public StudentModel convertToModel() {
-        return new StudentModel(userName, phoneNumber);
+        return new StudentModel(userName, phoneNumber, address);
     }
 }

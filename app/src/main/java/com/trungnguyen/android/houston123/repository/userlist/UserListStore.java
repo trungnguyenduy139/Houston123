@@ -19,6 +19,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by trungnd4 on 07/10/2018.
@@ -26,13 +27,13 @@ import retrofit2.http.Path;
 public class UserListStore {
     public interface RequestService {
         @GET(Constants.Api.LECTURER)
-        Observable<ListBaseResponse<LecturerResponse>> getListLecturer();
+        Observable<ListBaseResponse<LecturerResponse>> getListLecturer(@Query("page") int page);
 
         @GET(Constants.Api.STUDENT)
-        Observable<ListBaseResponse<StudentResponse>> getListStudents();
+        Observable<ListBaseResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
         @GET(Constants.Api.MANAGER)
-        Observable<ListBaseResponse<ManagerResponse>> getListManager();
+        Observable<ListBaseResponse<ManagerResponse>> getListManager(@Query("page") int page);
 
         @Headers({
                 "Content-Type: application/json",
@@ -44,11 +45,11 @@ public class UserListStore {
     }
 
     public interface Repository {
-        Observable<List<LecturerModel>> handleLecturerService();
+        Observable<List<LecturerModel>> handleLecturerService(int page);
 
-        Observable<List<StudentModel>> handleStudentService();
+        Observable<List<StudentModel>> handleStudentService(int page);
 
-        Observable<List<ManagerModel>> handleManagerService();
+        Observable<List<ManagerModel>> handleManagerService(int page);
 
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
@@ -56,7 +57,7 @@ public class UserListStore {
 
         Observable<Integer> getPageFromLocal();
 
-        Observable<BaseResponse> handleRemoveUserFlow(int code, String userId);
+        Observable<BaseResponse> handleRemoveUserFlow(int code, BaseUserModel baseUserModel);
     }
 
     public interface LocalStorage {

@@ -22,7 +22,6 @@ public class ManagerModel extends BaseUserModel {
 
     private String lecturerId;
     private String img;
-    private String address;
     private String email;
     private String cmnd;
     private String outDate;
@@ -32,16 +31,43 @@ public class ManagerModel extends BaseUserModel {
 
 
     public ManagerModel(String name, String phone, String lecturerId, String img, String address, String email, String cmnd, String outDate, String outReason, String department, String position) {
-        super(name, phone);
+        super(name, phone, address);
         this.lecturerId = lecturerId;
         this.img = img;
-        this.address = address;
         this.email = email;
         this.cmnd = cmnd;
         this.outDate = outDate;
         this.outReason = outReason;
         this.department = department;
         this.position = position;
+    }
+
+    public String getLecturerId() {
+        return lecturerId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCmnd() {
+        return cmnd;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getPosition() {
+        return position;
     }
 
     public String getOutDate() {

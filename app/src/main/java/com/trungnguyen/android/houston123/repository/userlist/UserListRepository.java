@@ -44,8 +44,8 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<List<LecturerModel>> handleLecturerService() {
-        return mRequestService.getListLecturer()
+    public Observable<List<LecturerModel>> handleLecturerService(int page) {
+        return mRequestService.getListLecturer(page)
                 .filter(Objects::nonNull)
                 .doOnNext(lecturerResponseListBaseResponse ->
                         mLocalStorage.putCurrentListPageLocal(lecturerResponseListBaseResponse.getPage()))
@@ -61,8 +61,8 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<List<StudentModel>> handleStudentService() {
-        return mRequestService.getListStudents()
+    public Observable<List<StudentModel>> handleStudentService(int page) {
+        return mRequestService.getListStudents(page)
                 .filter(Objects::nonNull)
                 .doOnNext(studentResponseListBaseResponse ->
                         mLocalStorage.putCurrentListPageLocal(studentResponseListBaseResponse.getPage()))
@@ -77,8 +77,8 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<List<ManagerModel>> handleManagerService() {
-        return mRequestService.getListManager()
+    public Observable<List<ManagerModel>> handleManagerService(int page) {
+        return mRequestService.getListManager(page)
                 .filter(Objects::nonNull)
                 .doOnNext(managerResponseListBaseResponse ->
                         mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
@@ -111,33 +111,43 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code, int page) {
         switch (code) {
             case UserType.STUDENT:
-                return this.handleLecturerService();
+                return this.handleLecturerService(page);
             case UserType.MANAGER:
-                return this.handleManagerService();
+                return this.handleManagerService(page);
             case UserType.LECTURER:
-                return this.handleStudentService();
+                return this.handleStudentService(page);
             default:
                 return Observable.just(new ArrayList<>());
         }
     }
 
     @Override
-    public Observable<BaseResponse> handleRemoveUserFlow(int code, String userId) {
-        String userType;
+    public Observable<BaseResponse> handleRemoveUserFlow(int code, BaseUserModel baseUserModel) {
+        if (baseUserModel == null) {
+            return Observable.error(new HttpEmptyResponseException());
+        }
+        String userType = Constants.EMPTY;
+        String userId = Constants.EMPTY;
         switch (code) {
             case UserType.STUDENT:
                 userType = Constants.Api.STUDENT;
                 break;
             case UserType.MANAGER:
                 userType = Constants.Api.MANAGER;
+                if (baseUserModel instanceof ManagerModel) {
+                    userId = ((ManagerModel) baseUserModel).getLecturerId();
+                }
                 break;
             case UserType.LECTURER:
                 userType = Constants.Api.LECTURER;
+                if (baseUserModel instanceof LecturerModel) {
+                    userId = ((LecturerModel) baseUserModel).getLecturerId();
+                }
                 break;
             default:
-                userType = Constants.EMPTY;
+                break;
         }
-        if (TextUtils.isEmpty(userType)) {
+        if (TextUtils.isEmpty(userType) || TextUtils.isEmpty(userId)) {
             return Observable.error(new HttpEmptyResponseException());
         }
         return this.callApiDeleteUser(userType, userId);

@@ -6,7 +6,16 @@ import com.trungnguyen.android.houston123.base.BaseUserModel;
  * Created by trungnd4 on 08/10/2018.
  */
 public class StudentModel extends BaseUserModel {
-    public StudentModel(String name, String phoneNumber) {
-        super(name, phoneNumber);
+    private String lecturerId;
+    private String img;
+    private String email;
+    private String cmnd;
+    private String outDate;
+    private String outReason;
+    private String department;
+    private String position;
+    public StudentModel(String name, String phoneNumber, String address) {
+        super(name, phoneNumber, address);
     }
+
 }

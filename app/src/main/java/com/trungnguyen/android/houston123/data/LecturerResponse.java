@@ -7,14 +7,11 @@ import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerMode
  * Created by trungnd4 on 07/10/2018.
  */
 public class LecturerResponse extends BaseUserResponse {
-    @SerializedName("STT")
-    String lecutrerStt;
+
     @SerializedName("Mã Giáo Viên")
     String lecturerId;
     @SerializedName("Hình Ảnh")
     String img;
-    @SerializedName("Địa Chỉ")
-    String address;
     @SerializedName("Email")
     String email;
     @SerializedName("CMND")
@@ -27,6 +24,6 @@ public class LecturerResponse extends BaseUserResponse {
     String department;
 
     public LecturerModel convertToModel() {
-        return new LecturerModel(userName, phoneNumber, lecutrerStt, lecturerId, img, address, email, cmnd, outDate, outReason, department);
+        return new LecturerModel(userName, phoneNumber, lecturerId, img, address, email, cmnd, outDate, outReason, department);
     }
 }
