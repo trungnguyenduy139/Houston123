@@ -101,7 +101,9 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     public void nextPage(int code) {
         Observable<Integer> localPageObservable = mUserListRepository.getPageFromLocal()
-                .map(integer -> ++integer);
+                .map(integer -> ++integer)
+                .firstOrError()
+                .toObservable();
 
         Disposable subscription = localPageObservable
                 .doOnNext(integer -> Timber.d("current page is [%s]", integer))
@@ -118,8 +120,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     public void doRemoveUser(int code, int position, BaseUserModel baseUserModel) {
         Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, baseUserModel)
-                .doOnSubscribe(disposable -> showLoading())
-                .doOnTerminate(this::hideLoading)
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(baseResponse -> {
                     if (mView != null) {
                         mView.successToDeleteUser(position);
