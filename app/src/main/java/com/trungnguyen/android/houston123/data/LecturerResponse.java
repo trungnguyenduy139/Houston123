@@ -20,7 +20,7 @@ public class LecturerResponse extends BaseUserResponse {
     String outDate;
     @SerializedName("Lý Do Nghĩ")
     String outReason;
-    @SerializedName("Cở Sở")
+    @SerializedName("Cơ Sở")
     String department;
 
     public LecturerModel convertToModel() {

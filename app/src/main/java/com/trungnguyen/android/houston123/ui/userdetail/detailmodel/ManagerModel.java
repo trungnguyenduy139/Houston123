@@ -78,7 +78,6 @@ public class ManagerModel extends BaseUserModel {
         return outReason != null ? outReason : "";
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Observable<List<ItemDetailModel>> convert() {
         Observable<String> observableResource = Observable.just(ModelResourceLoader.loadResourceManager())

@@ -36,6 +36,9 @@ public abstract class BaseUserModel extends BaseObservable implements Serializab
     }
 
     public String getPhoneNumber() {
+        if (phoneNumber == null) {
+            return "";
+        }
         return phoneNumber;
     }
 

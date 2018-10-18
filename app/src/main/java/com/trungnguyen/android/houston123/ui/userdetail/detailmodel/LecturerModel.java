@@ -22,7 +22,6 @@ public class LecturerModel extends BaseUserModel implements Serializable {
 
     private String lecturerId;
     private String img;
-    private String address;
     private String email;
     private String cmnd;
     private String outDate;
@@ -75,10 +74,12 @@ public class LecturerModel extends BaseUserModel implements Serializable {
     }
 
     public String getDepartment() {
+        if (department == null) {
+            return "";
+        }
         return department;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Observable<List<ItemDetailModel>> convert() {
         Observable<String> observableResource = Observable.just(ModelResourceLoader.loadResourceLecturer())
@@ -86,23 +87,14 @@ public class LecturerModel extends BaseUserModel implements Serializable {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io());
 
-        Observable<String> observableValue = Observable.just(Arrays.asList(lecturerId, name, phoneNumber, address, email, cmnd, getOutDate(), getOutReason(), department))
+        Observable<String> observableValue = Observable.just(Arrays.asList(name, getPhoneNumber(), address, email, cmnd, getOutDate(), getOutReason(), getDepartment()))
                 .flatMapIterable(items -> items)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io());
 
         return Observable.zip(observableResource, observableValue, (ItemDetailModel::new))
-                .doOnNext(itemDetailModel -> Timber.d("[DetailUser] Print item detail mode %s", itemDetailModel.getKey()))
+                .doOnNext(itemDetailModel -> Timber.d("[DetailUser] Print item detail mode %s", itemDetailModel.getValue()))
                 .toList()
                 .toObservable();
     }
-
-//    @Override
-//    public List<ItemDetailModel> convert() {
-//        List<String> lecturerResources = ModelResourceLoader.loadResourceLecturer();
-//        List<ItemDetailModel> itemDetailModelList = super.convert();
-//        int index = 0;
-//        itemDetailModelList.add(new ItemDetailModel(lecturerResources.get(index++), lecutrerStt));
-//        return itemDetailModelList;
-//    }
 }
