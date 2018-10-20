@@ -118,7 +118,8 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
             if (mListener == null) {
                 return;
             }
-            mListener.onItemClick(mListUser.get(getAdapterPosition()));
+            int position = getAdapterPosition();
+            mListener.onItemClick(mListUser.get(position), position);
         }
 
         @Override

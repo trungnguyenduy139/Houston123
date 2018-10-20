@@ -82,6 +82,22 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         }
     }
 
+    public void deleteCurrentUser(int code, String userId) {
+        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, userId)
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .subscribe(baseResponse -> {
+                    if (mView != null) {
+                        mView.deleteUserSuccess();
+                    }
+                }, throwable -> {
+                    if (mView != null) {
+                        mView.deleteUserFailed();
+                    }
+                });
+
+        mSubscription.add(subscription);
+    }
+
     public void setApply(int apply) {
         mServiceActionCode = apply;
     }

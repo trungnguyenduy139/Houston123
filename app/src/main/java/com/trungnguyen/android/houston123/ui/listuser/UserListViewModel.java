@@ -10,7 +10,6 @@ import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
-import com.trungnguyen.android.houston123.util.AppLogger;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
@@ -55,15 +54,20 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     }
 
     @Override
-    public void onItemClick(@NonNull BaseUserModel baseUserModel) {
-        try {
-            Bundle bundle = new BundleBuilder()
-                    .putValue(BundleConstants.KEY_USER_DETAIL, baseUserModel)
-                    .build();
-            mNavigator.startDetailActivity(context, bundle);
-        } catch (@NonNull ClassCastException | NullPointerException e) {
-            AppLogger.w("UserListViewModel onItemClick() [%s]", e.getMessage());
+    public void onItemClick(@NonNull BaseUserModel baseUserModel, int position) {
+        if (!(mView instanceof UserListActivity)) {
+            return;
         }
+        UserListActivity activity = ((UserListActivity) mView);
+        if (activity.isFinishing()) {
+            return;
+        }
+        Bundle bundle = new BundleBuilder()
+                .putValue(BundleConstants.KEY_USER_DETAIL, baseUserModel)
+                .putValue(BundleConstants.KEY_CODE_DETAIL, mView == null ? Constants.DEFAULT_CODE_VALUE : mView.getCurrentUserCode())
+                .putValue(BundleConstants.KEY_POSITION_USER, position)
+                .build();
+        mNavigator.startDetailActivity(activity, bundle == null ? new Bundle() : bundle);
     }
 
     @Override

@@ -137,7 +137,7 @@ public class UserListRepository implements UserListStore.Repository {
             default:
                 break;
         }
-        if (TextUtils.isEmpty(userType) || TextUtils.isEmpty(userId)) {
+        if (code == Constants.DEFAULT_CODE_VALUE || TextUtils.isEmpty(userType) || TextUtils.isEmpty(userId)) {
             return Observable.error(new HttpEmptyResponseException());
         }
         return this.callApiDeleteUser(userType, userId);

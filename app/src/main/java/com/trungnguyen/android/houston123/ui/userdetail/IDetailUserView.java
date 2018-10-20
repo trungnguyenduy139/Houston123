@@ -12,4 +12,8 @@ public interface IDetailUserView extends IBaseLoadingView {
     BaseUserModel getUserModel();
 
     void updateResourceList(List<ItemDetailModel> list);
+
+    void deleteUserSuccess();
+
+    void deleteUserFailed();
 }

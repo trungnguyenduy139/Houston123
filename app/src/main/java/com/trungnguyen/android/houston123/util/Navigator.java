@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,24 +20,16 @@ public final class Navigator {
         context.startActivity(intent);
     }
 
-    public void startDetailActivity(@NonNull Context context, @NonNull Bundle bundle) {
-        try {
-            Intent intent = getIntent(context, DetailUserActivity.class);
-            intent.putExtras(bundle);
-            context.startActivity(intent);
-        } catch (IllegalArgumentException e) {
-            AppLogger.w("Navigator startDetailActivity() [%s]", e.getMessage());
-        }
+    public void startDetailActivity(@NonNull Activity activity, @NonNull Bundle bundle) {
+        Intent intent = getIntent(activity, DetailUserActivity.class);
+        intent.putExtras(bundle);
+        activity.startActivityForResult(intent, Constants.REQUEST_DETAIL);
     }
 
     public void startEditDetailActivity(@NonNull Context context, @NonNull Bundle bundle) {
-        try {
-            Intent intent = getIntent(context, UpdateDetailUserActivity.class);
-            intent.putExtras(bundle);
-            context.startActivity(intent);
-        } catch (IllegalArgumentException e) {
-            AppLogger.w("Navigator startDetailActivity() [%s]", e.getMessage());
-        }
+        Intent intent = getIntent(context, UpdateDetailUserActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     public void startMainActivity(@NonNull Context context, @NonNull Bundle bundle) {

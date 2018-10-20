@@ -11,6 +11,8 @@ object BundleConstants {
     //detail
     const val KEY_USER_DETAIL = "key_user_detail"
     const val KEY_UPDATE_USER_DETAIL = "key_update_user_detail"
+    const val KEY_CODE_DETAIL = "key_code_detail"
+    const val KEY_POSITION_USER = "position_user"
 
     //List
     const val LIST_USER_BUNDLE = "list_lecturer_bundle"

@@ -24,16 +24,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="9" />
-
-
-        <Button
-            android:id="@+id/btnUpdateDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:onClick="@{() -> viewModel.onUpdateClick(viewModel.mServiceActionCode)}"
-            android:text="Cập nhật thông tin" />
-
     </LinearLayout>
 </layout>
