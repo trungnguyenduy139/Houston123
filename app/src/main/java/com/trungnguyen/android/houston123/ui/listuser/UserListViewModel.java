@@ -31,6 +31,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     private Navigator mNavigator;
     private UserListStore.Repository mUserListRepository;
+    private UserListAdapter<BaseUserModel> mAdapter;
 
 
     @NonNull
@@ -51,6 +52,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     public void attachAdapter(@NonNull UserListAdapter<BaseUserModel> adapter) {
         adapter.setListener(this);
+        mAdapter = adapter;
     }
 
     @Override
@@ -133,6 +135,17 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
                 }, throwable -> {
                     if (mView != null) {
                         mView.failedToDeleteUser();
+                    }
+                });
+        mSubscription.add(subscription);
+    }
+
+    public void doSearchAction(String searchSequence) {
+        Disposable subscription = mAdapter.searchAction(searchSequence)
+                .compose(SchedulerHelper.applySchedulers())
+                .subscribe(val -> {
+                    if (mView != null) {
+                        mView.handleSearchResult();
                     }
                 });
         mSubscription.add(subscription);

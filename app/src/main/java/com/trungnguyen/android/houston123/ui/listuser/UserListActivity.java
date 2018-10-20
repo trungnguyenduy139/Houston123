@@ -111,9 +111,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
 
     @Override
     public void doSearchAction(String searchSequence) {
-        if (mListAdapter != null) {
-            mListAdapter.searchAction(searchSequence);
-        }
+        viewModel.doSearchAction(searchSequence);
     }
 
     @Override
@@ -159,6 +157,13 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     @Override
     public int getCurrentUserCode() {
         return mUserCode;
+    }
+
+    @Override
+    public void handleSearchResult() {
+        if (mListAdapter != null) {
+            mListAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

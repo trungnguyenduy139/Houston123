@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import io.reactivex.Observable;
+
 /**
  * Created by trungnd4 on 13/07/2018.
  */
@@ -61,6 +63,7 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
             return;
         }
         mListUser.addAll(lecturerModels);
+        mFilterList.addAll(lecturerModels);
         notifyDataSetChanged();
     }
 
@@ -69,25 +72,36 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
             return;
         }
         mListUser.remove(position);
+        mFilterList.remove(position);
         notifyDataSetChanged();
     }
 
-    public void searchAction(String searchSequence) {
+    Observable<String> searchAction(String searchSequence) {
+
         final String textSearchSequence = searchSequence.toLowerCase(Locale.getDefault());
-        mListUser.clear();
-        if (Lists.isEmptyOrNull(mFilterList)) {
-            return;
-        }
-        if (TextUtils.isEmpty(searchSequence)) {
-            mListUser.addAll(mFilterList);
-        } else {
-            for (U user : mFilterList) {
-                if (user.getName().toLowerCase(Locale.getDefault()).contains(textSearchSequence)) {
-                    mListUser.add(user);
-                }
-            }
-        }
-        notifyDataSetChanged();
+
+        return Observable.just(textSearchSequence)
+                .map(string -> {
+                    mListUser.clear();
+                    return string;
+                })
+                .filter(string -> !Lists.isEmptyOrNull(mFilterList))
+                .flatMap(string -> {
+                    if (TextUtils.isEmpty(string)) {
+                        mListUser.addAll(mFilterList);
+                    } else {
+                        return Observable.just(mFilterList)
+                                .flatMapIterable(list -> list)
+                                .flatMap(item -> {
+                                    if (item.getName().toLowerCase(Locale.getDefault()).contains(textSearchSequence)) {
+                                        mListUser.add(item);
+                                    }
+                                    return Observable.just(string);
+                                });
+                    }
+                    return Observable.just(string);
+                });
+
     }
 
     public class UserListViewHolder extends BaseViewHolder implements UserItemViewModel.OnUserClickListener {

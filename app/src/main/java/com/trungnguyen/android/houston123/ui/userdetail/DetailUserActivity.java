@@ -119,7 +119,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                 viewModel.deleteCurrentUser(mCode, mUserModel.getUserId());
                 break;
         }
-        return true;
+        return false;
     }
 
     @Override

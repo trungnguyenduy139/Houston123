@@ -24,4 +24,6 @@ public interface IUserListView extends IBaseView {
     void failedToDeleteUser();
 
     int getCurrentUserCode();
+
+    void handleSearchResult();
 }
