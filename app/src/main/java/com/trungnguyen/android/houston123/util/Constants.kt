@@ -11,6 +11,7 @@ object Constants {
     const val DEFAULT_CODE_VALUE = -1
     const val TOKEN_PREFIX = "Bearer"
     const val SPACE = " "
+    const val FIRST_PAGE_REQUEST = 1
 
     // API url const
     object LoginApi {

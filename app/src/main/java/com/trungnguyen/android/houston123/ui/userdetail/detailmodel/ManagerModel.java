@@ -20,10 +20,7 @@ import timber.log.Timber;
  */
 public class ManagerModel extends BaseUserModel {
 
-    private String lecturerId;
     private String img;
-    private String email;
-    private String cmnd;
     private String outDate;
     private String outReason;
     private String department;
@@ -31,19 +28,12 @@ public class ManagerModel extends BaseUserModel {
 
 
     public ManagerModel(String name, String phone, String lecturerId, String img, String address, String email, String cmnd, String outDate, String outReason, String department, String position) {
-        super(name, phone, address);
-        this.lecturerId = lecturerId;
+        super(name, phone, address, lecturerId, email, cmnd);
         this.img = img;
-        this.email = email;
-        this.cmnd = cmnd;
         this.outDate = outDate;
         this.outReason = outReason;
         this.department = department;
         this.position = position;
-    }
-
-    public String getLecturerId() {
-        return lecturerId;
     }
 
     public String getImg() {
@@ -85,7 +75,7 @@ public class ManagerModel extends BaseUserModel {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io());
 
-        Observable<String> observableValue = Observable.just(Arrays.asList(lecturerId, name, phoneNumber, address, email, cmnd, position, getOutDate(), getOutReason(), department))
+        Observable<String> observableValue = Observable.just(Arrays.asList(userId, name, phoneNumber, address, email, cmnd, position, getOutDate(), getOutReason(), department))
                 .flatMapIterable(items -> items)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io());

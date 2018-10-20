@@ -122,27 +122,17 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @Override
-    public Observable<BaseResponse> handleRemoveUserFlow(int code, BaseUserModel baseUserModel) {
-        if (baseUserModel == null) {
-            return Observable.error(new HttpEmptyResponseException());
-        }
+    public Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId) {
         String userType = Constants.EMPTY;
-        String userId = Constants.EMPTY;
         switch (code) {
             case UserType.STUDENT:
                 userType = Constants.Api.STUDENT;
                 break;
             case UserType.MANAGER:
                 userType = Constants.Api.MANAGER;
-                if (baseUserModel instanceof ManagerModel) {
-                    userId = ((ManagerModel) baseUserModel).getLecturerId();
-                }
                 break;
             case UserType.LECTURER:
                 userType = Constants.Api.LECTURER;
-                if (baseUserModel instanceof LecturerModel) {
-                    userId = ((LecturerModel) baseUserModel).getLecturerId();
-                }
                 break;
             default:
                 break;

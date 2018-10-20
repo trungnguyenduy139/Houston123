@@ -8,14 +8,18 @@
 
     </data>
     <LinearLayout
+        android:background="@color/color_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="20dp"
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:weightSum="10">
 
@@ -24,8 +28,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
+                android:gravity="start"
                 android:text="@{viewModel.mKey}"
-                android:textColor="#000"
+                android:textColor="@color/color_text"
                 android:textSize="16sp" />
 
 
@@ -34,16 +39,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
+                android:gravity="end"
                 android:text="@{viewModel.mValue}"
-                android:textColor="#000"
+                android:textColor="@color/color_text"
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <View
-            android:layout_marginTop="10dp"
-            android:id="@+id/separate_top_tab_setting"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
     </LinearLayout>
 </layout>

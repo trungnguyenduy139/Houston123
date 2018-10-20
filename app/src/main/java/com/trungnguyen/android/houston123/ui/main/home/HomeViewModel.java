@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.repository.userlist.UserListRepository
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.CommonResourceLoader;
+import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
 
 
@@ -28,8 +29,6 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     private CommonResourceLoader mResourceLoader;
 
     private UserListStore.Repository mUserListRepository;
-
-    public static final int FIRST_PAGE = 1;
 
     @Inject
     public HomeViewModel(Context context,
@@ -65,7 +64,7 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
     }
 
     private void processUserFlow(int code) {
-        Disposable subscription = mUserListRepository.handleUserServiceFlow(code, FIRST_PAGE)
+        Disposable subscription = mUserListRepository.handleUserServiceFlow(code, Constants.FIRST_PAGE_REQUEST)
                 .compose(SchedulerHelper.applySchedulers())
                 .filter(models -> !Lists.isEmptyOrNull(models))
                 .doOnSubscribe(disposable -> showLoading())

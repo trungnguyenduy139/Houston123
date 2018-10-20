@@ -57,7 +57,7 @@ public class UserListStore {
 
         Observable<Integer> getPageFromLocal();
 
-        Observable<BaseResponse> handleRemoveUserFlow(int code, BaseUserModel baseUserModel);
+        Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId);
     }
 
     public interface LocalStorage {

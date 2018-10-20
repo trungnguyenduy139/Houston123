@@ -13,6 +13,7 @@ import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.AppLogger;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.util.Navigator;
 
@@ -31,7 +32,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     private Navigator mNavigator;
     private UserListStore.Repository mUserListRepository;
-    public static final int FIRST_PAGE = 1;
+
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
@@ -81,7 +82,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     }
 
     public void refreshList(int code) {
-        Disposable subscription = mUserListRepository.handleUserServiceFlow(code, FIRST_PAGE)
+        Disposable subscription = mUserListRepository.handleUserServiceFlow(code, Constants.FIRST_PAGE_REQUEST)
                 .filter(models -> !Lists.isEmptyOrNull(models))
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> showLoading())
@@ -119,7 +120,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     }
 
     public void doRemoveUser(int code, int position, BaseUserModel baseUserModel) {
-        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, baseUserModel)
+        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, baseUserModel.getUserId())
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(baseResponse -> {
                     if (mView != null) {
