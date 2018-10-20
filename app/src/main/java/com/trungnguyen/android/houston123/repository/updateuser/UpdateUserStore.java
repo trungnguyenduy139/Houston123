@@ -5,16 +5,13 @@ package com.trungnguyen.android.houston123.repository.updateuser;
  */
 public class UpdateUserStore {
 
-    public interface ServiceRequest {
-
+    public interface RequestService {
     }
 
     public interface Repository {
-
     }
 
     public interface LocalStorage {
 
     }
-
 }

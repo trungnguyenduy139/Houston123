@@ -18,6 +18,7 @@ import io.reactivex.Observable;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -42,6 +43,21 @@ public class UserListStore {
         @DELETE("{user_type}/{user_id}")
         Observable<BaseResponse> deleteUser(@Path(value = "user_type", encoded = true) String userType,
                                             @Path(value = "user_id", encoded = true) String userId);
+
+        @PUT(Constants.Api.MANAGER + "/{user_id}")
+        Observable<BaseResponse> updateManager(@Path(value = "user_id") String userId,
+                                               @Query("hovaten") String name,
+                                               @Query("hinhanh") String img,
+                                               @Query("permission") String permission,
+                                               @Query("available") String available,
+                                               @Query("sdt") String sdt,
+                                               @Query("diachi") String address,
+                                               @Query("email") String email,
+                                               @Query("cmnd") String cmnd,
+                                               @Query("chucvu") String position,
+                                               @Query("coso") String department,
+                                               @Query("ngaynghi") String out,
+                                               @Query("lydonghi") String reason);
     }
 
     public interface Repository {
@@ -58,6 +74,8 @@ public class UserListStore {
         Observable<Integer> getPageFromLocal();
 
         Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId);
+
+        Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel);
     }
 
     public interface LocalStorage {

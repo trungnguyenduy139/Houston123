@@ -9,6 +9,8 @@ import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
+import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
@@ -30,6 +32,8 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     public BaseUserModel mUserModel;
 
     private Navigator mNavigator;
+
+    private UserListStore.Repository mUserListRepository;
 
     public int mServiceActionCode = DetailServiceType.START_UPDATE;
 
@@ -54,9 +58,10 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
     @Inject
-    public DetailUserViewModel(Context context, Navigator navigator) {
+    public DetailUserViewModel(Context context, Navigator navigator, UserListRepository repository) {
         super(context);
         this.mNavigator = navigator;
+        this.mUserListRepository = repository;
     }
 
     @OnClick
@@ -69,8 +74,11 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                 Bundle bundle = new BundleBuilder().putValue(BundleConstants.KEY_UPDATE_USER_DETAIL, mUserModel).build();
                 mNavigator.startEditDetailActivity(context, bundle);
                 break;
-            // make repository call
-            // chose repository based on action code
+            case DetailServiceType.DO_UPDATE:
+//                mUserListRepository.callApiUpdateManager(new ManagerModel());
+                break;
+            default:
+                break;
         }
     }
 

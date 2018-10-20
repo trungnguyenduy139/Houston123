@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
         <variable
@@ -7,26 +8,26 @@
             type="com.trungnguyen.android.houston123.ui.main.home.HomeItemViewModel" />
 
     </data>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:padding="20dp"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:onClick="@{() -> viewModel.onItemClick()}"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <ImageView
             android:layout_width="50dp"
-            app:imageResource="@{viewModel.mImgRes}"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_height="50dp" />
+            app:imageResource="@{viewModel.mImgRes}" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:text="@{viewModel.mTitle}"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@{viewModel.mTitle}" />
 
     </LinearLayout>
 </layout>

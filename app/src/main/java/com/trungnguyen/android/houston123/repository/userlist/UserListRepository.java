@@ -144,6 +144,11 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @Override
+    public Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel) {
+        return Observable.just(new BaseResponse());
+    }
+
+    @Override
     public Observable<Integer> getPageFromLocal() {
         return Observable.just(mLocalStorage.getCurrentPage());
     }
