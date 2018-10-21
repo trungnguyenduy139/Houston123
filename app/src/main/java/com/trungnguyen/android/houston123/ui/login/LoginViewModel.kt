@@ -1,9 +1,7 @@
 package com.trungnguyen.android.houston123.ui.login
 
-import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.text.TextUtils
-
 import com.trungnguyen.android.houston123.anotation.OnClick
 import com.trungnguyen.android.houston123.base.BaseViewModel
 import com.trungnguyen.android.houston123.data.AuthenticateResponse
@@ -12,11 +10,10 @@ import com.trungnguyen.android.houston123.repository.login.AuthenticateStore
 import com.trungnguyen.android.houston123.rx.DefaultSubscriber
 import com.trungnguyen.android.houston123.rx.SchedulerHelper
 import com.trungnguyen.android.houston123.util.AppUtils
-
-import javax.inject.Inject
-
+import com.trungnguyen.android.houston123.util.SingleLiveEvent
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 class LoginViewModel
 @Inject
@@ -27,7 +24,9 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
 
     private val mAuthRepository: AuthenticateStore.Repository
 
-    private val isLoggedIn = MutableLiveData<Boolean>()
+    val isLoggedIn = SingleLiveEvent<Boolean>()
+
+    val liveUserToken = SingleLiveEvent<String>()
 
     init {
         isLoggedIn.value = mLoginState
@@ -35,12 +34,11 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
         mLoginModel = LoginModel()
     }
 
-    fun getIsLoggedIn(): MutableLiveData<Boolean> {
+    fun getLoginStatus() {
         val disposable = mAuthRepository.loginState
                 .compose(SchedulerHelper.applySchedulers())
                 .subscribe({ isLoggedIn.setValue(it) }, { Timber.d(it) })
         mSubscription.add(disposable)
-        return isLoggedIn
     }
 
     @OnClick
@@ -62,7 +60,7 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
                 .doOnSubscribe { mView?.showLoadingDialog() }
                 .doOnTerminate { mView?.hideLoadingDialog() }
                 .subscribe({
-                    mView?.onAuthSuccess(it.userToken)
+                    liveUserToken.value = it.userToken
                 }, {
                     mView?.onAuthFailed()
                 })

@@ -24,9 +24,15 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel.getIsLoggedIn().observe(this, this::handleState);
+        viewModel.getLoginStatus();
     }
 
+    @Override
+    public void initViewObservable() {
+        super.initViewObservable();
+        viewModel.isLoggedIn().observe(this, this::handleState);
+        viewModel.getLiveUserToken().observe(this, this::onAuthSuccess);
+    }
 
     public void handleState(boolean isLoggedIn) {
         if (isLoggedIn) {

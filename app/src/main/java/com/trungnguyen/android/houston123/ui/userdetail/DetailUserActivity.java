@@ -1,6 +1,5 @@
 package com.trungnguyen.android.houston123.ui.userdetail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,9 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
-
+import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
