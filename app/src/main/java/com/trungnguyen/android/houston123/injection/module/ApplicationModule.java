@@ -9,6 +9,8 @@ import com.trungnguyen.android.houston123.util.CommonResourceLoader;
 import com.trungnguyen.android.houston123.util.Navigator;
 import com.trungnguyen.android.houston123.util.PrefsUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -21,6 +23,13 @@ public abstract class ApplicationModule {
     @Singleton
     static protected Context provideApplicationContext(Application application) {
         return application;
+    }
+
+    @Provides
+    @Singleton
+    @NonNull
+    static protected EventBus provideEventBus() {
+        return EventBus.getDefault();
     }
 
     @NonNull

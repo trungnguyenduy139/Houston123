@@ -14,14 +14,19 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.bus.DeletedUserEvent;
 import com.trungnguyen.android.houston123.databinding.ActivityDetailUserBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBinding, DetailUserViewModel>
         implements IDetailUserView {
@@ -32,6 +37,9 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     private BaseUserModel mUserModel;
     private int mCode;
     private int mPosition;
+
+    @Inject
+    EventBus mEventBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         binding.detailUserRecycler.setAdapter(mUserDetailAdapter);
 
         setTitle(getResources().getString(R.string.user_detail));
+
     }
 
     @Override
@@ -86,6 +95,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     public void deleteUserSuccess() {
         setResult(Constants.DELETED_USER);
         setIntent(new Intent().putExtra(Constants.RESULT_DELETED, mPosition));
+        mEventBus.post(new DeletedUserEvent(mPosition));
         finish();
     }
 

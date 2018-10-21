@@ -89,17 +89,17 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
                 .flatMap(string -> {
                     if (TextUtils.isEmpty(string)) {
                         mListUser.addAll(mFilterList);
+                        return Observable.just(string);
                     } else {
                         return Observable.just(mFilterList)
                                 .flatMapIterable(list -> list)
-                                .flatMap(item -> {
+                                .map(item -> {
                                     if (item.getName().toLowerCase(Locale.getDefault()).contains(textSearchSequence)) {
                                         mListUser.add(item);
                                     }
-                                    return Observable.just(string);
+                                    return string;
                                 });
                     }
-                    return Observable.just(string);
                 });
 
     }

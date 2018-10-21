@@ -10,12 +10,17 @@ import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.bus.DeletedUserEvent;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.widget.InfiniteScrollListener;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +62,10 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         viewModel.getUserListLiveData().observe(this, o -> {
 
         });
+
+        EventBus.getDefault().register(this);
     }
+
 
     @SuppressWarnings("unchecked")
     private List<BaseUserModel> getData(Intent intent) {
@@ -77,6 +85,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         if (mListAdapter != null) {
             mListAdapter.releaseListener();
         }
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -107,6 +116,15 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                     sweetAlertDialog.dismiss();
                 });
         dialog.show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserDeletedOnDetailScreen(DeletedUserEvent event) {
+        if (event == null) {
+            return;
+        }
+        int position = event.getUserPosition();
+        successToDeleteUser(position);
     }
 
     @Override

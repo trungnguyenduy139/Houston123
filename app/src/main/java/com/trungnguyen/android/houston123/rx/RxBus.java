@@ -2,7 +2,6 @@ package com.trungnguyen.android.houston123.rx;
 
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,8 +11,9 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 public class RxBus {
-    @Nullable
+
     private static volatile RxBus mDefaultInstance;
+
     @NonNull
     private final Subject<Object> mBus;
 
@@ -25,7 +25,6 @@ public class RxBus {
         mStickyEventMap = new ConcurrentHashMap<>();
     }
 
-    @Nullable
     public static RxBus getDefault() {
         if (mDefaultInstance == null) {
             synchronized (RxBus.class) {

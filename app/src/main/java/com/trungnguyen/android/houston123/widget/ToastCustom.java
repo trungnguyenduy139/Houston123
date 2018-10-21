@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ public final class ToastCustom {
     public static final int LENGTH_SHORT = 0;
     public static final int LENGTH_LONG = 1;
 
+    @SuppressLint("ObsoleteSdkInt")
     @UiThread
     public static void makeText(@NonNull final Context context, final CharSequence text, final int duration, @NonNull final @ToastType String type) {
         Toast toast = Toast.makeText(context, text, duration);
