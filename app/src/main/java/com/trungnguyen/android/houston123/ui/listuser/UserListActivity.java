@@ -2,7 +2,6 @@ package com.trungnguyen.android.houston123.ui.listuser;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -193,15 +192,6 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     public void onRefresh() {
         if (viewModel != null && mUserCode != Constants.DEFAULT_CODE_VALUE) {
             viewModel.refreshList(mUserCode);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && resultCode == Constants.DELETED_USER && requestCode == Constants.REQUEST_DETAIL) {
-            int position = data.getIntExtra(Constants.RESULT_DELETED, 0);
-            successToDeleteUser(position);
         }
     }
 }

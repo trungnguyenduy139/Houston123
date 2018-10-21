@@ -12,9 +12,6 @@ object Constants {
     const val TOKEN_PREFIX = "Bearer"
     const val SPACE = " "
     const val FIRST_PAGE_REQUEST = 1
-    const val DELETED_USER = 100
-    const val REQUEST_DETAIL = 200
-    const val RESULT_DELETED = "result_deleted"
 
     // API url const
     object LoginApi {

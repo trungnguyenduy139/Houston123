@@ -93,8 +93,6 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
 
     @Override
     public void deleteUserSuccess() {
-        setResult(Constants.DELETED_USER);
-        setIntent(new Intent().putExtra(Constants.RESULT_DELETED, mPosition));
         mEventBus.post(new DeletedUserEvent(mPosition));
         finish();
     }

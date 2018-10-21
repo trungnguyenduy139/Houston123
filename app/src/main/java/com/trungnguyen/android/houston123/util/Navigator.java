@@ -23,7 +23,7 @@ public final class Navigator {
     public void startDetailActivity(@NonNull Activity activity, @NonNull Bundle bundle) {
         Intent intent = getIntent(activity, DetailUserActivity.class);
         intent.putExtras(bundle);
-        activity.startActivityForResult(intent, Constants.REQUEST_DETAIL);
+        activity.startActivity(intent);
     }
 
     public void startEditDetailActivity(@NonNull Context context, @NonNull Bundle bundle) {
