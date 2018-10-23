@@ -1,7 +1,9 @@
 package com.trungnguyen.android.houston123.repository.userlist;
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
+import com.trungnguyen.android.houston123.data.DataResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
@@ -34,7 +36,7 @@ public class UserListStore {
         Observable<ListBaseResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
         @GET(Constants.Api.MANAGER)
-        Observable<ListBaseResponse<ManagerResponse>> getListManager(@Query("page") int page);
+        Observable<DataResponse<ManagerResponse>> getListManager(@Query("page") int page);
 
         @Headers({
                 "Content-Type: application/json",
@@ -69,7 +71,7 @@ public class UserListStore {
 
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
-        Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code, int page);
+        Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page);
 
         Observable<Integer> getPageFromLocal();
 

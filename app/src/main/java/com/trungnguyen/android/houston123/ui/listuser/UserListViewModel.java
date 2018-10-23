@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
@@ -31,7 +32,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     private Navigator mNavigator;
     private UserListStore.Repository mUserListRepository;
-    private UserListAdapter<BaseUserModel> mAdapter;
+    private UserListAdapter<BaseModel> mAdapter;
 
 
     @NonNull
@@ -50,13 +51,13 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
         return mUserListLiveData;
     }
 
-    public void attachAdapter(@NonNull UserListAdapter<BaseUserModel> adapter) {
+    public void attachAdapter(@NonNull UserListAdapter<BaseModel> adapter) {
         adapter.setListener(this);
         mAdapter = adapter;
     }
 
     @Override
-    public void onItemClick(@NonNull BaseUserModel baseUserModel, int position) {
+    public void onItemClick(@NonNull BaseModel baseUserModel, int position) {
         if (!(mView instanceof UserListActivity)) {
             return;
         }
@@ -125,8 +126,12 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
         mSubscription.add(subscription);
     }
 
-    public void doRemoveUser(int code, int position, BaseUserModel baseUserModel) {
-        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, baseUserModel.getUserId())
+    public void doRemoveUser(int code, int position, BaseModel baseUserModel) {
+        if (!(baseUserModel instanceof BaseUserModel)) {
+            return;
+        }
+
+        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, ((BaseUserModel)baseUserModel).getUserId())
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(baseResponse -> {
                     if (mView != null) {

@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.ui.listuser;
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.IBaseView;
 
@@ -13,9 +14,9 @@ public interface IUserListView extends IBaseView {
 
     void doSearchAction(String text);
 
-    void doLoadMore(Collection<? extends BaseUserModel> userModels);
+    void doLoadMore(Collection<? extends BaseModel> userModels);
 
-    void doRefreshList(Collection<? extends BaseUserModel> usersModels);
+    void doRefreshList(Collection<? extends BaseModel> usersModels);
 
     void setRefreshing(boolean isRefreshing);
 

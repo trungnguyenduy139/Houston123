@@ -1,9 +1,7 @@
 package com.trungnguyen.android.houston123.base;
 
-import android.databinding.BaseObservable;
 import android.text.TextUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
@@ -11,7 +9,7 @@ import io.reactivex.Observable;
 /**
  * Created by trungnd4 on 20/07/2018.
  */
-public abstract class BaseUserModel extends BaseObservable implements Serializable {
+public abstract class BaseUserModel extends BaseModel {
 
     private String userImg;
     protected String name;
@@ -22,8 +20,7 @@ public abstract class BaseUserModel extends BaseObservable implements Serializab
     protected String cmnd;
 
     public BaseUserModel(String name, String phoneNumber, String address, String userId, String email, String cmnd) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
+        super(name, phoneNumber);
         this.address = address;
         this.userId = userId;
         this.email = email;

@@ -1,14 +1,10 @@
 package com.trungnguyen.android.houston123.base;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
-import com.trungnguyen.android.houston123.injection.DataManagerComponent;
 import com.trungnguyen.android.houston123.injection.Injector;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -55,36 +51,6 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-    }
-
-
-    public void startActivity(Class<?> clz) {
-        context.startActivity(new Intent(context, clz));
-    }
-
-    public void startActivity(Class<?> clz, @Nullable Bundle bundle) {
-        Intent intent = new Intent(context, clz);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        context.startActivity(intent);
-    }
-
-
-    public void startContainerActivity(String canonicalName, @Nullable Bundle bundle) {
-        Intent intent = new Intent(context, ContainerActivity.class);
-        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
-        if (bundle != null) {
-            intent.putExtra(ContainerActivity.BUNDLE, bundle);
-        }
-        context.startActivity(intent);
-    }
-
-
-    public void startContainerActivity(String canonicalName) {
-        Intent intent = new Intent(context, ContainerActivity.class);
-        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
-        context.startActivity(intent);
     }
 
     @Override

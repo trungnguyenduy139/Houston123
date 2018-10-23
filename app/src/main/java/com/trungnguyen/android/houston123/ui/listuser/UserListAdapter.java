@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.InfinityAdapterType;
 import com.trungnguyen.android.houston123.base.BaseInfinityAdapter;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.UserListItemBinding;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -29,7 +29,7 @@ import io.reactivex.Observable;
  * Created by trungnd4 on 13/07/2018.
  */
 
-public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapter<UserListListener> {
+public class UserListAdapter<U extends BaseModel> extends BaseInfinityAdapter<UserListListener> {
 
     private List<U> mListUser;
 
@@ -94,7 +94,7 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
                         return Observable.just(mFilterList)
                                 .flatMapIterable(list -> list)
                                 .map(item -> {
-                                    if (item.getName().toLowerCase(Locale.getDefault()).contains(textSearchSequence)) {
+                                    if (item.getMainContent().toLowerCase(Locale.getDefault()).contains(textSearchSequence)) {
                                         mListUser.add(item);
                                     }
                                     return string;
@@ -117,7 +117,7 @@ public class UserListAdapter<U extends BaseUserModel> extends BaseInfinityAdapte
 
         @Override
         public void onBind(int position) {
-            final BaseUserModel user = mListUser.get(position);
+            final BaseModel user = mListUser.get(position);
 
             userItemViewModel = new UserItemViewModel(user, this);
 

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -27,9 +28,9 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
-        BaseUserModel baseUserModel = null;
+        BaseModel baseUserModel = null;
         if (bundle != null) {
-            baseUserModel = (BaseUserModel) bundle.getSerializable(BundleConstants.KEY_UPDATE_USER_DETAIL);
+            baseUserModel = (BaseModel) bundle.getSerializable(BundleConstants.KEY_UPDATE_USER_DETAIL);
         }
         if (baseUserModel != null) {
             viewModel.setLecturerModel(baseUserModel);

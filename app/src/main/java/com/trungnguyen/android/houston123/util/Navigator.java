@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.trungnguyen.android.houston123.base.ContainerActivity;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
@@ -41,6 +43,35 @@ public final class Navigator {
     public void startUserListActivity(@NonNull Context context, @NonNull Bundle bundle) {
         Intent intent = getIntent(context, UserListActivity.class);
         intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    public void startActivity(Context context, Class<?> clz) {
+        context.startActivity(new Intent(context, clz));
+    }
+
+    public void startActivity(Context context, Class<?> clz, @Nullable Bundle bundle) {
+        Intent intent = new Intent(context, clz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        context.startActivity(intent);
+    }
+
+
+    public void startContainerActivity(Context context, String canonicalName, @Nullable Bundle bundle) {
+        Intent intent = new Intent(context, ContainerActivity.class);
+        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
+        if (bundle != null) {
+            intent.putExtra(ContainerActivity.BUNDLE, bundle);
+        }
+        context.startActivity(intent);
+    }
+
+
+    public void startContainerActivity(Context context, String canonicalName) {
+        Intent intent = new Intent(context, ContainerActivity.class);
+        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
         context.startActivity(intent);
     }
 

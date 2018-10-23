@@ -1,9 +1,6 @@
 package com.trungnguyen.android.houston123.ui.userdetail.detailmodel;
 
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 import com.trungnguyen.android.houston123.util.ModelResourceLoader;
@@ -75,7 +72,7 @@ public class ManagerModel extends BaseUserModel {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io());
 
-        Observable<String> observableValue = Observable.just(Arrays.asList(userId, name, phoneNumber, address, email, cmnd, position, getOutDate(), getOutReason(), department))
+        Observable<String> observableValue = Observable.just(Arrays.asList(userId, getMainContent(), getSubCotent(), address, email, cmnd, position, getOutDate(), getOutReason(), department))
                 .flatMapIterable(items -> items)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io());

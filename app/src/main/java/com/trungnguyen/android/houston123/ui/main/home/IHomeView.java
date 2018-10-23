@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.ui.main.home;
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.IBaseLoadingView;
 
@@ -14,5 +15,5 @@ public interface IHomeView extends IBaseLoadingView {
 
     void failedToLoadUsers(Throwable throwable);
 
-    void successToLoadUsers(int code, Collection<? extends BaseUserModel> userModels);
+    void successToLoadUsers(int code, Collection<? extends BaseModel> userModels);
 }

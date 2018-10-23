@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
@@ -29,7 +30,7 @@ import timber.log.Timber;
 public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, UserDetailListener> implements UserDetailListener {
 
     @Nullable
-    public BaseUserModel mUserModel;
+    public BaseModel mUserModel;
 
     private Navigator mNavigator;
 
@@ -37,14 +38,14 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
     public int mServiceActionCode = DetailServiceType.START_UPDATE;
 
-    public void setLecturerModel(@Nullable BaseUserModel userModel) {
+    public void setLecturerModel(@Nullable BaseModel userModel) {
         if (userModel == null) {
             return;
         }
         mUserModel = userModel;
     }
 
-    public void initDetailList(@NonNull BaseUserModel baseUserModel) {
+    public void initDetailList(@NonNull BaseModel baseUserModel) {
         Disposable subscription = baseUserModel
                 .convert()
                 .compose(SchedulerHelper.applySchedulers())

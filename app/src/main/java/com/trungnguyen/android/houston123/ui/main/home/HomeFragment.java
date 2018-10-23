@@ -12,6 +12,7 @@ import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.base.BaseFragment;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.FragmentMainBinding;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
@@ -24,6 +25,8 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 18/08/2018.
@@ -103,10 +106,11 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getBaseActivity(), SweetAlertDialog.ERROR_TYPE);
         sweetAlertDialog.setContentText(getString(R.string.default_api_error_msg));
         sweetAlertDialog.show();
+        Timber.d("Load list model error [%s]", throwable.getMessage());
     }
 
     @Override
-    public void successToLoadUsers(int code, Collection<? extends BaseUserModel> userModels) {
+    public void successToLoadUsers(int code, Collection<? extends BaseModel> userModels) {
         if (getBaseActivity() == null || getBaseActivity().isFinishing()) {
             return;
         }

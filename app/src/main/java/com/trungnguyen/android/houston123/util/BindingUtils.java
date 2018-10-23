@@ -22,7 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.ui.listuser.UserListAdapter;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public final class BindingUtils {
     }
 
     @BindingAdapter({"adapter"})
-    public static void addUserItem(RecyclerView recyclerView, List<BaseUserModel> lecturerModels) {
+    public static void addUserItem(RecyclerView recyclerView, List<BaseModel> lecturerModels) {
         UserListAdapter adapter = (UserListAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.clearItems();

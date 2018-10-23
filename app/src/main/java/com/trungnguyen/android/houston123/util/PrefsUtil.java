@@ -24,7 +24,7 @@ public final class PrefsUtil implements PersistentPrefs {
     /**
      * Should try/catch when using PUT and GET List of Data from SharedPreferences
      * <p>
-     * Put Class<T> of Object to make sure Gson parsing the correct type
+     * Put ClassModel<T> of Object to make sure Gson parsing the correct type
      */
 
     public <T> List<T> getListPreferences(String key, Class<T> type) {

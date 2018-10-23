@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.bus.DeletedUserEvent;
@@ -33,9 +34,9 @@ import timber.log.Timber;
 public class UserListActivity extends BaseToolbarActivity<ActivityUserListBinding, UserListViewModel> implements
         IUserListView, SwipeRefreshLayout.OnRefreshListener {
 
-    private UserListAdapter<BaseUserModel> mListAdapter;
+    private UserListAdapter<BaseModel> mListAdapter;
     private int mUserCode;
-    private List<BaseUserModel> mDataList;
+    private List<BaseModel> mDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +68,10 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
 
 
     @SuppressWarnings("unchecked")
-    private List<BaseUserModel> getData(Intent intent) {
-        List<BaseUserModel> data;
+    private List<BaseModel> getData(Intent intent) {
+        List<BaseModel> data;
         try {
-            data = (List<BaseUserModel>) intent.getSerializableExtra(BundleConstants.LIST_USER_BUNDLE);
+            data = (List<BaseModel>) intent.getSerializableExtra(BundleConstants.LIST_USER_BUNDLE);
         } catch (Exception e) {
             data = new ArrayList<>();
             Timber.d("Failed to parse list of Users");
@@ -107,7 +108,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                     if (sweetAlertDialog == null || mUserCode == Constants.DEFAULT_CODE_VALUE) {
                         return;
                     }
-                    BaseUserModel baseUserModel = null;
+                    BaseModel baseUserModel = null;
                     if (!Lists.isEmptyOrNull(mDataList) && position >= 0 && position < mDataList.size()) {
                         baseUserModel = mDataList.get(position);
                     }
@@ -132,14 +133,14 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     }
 
     @Override
-    public void doLoadMore(Collection<? extends BaseUserModel> userModels) {
+    public void doLoadMore(Collection<? extends BaseModel> userModels) {
         if (mListAdapter != null) {
             mListAdapter.addItems(userModels);
         }
     }
 
     @Override
-    public void doRefreshList(Collection<? extends BaseUserModel> usersModels) {
+    public void doRefreshList(Collection<? extends BaseModel> usersModels) {
         if (mListAdapter == null) {
             return;
         }

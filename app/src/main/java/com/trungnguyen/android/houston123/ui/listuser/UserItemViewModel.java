@@ -4,6 +4,7 @@ import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import com.trungnguyen.android.houston123.base.BaseItemViewModelListener;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 
@@ -21,15 +22,15 @@ public class UserItemViewModel extends BaseViewModel {
     @NonNull
     public final ObservableField<String> mPhoneNumber;
 
-    private final BaseUserModel mLecturerModel;
+    private final BaseModel mLecturerModel;
 
     private OnUserClickListener mListener;
 
-    public UserItemViewModel(BaseUserModel lecturerModel, OnUserClickListener listener) {
+    public UserItemViewModel(BaseModel lecturerModel, OnUserClickListener listener) {
         this.mLecturerModel = lecturerModel;
-        mImgUrl = new ObservableField<>(mLecturerModel.getName());
-        mName = new ObservableField<>(mLecturerModel.getName());
-        mPhoneNumber = new ObservableField<>(mLecturerModel.getPhoneNumber());
+        mImgUrl = new ObservableField<>(mLecturerModel.getMainContent());
+        mName = new ObservableField<>(mLecturerModel.getMainContent());
+        mPhoneNumber = new ObservableField<>(mLecturerModel.getSubCotent());
         mListener = listener;
     }
 

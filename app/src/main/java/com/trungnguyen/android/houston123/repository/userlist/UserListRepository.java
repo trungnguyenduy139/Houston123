@@ -5,6 +5,7 @@ import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
@@ -80,6 +81,7 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<ManagerModel>> handleManagerService(int page) {
         return mRequestService.getListManager(page)
                 .filter(Objects::nonNull)
+                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
                 .doOnNext(managerResponseListBaseResponse ->
                         mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
@@ -108,7 +110,7 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<? extends Collection<? extends BaseUserModel>> handleUserServiceFlow(int code, int page) {
+    public Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page) {
         switch (code) {
             case UserType.STUDENT:
                 return this.handleLecturerService(page);
