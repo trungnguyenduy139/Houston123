@@ -21,4 +21,5 @@ public @interface UserType {
     int LECTURER = 0;
     int MANAGER = 1;
     int STUDENT = 2;
+    int CLAZZ = 3;
 }

@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by trungnd4 on 23/10/2018.
  */
-public class DataResponse<T extends BaseUserResponse> {
+public class DataResponse<T extends EmptyResponse> {
     @SerializedName("code")
     int returncode;
 
-    @SerializedName("quanly")
+    @SerializedName("embeddata")
     ListBaseResponse<T> listBaseResponse;
 
     public int getReturncode() {

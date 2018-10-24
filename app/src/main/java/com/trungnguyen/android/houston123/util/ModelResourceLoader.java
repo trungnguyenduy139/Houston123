@@ -19,6 +19,11 @@ public final class ModelResourceLoader {
         return Arrays.asList("Mã quản lý", "Họ và tên", "Số điện thoại", "Địa chỉ", "Email", "CMND", "Chức vụ", "Ngày nghĩ", "Lý do nghĩ", "Cơ sở");
     }
 
+
+    public static List<String> loadClassResource() {
+        return Arrays.asList("Mã Lớp", "Lớp", "Mã Môn Học", "Tên", "Mã Giáo Viên", "Họ Và Tên", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Nhánh", "Cơ sở");
+    }
+
     public static List<ItemDetailModel> loadEmptyManagerResources() {
         return new ArrayList<>();
     }

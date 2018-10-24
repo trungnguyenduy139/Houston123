@@ -10,10 +10,12 @@ import android.view.MenuItem;
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.bus.DeletedUserEvent;
 import com.trungnguyen.android.houston123.databinding.ActivityDetailUserBinding;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -32,7 +34,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     @NonNull
     private List<ItemDetailModel> mItemDetailList = new ArrayList<>();
     private UserDetailAdapter mUserDetailAdapter;
-    private BaseUserModel mUserModel;
+    private BaseModel mUserModel;
     private int mCode;
     private int mPosition;
 
@@ -43,10 +45,10 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
-        BaseUserModel baseUserModel = null;
+        BaseModel baseUserModel = null;
         if (bundle != null) {
             mPosition = bundle.getInt(BundleConstants.KEY_POSITION_USER);
-            baseUserModel = (BaseUserModel) bundle.getSerializable(BundleConstants.KEY_USER_DETAIL);
+            baseUserModel = (BaseModel) bundle.getSerializable(BundleConstants.KEY_USER_DETAIL);
             mCode = bundle.getInt(BundleConstants.KEY_CODE_DETAIL, Constants.DEFAULT_CODE_VALUE);
         }
         if (baseUserModel != null) {
@@ -122,7 +124,15 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                 viewModel.onUpdateClick(DetailServiceType.START_UPDATE);
                 break;
             case R.id.detail_delete:
-                viewModel.deleteCurrentUser(mCode, mUserModel.getUserId());
+                String modelId = "";
+                if (mUserModel instanceof BaseUserModel) {
+                    BaseUserModel model = (BaseUserModel) mUserModel;
+                    modelId = model.getUserId();
+                } else if (mUserModel instanceof ClassModel) {
+                    ClassModel model = (ClassModel) mUserModel;
+                    modelId = model.clazzId;
+                }
+                viewModel.deleteCurrentUser(mCode, modelId);
                 break;
         }
         return false;

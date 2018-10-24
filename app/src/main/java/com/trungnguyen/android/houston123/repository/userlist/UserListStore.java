@@ -1,13 +1,14 @@
 package com.trungnguyen.android.houston123.repository.userlist;
 
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
+import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.DataResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
@@ -60,6 +61,9 @@ public class UserListStore {
                                                @Query("coso") String department,
                                                @Query("ngaynghi") String out,
                                                @Query("lydonghi") String reason);
+
+        @GET(Constants.Api.CLAZZ)
+        Observable<DataResponse<ClassResponse>> getLisClazz(@Query("page") int page);
     }
 
     public interface Repository {
@@ -78,6 +82,8 @@ public class UserListStore {
         Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId);
 
         Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel);
+
+        Observable<List<ClassModel>> handleClassService(int page);
     }
 
     public interface LocalStorage {

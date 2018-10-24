@@ -8,7 +8,7 @@ import java.util.List;
  * Created by trungnd4 on 07/10/2018.
  */
 
-public class ListBaseResponse<T extends BaseUserResponse> {
+public class ListBaseResponse<T extends EmptyResponse> {
     @SerializedName("current_page")
     private int page;
     @SerializedName("data")

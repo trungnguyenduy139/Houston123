@@ -6,13 +6,14 @@ import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
+import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
 import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
@@ -118,6 +119,8 @@ public class UserListRepository implements UserListStore.Repository {
                 return this.handleManagerService(page);
             case UserType.LECTURER:
                 return this.handleStudentService(page);
+            case UserType.CLAZZ:
+                return this.handleClassService(page);
             default:
                 return Observable.just(new ArrayList<>());
         }
@@ -148,6 +151,23 @@ public class UserListRepository implements UserListStore.Repository {
     @Override
     public Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel) {
         return Observable.just(new BaseResponse());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Observable<List<ClassModel>> handleClassService(int page) {
+        return mRequestService.getLisClazz(page)
+                .filter(Objects::nonNull)
+                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
+                .doOnNext(managerResponseListBaseResponse ->
+                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
+                .filter(Objects::nonNull)
+                .flatMapIterable(managerResponses -> managerResponses)
+                .filter(Objects::nonNull)
+                .map(ClassResponse::convertToModel)
+                .toList()
+                .toObservable();
     }
 
     @Override
