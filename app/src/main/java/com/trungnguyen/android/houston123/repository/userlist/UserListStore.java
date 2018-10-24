@@ -31,10 +31,10 @@ import retrofit2.http.Query;
 public class UserListStore {
     public interface RequestService {
         @GET(Constants.Api.LECTURER)
-        Observable<ListBaseResponse<LecturerResponse>> getListLecturer(@Query("page") int page);
+        Observable<DataResponse<LecturerResponse>> getListLecturer(@Query("page") int page);
 
         @GET(Constants.Api.STUDENT)
-        Observable<ListBaseResponse<StudentResponse>> getListStudents(@Query("page") int page);
+        Observable<DataResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
         @GET(Constants.Api.MANAGER)
         Observable<DataResponse<ManagerResponse>> getListManager(@Query("page") int page);

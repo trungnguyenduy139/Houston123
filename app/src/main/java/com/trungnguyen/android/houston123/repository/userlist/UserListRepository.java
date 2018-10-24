@@ -49,12 +49,12 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<LecturerModel>> handleLecturerService(int page) {
         return mRequestService.getListLecturer(page)
                 .filter(Objects::nonNull)
-                .doOnNext(lecturerResponseListBaseResponse ->
-                        mLocalStorage.putCurrentListPageLocal(lecturerResponseListBaseResponse.getPage()))
-                .flatMap(lecturerResponseListBaseResponse ->
-                        Observable.just(lecturerResponseListBaseResponse.getDataList()))
+                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
+                .doOnNext(managerResponseListBaseResponse ->
+                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
-                .flatMapIterable(lecturerResponses -> lecturerResponses)
+                .flatMapIterable(managerResponses -> managerResponses)
                 .filter(Objects::nonNull)
                 .map(LecturerResponse::convertToModel)
                 .toList()
@@ -66,11 +66,12 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<StudentModel>> handleStudentService(int page) {
         return mRequestService.getListStudents(page)
                 .filter(Objects::nonNull)
-                .doOnNext(studentResponseListBaseResponse ->
-                        mLocalStorage.putCurrentListPageLocal(studentResponseListBaseResponse.getPage()))
-                .flatMap(studentResponseListBaseResponse -> Observable.just(studentResponseListBaseResponse.getDataList()))
+                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
+                .doOnNext(managerResponseListBaseResponse ->
+                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
-                .flatMapIterable(studentResponses -> studentResponses)
+                .flatMapIterable(managerResponses -> managerResponses)
                 .filter(Objects::nonNull)
                 .map(StudentResponse::convertToModel)
                 .toList()
@@ -114,11 +115,11 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page) {
         switch (code) {
             case UserType.STUDENT:
-                return this.handleLecturerService(page);
+                return this.handleStudentService(page);
             case UserType.MANAGER:
                 return this.handleManagerService(page);
             case UserType.LECTURER:
-                return this.handleStudentService(page);
+                return this.handleLecturerService(page);
             case UserType.CLAZZ:
                 return this.handleClassService(page);
             default:

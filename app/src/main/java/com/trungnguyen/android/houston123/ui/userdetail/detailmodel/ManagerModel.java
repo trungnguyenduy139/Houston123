@@ -2,15 +2,10 @@ package com.trungnguyen.android.houston123.ui.userdetail.detailmodel;
 
 
 import com.trungnguyen.android.houston123.base.BaseUserModel;
-import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
 import java.util.Arrays;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 14/08/2018.
@@ -65,21 +60,14 @@ public class ManagerModel extends BaseUserModel {
         return outReason != null ? outReason : "";
     }
 
+
     @Override
-    public Observable<List<ItemDetailModel>> convert() {
-        Observable<String> observableResource = Observable.just(ModelResourceLoader.loadResourceManager())
-                .flatMapIterable(items -> items)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io());
+    public List<String> getSource() {
+        return ModelResourceLoader.loadResourceManager();
+    }
 
-        Observable<String> observableValue = Observable.just(Arrays.asList(userId, getMainContent(), getSubCotent(), address, email, cmnd, position, getOutDate(), getOutReason(), department))
-                .flatMapIterable(items -> items)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io());
-
-        return Observable.zip(observableResource, observableValue, (ItemDetailModel::new))
-                .doOnNext(itemDetailModel -> Timber.d("[DetailUser] Print item detail mode %s", itemDetailModel.getKey()))
-                .toList()
-                .toObservable();
+    @Override
+    public List<String> getValue() {
+        return Arrays.asList(userId, getMainContent(), getSubCotent(), address, email, cmnd, position, getOutDate(), getOutReason(), department);
     }
 }

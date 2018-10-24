@@ -36,15 +36,12 @@ public class LecturerModel extends BaseUserModel implements Serializable {
         return img;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public String getOutDate() {
         if (outDate == null) {
             return "";
         }
-        return outDate;    }
+        return outDate;
+    }
 
     public String getOutReason() {
         if (outReason == null) {
@@ -61,20 +58,12 @@ public class LecturerModel extends BaseUserModel implements Serializable {
     }
 
     @Override
-    public Observable<List<ItemDetailModel>> convert() {
-        Observable<String> observableResource = Observable.just(ModelResourceLoader.loadResourceLecturer())
-                .flatMapIterable(items -> items)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io());
+    public List<String> getSource() {
+        return ModelResourceLoader.loadResourceLecturer();
+    }
 
-        Observable<String> observableValue = Observable.just(Arrays.asList(name, getPhoneNumber(), address, email, cmnd, getOutDate(), getOutReason(), getDepartment()))
-                .flatMapIterable(items -> items)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io());
-
-        return Observable.zip(observableResource, observableValue, (ItemDetailModel::new))
-                .doOnNext(itemDetailModel -> Timber.d("[DetailUser] Print item detail mode %s", itemDetailModel.getValue()))
-                .toList()
-                .toObservable();
+    @Override
+    public List<String> getValue() {
+        return Arrays.asList(getMainContent(), getSubCotent(), getAddress(), getEmail(), getCmnd(), getOutDate(), getOutReason(), getDepartment());
     }
 }

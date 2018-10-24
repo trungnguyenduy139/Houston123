@@ -2,6 +2,9 @@ package com.trungnguyen.android.houston123.ui.userdetail.detailmodel;
 
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by trungnd4 on 08/10/2018.
  */
@@ -19,4 +22,13 @@ public class StudentModel extends BaseUserModel {
         super(name, phoneNumber, address, userId, email, cmnd);
     }
 
+    @Override
+    public List<String> getSource() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<String> getValue() {
+        return new ArrayList<>();
+    }
 }

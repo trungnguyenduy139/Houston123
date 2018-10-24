@@ -53,20 +53,12 @@ public class ClassModel extends BaseModel {
     }
 
     @Override
-    public Observable<List<ItemDetailModel>> convert() {
-        Observable<String> observableResource = Observable.just(ModelResourceLoader.loadClassResource())
-                .flatMapIterable(items -> items)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io());
+    public List<String> getSource() {
+        return ModelResourceLoader.loadClassResource();
+    }
 
-        Observable<String> observableValue = Observable.just(Arrays.asList(clazzId, getMainContent(), getSubCotent(), lecturerId, lecturerName, startDate, endDate, branch, departmen))
-                .flatMapIterable(items -> items)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io());
-
-        return Observable.zip(observableResource, observableValue, (ItemDetailModel::new))
-                .doOnNext(itemDetailModel -> Timber.d("[DetailUser] Print item detail mode %s", itemDetailModel.getKey()))
-                .toList()
-                .toObservable();
+    @Override
+    public List<String> getValue() {
+        return Arrays.asList(clazzId, getMainContent(), getSubCotent(), lecturerId, lecturerName, startDate, endDate, branch, departmen);
     }
 }

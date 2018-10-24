@@ -2,10 +2,6 @@ package com.trungnguyen.android.houston123.base;
 
 import android.text.TextUtils;
 
-import java.util.ArrayList;
-
-import io.reactivex.Observable;
-
 /**
  * Created by trungnd4 on 20/07/2018.
  */
@@ -39,18 +35,30 @@ public abstract class BaseUserModel extends BaseModel {
     }
 
     public String getEmail() {
+        if (email == null) {
+            return "";
+        }
         return email;
     }
 
     public String getCmnd() {
+        if (cmnd == null) {
+            return "";
+        }
         return cmnd;
     }
 
     public String getAddress() {
+        if (address == null) {
+            return "";
+        }
         return address;
     }
 
     public String getName() {
+        if (name == null) {
+            return "";
+        }
         return name;
     }
 
@@ -67,9 +75,5 @@ public abstract class BaseUserModel extends BaseModel {
 
     public void getPhoneNumber(String phomeNumber) {
         this.phoneNumber = phomeNumber;
-    }
-
-    public Observable convert() {
-        return Observable.just(new ArrayList<>());
     }
 }
