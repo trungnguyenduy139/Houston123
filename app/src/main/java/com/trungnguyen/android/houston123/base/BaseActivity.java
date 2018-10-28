@@ -98,10 +98,9 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     }
 
     @Override
-    public void showFailedActionDialog() {
-        String msg = getString(R.string.general_error_message);
+    public void showErrorDialog(String errorMessage) {
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
-        sweetAlertDialog.setContentText(msg);
+        sweetAlertDialog.setContentText(errorMessage);
         sweetAlertDialog.show();
     }
 

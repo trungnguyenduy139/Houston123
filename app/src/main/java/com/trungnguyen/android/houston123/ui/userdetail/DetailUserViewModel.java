@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
@@ -135,7 +136,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                                 .build();
                         mNavigator.startUserListActivity(mContext, bundle);
                     }
-                }, throwable -> showFailedActionDialog());
+                }, throwable -> showFailedActionDialog(mContext.getString(R.string.general_error_message)));
 
         mSubscription.add(subscription);
     }

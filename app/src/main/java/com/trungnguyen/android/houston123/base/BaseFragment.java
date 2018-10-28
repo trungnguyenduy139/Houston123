@@ -149,12 +149,12 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     }
 
     @Override
-    public void showFailedActionDialog() {
+    public void showErrorDialog(String errorMessage) {
         BaseActivity baseActivity = getBaseActivity();
         if (baseActivity == null || baseActivity.isFinishing()) {
             return;
         }
-        baseActivity.showFailedActionDialog();
+        baseActivity.showErrorDialog(errorMessage);
     }
 
     public boolean onBackPressed() {

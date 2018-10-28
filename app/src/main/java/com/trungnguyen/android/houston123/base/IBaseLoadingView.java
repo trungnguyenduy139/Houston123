@@ -8,5 +8,5 @@ public interface IBaseLoadingView extends IBaseView {
 
     void hideLoadingDialog();
 
-    void showFailedActionDialog();
+    void showErrorDialog(String errorMessage);
 }

@@ -93,15 +93,15 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
         }
     }
 
-    protected void showFailedActionDialog() {
+    protected void showFailedActionDialog(String errorMessage) {
         if (mView instanceof BaseFragment) {
-            ((BaseFragment) mView).showFailedActionDialog();
+            ((BaseFragment) mView).showErrorDialog(errorMessage);
         } else if (mView instanceof BaseActivity) {
             BaseActivity baseActivity = (BaseActivity) mView;
             if (baseActivity.isFinishing()) {
                 return;
             }
-            baseActivity.showFailedActionDialog();
+            baseActivity.showErrorDialog(errorMessage);
         }
     }
 
