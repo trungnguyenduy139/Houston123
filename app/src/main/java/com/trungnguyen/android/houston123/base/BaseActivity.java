@@ -97,6 +97,14 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         mLoadingDialog.dismiss();
     }
 
+    @Override
+    public void showFailedActionDialog() {
+        String msg = getString(R.string.general_error_message);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+        sweetAlertDialog.setContentText(msg);
+        sweetAlertDialog.show();
+    }
+
     protected void showNetworkErrorDialog() {
         String msg = getString(R.string.network_message);
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);

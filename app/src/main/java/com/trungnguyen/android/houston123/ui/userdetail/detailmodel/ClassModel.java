@@ -1,15 +1,10 @@
 package com.trungnguyen.android.houston123.ui.userdetail.detailmodel;
 
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
 import java.util.Arrays;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 23/10/2018.

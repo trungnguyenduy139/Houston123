@@ -72,12 +72,36 @@ public class BaseViewModel<View> implements IBaseViewModel<View> {
     protected void showLoading() {
         if (mView instanceof BaseFragment) {
             ((BaseFragment) mView).showLoadingDialog();
+        } else if (mView instanceof BaseActivity) {
+            BaseActivity baseActivity = (BaseActivity) mView;
+            if (baseActivity.isFinishing()) {
+                return;
+            }
+            baseActivity.showLoadingDialog();
         }
     }
 
     protected void hideLoading() {
         if (mView instanceof BaseFragment) {
             ((BaseFragment) mView).hideLoadingDialog();
+        } else if (mView instanceof BaseActivity) {
+            BaseActivity baseActivity = (BaseActivity) mView;
+            if (baseActivity.isFinishing()) {
+                return;
+            }
+            baseActivity.hideLoadingDialog();
+        }
+    }
+
+    protected void showFailedActionDialog() {
+        if (mView instanceof BaseFragment) {
+            ((BaseFragment) mView).showFailedActionDialog();
+        } else if (mView instanceof BaseActivity) {
+            BaseActivity baseActivity = (BaseActivity) mView;
+            if (baseActivity.isFinishing()) {
+                return;
+            }
+            baseActivity.showFailedActionDialog();
         }
     }
 

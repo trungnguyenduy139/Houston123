@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.ui.userdetail;
 
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.IBaseLoadingView;
+import com.trungnguyen.android.houston123.data.ClassResponse;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface IDetailUserView extends IBaseLoadingView {
     void deleteUserSuccess();
 
     void deleteUserFailed();
+
+    void loadClassOfLecturerSuccess(List<ClassResponse> dataList);
 }

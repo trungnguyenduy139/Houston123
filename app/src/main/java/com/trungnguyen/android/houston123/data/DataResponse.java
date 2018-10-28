@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName;
  */
 public class DataResponse<T extends EmptyResponse> {
     @SerializedName("code")
-    int returncode;
+    String returncode;
 
     @SerializedName("embeddata")
     ListBaseResponse<T> listBaseResponse;
 
-    public int getReturncode() {
+    public String getReturncode() {
         return returncode;
     }
 

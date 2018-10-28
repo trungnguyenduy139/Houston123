@@ -10,12 +10,15 @@ import android.view.MenuItem;
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
+import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.bus.DeletedUserEvent;
+import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.databinding.ActivityDetailUserBinding;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -110,9 +113,15 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     }
 
     @Override
+    public void loadClassOfLecturerSuccess(List<ClassResponse> dataList) {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.detail_user_menu, menu);
+        int menuId = mCode == UserType.LECTURER ? R.menu.teacher_menu : R.menu.detail_user_menu;
+        inflater.inflate(menuId, menu);
         return true;
     }
 
@@ -133,6 +142,13 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                     modelId = model.clazzId;
                 }
                 viewModel.deleteCurrentUser(mCode, modelId);
+                break;
+            case R.id.detail_class_teacher:
+                if (mUserModel instanceof LecturerModel) {
+                    viewModel.classOfLecturer(((LecturerModel) mUserModel).getUserId());
+                }
+                break;
+            default:
                 break;
         }
         return false;

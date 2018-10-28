@@ -148,6 +148,15 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         baseActivity.hideLoadingDialog();
     }
 
+    @Override
+    public void showFailedActionDialog() {
+        BaseActivity baseActivity = getBaseActivity();
+        if (baseActivity == null || baseActivity.isFinishing()) {
+            return;
+        }
+        baseActivity.showFailedActionDialog();
+    }
+
     public boolean onBackPressed() {
         return false;
     }

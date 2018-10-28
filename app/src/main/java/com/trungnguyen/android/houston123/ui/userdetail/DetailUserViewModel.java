@@ -9,7 +9,8 @@ import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
+import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserRepository;
+import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserStore;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
@@ -36,6 +37,10 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
     private UserListStore.Repository mUserListRepository;
 
+    private UpdateUserStore.Repository mUpdateUserRepository;
+
+    private Context mContext;
+
     public int mServiceActionCode = DetailServiceType.START_UPDATE;
 
     public void setLecturerModel(@Nullable BaseModel userModel) {
@@ -59,10 +64,14 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
     @Inject
-    public DetailUserViewModel(Context context, Navigator navigator, UserListRepository repository) {
+    public DetailUserViewModel(Context context, Navigator navigator,
+                               UserListRepository repository,
+                               UpdateUserRepository updateUserRepository) {
         super(context);
+        this.mContext = context;
         this.mNavigator = navigator;
         this.mUserListRepository = repository;
+        this.mUpdateUserRepository = updateUserRepository;
     }
 
     @OnClick
@@ -113,5 +122,21 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     public void onDestroy() {
         mUserModel = null;
         super.onDestroy();
+    }
+
+    public void classOfLecturer(String userId) {
+        Disposable subscription = mUpdateUserRepository.callApiClassOfLecturer(userId)
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .doOnError(throwable -> Timber.d("Failed to load 2 %s", throwable.getMessage()))
+                .subscribe(dataList -> {
+                    if (mNavigator != null) {
+                        Bundle bundle = new BundleBuilder()
+                                .putValue(BundleConstants.LIST_USER_BUNDLE, dataList)
+                                .build();
+                        mNavigator.startUserListActivity(mContext, bundle);
+                    }
+                }, throwable -> showFailedActionDialog());
+
+        mSubscription.add(subscription);
     }
 }

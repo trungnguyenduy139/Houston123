@@ -1,7 +1,6 @@
 package com.trungnguyen.android.houston123.ui.listuser;
 
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.IBaseView;
 
 import java.util.Collection;
