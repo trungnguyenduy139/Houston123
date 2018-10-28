@@ -101,7 +101,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
                 })
                 .subscribe(usersModels -> {
                     if (mView != null) {
-                        mView.doRefreshList(usersModels);
+                        mView.doRefreshList(usersModels, mUserListRepository.getHasLoader());
                     }
                 });
         mSubscription.add(subscription);
@@ -110,16 +110,22 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     public void nextPage(int code) {
         Observable<Integer> localPageObservable = mUserListRepository.getPageFromLocal()
                 .map(integer -> ++integer)
+                .map(integer -> {
+                    if (!mUserListRepository.getHasLoader()) {
+                        return Constants.LOADING_MORE_ERROR;
+                    }
+                    return integer;
+                })
                 .firstOrError()
                 .toObservable();
 
         Disposable subscription = localPageObservable
                 .doOnNext(integer -> Timber.d("current page is [%s]", integer))
                 .flatMap(integer -> mUserListRepository.handleUserServiceFlow(code, integer))
-                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .compose(SchedulerHelper.applySchedulers())
                 .subscribe(baseResponse -> {
                     if (mView != null) {
-                        mView.doLoadMore(baseResponse);
+                        mView.doLoadMore(baseResponse, mUserListRepository.getHasLoader());
                     }
                 });
 
@@ -131,7 +137,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
             return;
         }
 
-        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, ((BaseUserModel)baseUserModel).getUserId())
+        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, ((BaseUserModel) baseUserModel).getUserId())
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(baseResponse -> {
                     if (mView != null) {
@@ -154,5 +160,12 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
                     }
                 });
         mSubscription.add(subscription);
+    }
+
+    public boolean getHasLoader() {
+        if (mUserListRepository == null) {
+            return true;
+        }
+        return mUserListRepository.getHasLoader();
     }
 }

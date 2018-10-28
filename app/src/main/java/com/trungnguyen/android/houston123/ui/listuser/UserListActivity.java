@@ -46,6 +46,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         mDataList = getData(intent);
         mListAdapter = new UserListAdapter<>(mDataList);
         viewModel.attachAdapter(mListAdapter);
+        mListAdapter.setLoaderState(viewModel.getHasLoader());
         binding.swipeToRefreshUserList.setOnRefreshListener(this);
         binding.userListRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.userListRecycler.setAdapter(mListAdapter);
@@ -133,17 +134,19 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     }
 
     @Override
-    public void doLoadMore(Collection<? extends BaseModel> userModels) {
+    public void doLoadMore(Collection<? extends BaseModel> userModels, boolean hasLoader) {
         if (mListAdapter != null) {
+            mListAdapter.setLoaderState(hasLoader);
             mListAdapter.addItems(userModels);
         }
     }
 
     @Override
-    public void doRefreshList(Collection<? extends BaseModel> usersModels) {
+    public void doRefreshList(Collection<? extends BaseModel> usersModels, boolean hasLoader) {
         if (mListAdapter == null) {
             return;
         }
+        mListAdapter.setLoaderState(hasLoader);
         mListAdapter.clearItems();
         mListAdapter.addItems(usersModels);
     }

@@ -50,8 +50,10 @@ public class UserListRepository implements UserListStore.Repository {
         return mRequestService.getListLecturer(page)
                 .filter(Objects::nonNull)
                 .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
-                .doOnNext(managerResponseListBaseResponse ->
-                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .doOnNext(managerResponseListBaseResponse -> {
+                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
+                    mLocalStorage.putHasLoader(!TextUtils.isEmpty(managerResponseListBaseResponse.getNextPageUrl()));
+                })
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(managerResponses -> managerResponses)
@@ -67,8 +69,10 @@ public class UserListRepository implements UserListStore.Repository {
         return mRequestService.getListStudents(page)
                 .filter(Objects::nonNull)
                 .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
-                .doOnNext(managerResponseListBaseResponse ->
-                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .doOnNext(managerResponseListBaseResponse -> {
+                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
+                    mLocalStorage.putHasLoader(!TextUtils.isEmpty(managerResponseListBaseResponse.getNextPageUrl()));
+                })
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(managerResponses -> managerResponses)
@@ -83,9 +87,30 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<ManagerModel>> handleManagerService(int page) {
         return mRequestService.getListManager(page)
                 .filter(Objects::nonNull)
-                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
-                .doOnNext(managerResponseListBaseResponse ->
-                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .flatMap(managerResponseDataResponse -> {
+                    if (managerResponseDataResponse == null) {
+                        return Observable.error(HttpEmptyResponseException::new);
+                    }
+                    if (managerResponseDataResponse.getReturncode().equals(Constants.ServerCode.SUCCESS)) {
+                        return Observable.just(managerResponseDataResponse.getListBaseResponse());
+                    }
+                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, ""));
+                })
+                .flatMap(managerResponseListBaseResponse -> {
+                    if (managerResponseListBaseResponse == null) {
+                        return Observable.error(HttpEmptyResponseException::new);
+                    }
+                    return Observable.just(managerResponseListBaseResponse);
+                })
+                .doOnNext(managerResponseListBaseResponse -> {
+                    if (managerResponseListBaseResponse == null) {
+                        return;
+                    }
+                    String url = managerResponseListBaseResponse.getNextPageUrl();
+                    String nextPageUrl = url == null ? "" : url;
+                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
+                    mLocalStorage.putHasLoader(!TextUtils.isEmpty(nextPageUrl));
+                })
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(managerResponses -> managerResponses)
@@ -113,6 +138,9 @@ public class UserListRepository implements UserListStore.Repository {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page) {
+        if (page == Constants.LOADING_MORE_ERROR) {
+            return Observable.just(new ArrayList<>());
+        }
         switch (code) {
             case UserType.STUDENT:
                 return this.handleStudentService(page);
@@ -160,8 +188,10 @@ public class UserListRepository implements UserListStore.Repository {
         return mRequestService.getLisClazz(page)
                 .filter(Objects::nonNull)
                 .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
-                .doOnNext(managerResponseListBaseResponse ->
-                        mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage()))
+                .doOnNext(managerResponseListBaseResponse -> {
+                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
+                    mLocalStorage.putHasLoader(!TextUtils.isEmpty(managerResponseListBaseResponse.getNextPageUrl()));
+                })
                 .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
                 .flatMapIterable(managerResponses -> managerResponses)
@@ -169,6 +199,11 @@ public class UserListRepository implements UserListStore.Repository {
                 .map(ClassResponse::convertToModel)
                 .toList()
                 .toObservable();
+    }
+
+    @Override
+    public boolean getHasLoader() {
+        return mLocalStorage.getHasLoader();
     }
 
     @Override

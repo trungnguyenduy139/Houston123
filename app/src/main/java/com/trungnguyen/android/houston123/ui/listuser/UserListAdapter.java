@@ -36,8 +36,8 @@ public class UserListAdapter<U extends BaseModel> extends BaseInfinityAdapter<Us
     private List<U> mFilterList = new ArrayList<>();
 
     UserListAdapter(List<U> listUser) {
-        mListUser = listUser;
-        mFilterList.addAll(listUser);
+        this.mListUser = listUser;
+        this.mFilterList.addAll(listUser);
     }
 
     @Override

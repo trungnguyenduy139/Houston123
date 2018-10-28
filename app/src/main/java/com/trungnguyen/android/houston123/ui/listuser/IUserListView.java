@@ -13,9 +13,9 @@ public interface IUserListView extends IBaseView {
 
     void doSearchAction(String text);
 
-    void doLoadMore(Collection<? extends BaseModel> userModels);
+    void doLoadMore(Collection<? extends BaseModel> userModels, boolean hasLoader);
 
-    void doRefreshList(Collection<? extends BaseModel> usersModels);
+    void doRefreshList(Collection<? extends BaseModel> usersModels, boolean hasLoader);
 
     void setRefreshing(boolean isRefreshing);
 

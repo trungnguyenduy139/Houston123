@@ -5,7 +5,6 @@ import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.DataResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
-import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
@@ -84,11 +83,17 @@ public class UserListStore {
         Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel);
 
         Observable<List<ClassModel>> handleClassService(int page);
+
+        boolean getHasLoader();
     }
 
     public interface LocalStorage {
         void putCurrentListPageLocal(int page);
 
         int getCurrentPage();
+
+        void putHasLoader(boolean empty);
+
+        boolean getHasLoader();
     }
 }

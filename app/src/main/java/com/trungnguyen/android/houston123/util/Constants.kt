@@ -12,6 +12,7 @@ object Constants {
     const val TOKEN_PREFIX = "Bearer"
     const val SPACE = " "
     const val FIRST_PAGE_REQUEST = 1
+    const val LOADING_MORE_ERROR = -5
 
     // API url const
     object LoginApi {

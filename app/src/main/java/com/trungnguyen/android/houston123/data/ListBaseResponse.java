@@ -13,6 +13,8 @@ public class ListBaseResponse<T extends EmptyResponse> {
     private int page;
     @SerializedName("data")
     private List<T> dataList;
+    @SerializedName("next_page_url")
+    private String nextPageUrl = "";
 
     public int getPage() {
         return this.page;
@@ -20,5 +22,9 @@ public class ListBaseResponse<T extends EmptyResponse> {
 
     public List<T> getDataList() {
         return this.dataList;
+    }
+
+    public String getNextPageUrl() {
+        return nextPageUrl;
     }
 }

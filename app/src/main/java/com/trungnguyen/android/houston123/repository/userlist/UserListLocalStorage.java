@@ -23,4 +23,14 @@ public class UserListLocalStorage implements UserListStore.LocalStorage {
     public int getCurrentPage() {
         return mPrefsUtil.getIntPreferences(PreferencesConst.LIST_CURRENT_PAGE, 1);
     }
+
+    @Override
+    public void putHasLoader(boolean empty) {
+        mPrefsUtil.saveBoolPreferences(PreferencesConst.HAS_LOADER_PREF, empty);
+    }
+
+    @Override
+    public boolean getHasLoader() {
+        return mPrefsUtil.getBoolPreferences(PreferencesConst.HAS_LOADER_PREF, true);
+    }
 }

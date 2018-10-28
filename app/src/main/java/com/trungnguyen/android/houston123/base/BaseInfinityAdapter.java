@@ -18,17 +18,23 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
     @Nullable
     protected L mListener;
 
+    protected boolean mShowLoader = true;
+
     @Override
     public int getItemViewType(int position) {
 
         // loader can't be at position 0
         // loader can only be at the last position
 
-        if (position != 0 && position == getItemCount() - 1 && enableInfinity()) {
+        if (position != 0 && position == getItemCount() - 1 && enableInfinity() && mShowLoader) {
             return InfinityAdapterType.TYPE_LOADING;
         }
 
         return InfinityAdapterType.TYPE_NORMAL;
+    }
+
+    public void setLoaderState(boolean state) {
+        this.mShowLoader = state;
     }
 
     @NonNull
@@ -56,7 +62,7 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
         }
         int dataSize = getDataSize();
         // +1 for loader
-        return enableInfinity() ? dataSize + 1 : dataSize;
+        return enableInfinity() && mShowLoader ? dataSize + 1 : dataSize;
     }
 
     public abstract boolean enableInfinity();
