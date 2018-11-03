@@ -52,21 +52,21 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<List<BaseUserModel>> handleManagerService(int page, int api) {
         switch (api) {
             case UserType.MANAGER:
-                Observable<DataResponse<ManagerResponse>> observable = mRequestService.getListManager(page, Constants.Api.MANAGER);
-                return tempMethod(observable);
+                Observable<DataResponse<ManagerResponse>> observableManager = mRequestService.getListManager(page);
+                return processUserFlow(observableManager);
             case UserType.LECTURER:
-                Observable<DataResponse<ManagerResponse>> observable2 = mRequestService.getListManager(page, Constants.Api.LECTURER);
-                return tempMethod(observable2);
+                Observable<DataResponse<LecturerResponse>> observableLecturer = mRequestService.getListLecturer(page);
+                return processUserFlow(observableLecturer);
             case UserType.STUDENT:
-                Observable<DataResponse<ManagerResponse>> observable3 = mRequestService.getListManager(page, Constants.Api.STUDENT);
-                return tempMethod(observable3);
+                Observable<DataResponse<StudentResponse>> observableStudent = mRequestService.getListStudents(page);
+                return processUserFlow(observableStudent);
             default:
                 return Observable.just(new ArrayList<>());
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private <R extends BaseUserResponse> Observable<List<BaseUserModel>> tempMethod(Observable<DataResponse<R>> observable) {
+    private <R extends BaseUserResponse> Observable<List<BaseUserModel>> processUserFlow(Observable<DataResponse<R>> observable) {
         return observable
                 .filter(Objects::nonNull)
                 .flatMap(baseUserResponseDataResponse -> {

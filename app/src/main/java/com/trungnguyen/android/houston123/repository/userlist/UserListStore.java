@@ -37,9 +37,8 @@ public class UserListStore {
         @GET(Constants.Api.STUDENT)
         Observable<DataResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
-        @GET("{user_type}")
-        Observable<DataResponse<ManagerResponse>> getListManager(@Query("page") int page,
-                                                                                @Path(value = "user_type") String userType);
+        @GET(Constants.Api.MANAGER)
+        Observable<DataResponse<ManagerResponse>> getListManager(@Query("page") int page);
 
         @Headers({
                 "Content-Type: application/json",
