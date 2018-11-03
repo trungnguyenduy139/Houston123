@@ -86,7 +86,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                 mNavigator.startEditDetailActivity(context, bundle);
                 break;
             case DetailServiceType.DO_UPDATE:
-//                mUserListRepository.callApiUpdateManager(new ManagerModel());
+//                mUserListRepository.callApiUpdateUser();
                 break;
             default:
                 break;
@@ -139,5 +139,9 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                 }, throwable -> showFailedActionDialog(mContext.getString(R.string.general_error_message)));
 
         mSubscription.add(subscription);
+    }
+
+    public void onAddNewClicked(int userCode) {
+
     }
 }

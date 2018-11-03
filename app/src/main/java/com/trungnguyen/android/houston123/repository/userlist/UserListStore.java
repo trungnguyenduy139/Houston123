@@ -80,6 +80,8 @@ public class UserListStore {
         Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel);
 
         boolean getHasLoader();
+
+        void callApiUpdateUser(BaseModel model);
     }
 
     public interface LocalStorage {

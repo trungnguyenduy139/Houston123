@@ -161,6 +161,11 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @Override
+    public void callApiUpdateUser(BaseModel model) {
+
+    }
+
+    @Override
     public Observable<Integer> getPageFromLocal() {
         return Observable.just(mLocalStorage.getCurrentPage());
     }

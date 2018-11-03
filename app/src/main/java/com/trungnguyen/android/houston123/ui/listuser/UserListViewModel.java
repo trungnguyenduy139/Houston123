@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
+import com.trungnguyen.android.houston123.ui.userdetail.UpdateDetailUserActivity;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
@@ -21,7 +22,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
@@ -33,7 +33,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     private Navigator mNavigator;
     private UserListStore.Repository mUserListRepository;
     private UserListAdapter<BaseModel> mAdapter;
-
+    private Context mContext;
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
@@ -41,7 +41,8 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     @Inject
     UserListViewModel(Context context, Navigator navigator, UserListRepository userListRepository) {
         super(context);
-        mUserListLiveData = new MutableLiveData<>();
+        this.mContext = context;
+        this.mUserListLiveData = new MutableLiveData<>();
         this.mNavigator = navigator;
         this.mUserListRepository = userListRepository;
     }
@@ -156,5 +157,13 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
             return true;
         }
         return mUserListRepository.getHasLoader();
+    }
+
+    public void handleAddNewUser(int userCode) {
+        if (mNavigator == null) {
+            return;
+        }
+        mNavigator.startActivity(mContext, UpdateDetailUserActivity.class, new BundleBuilder()
+                .putValue(BundleConstants.ADD_NEW_USER_BUNDLE, userCode).build());
     }
 }

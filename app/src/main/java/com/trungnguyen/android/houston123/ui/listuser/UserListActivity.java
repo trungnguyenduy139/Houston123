@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.BR;
+import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.bus.DeletedUserEvent;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
 import com.trungnguyen.android.houston123.util.BundleConstants;
@@ -173,6 +175,26 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                         sweetAlertDialog1.dismissWithAnimation();
                     }
                 }).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.list_user_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.add_new:
+                viewModel.handleAddNewUser(mUserCode);
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 
     @Override

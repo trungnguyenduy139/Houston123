@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.trungnguyen.android.houston123.R;
+import com.trungnguyen.android.houston123.anotation.UserType;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.UpdateUserDetailItemBinding;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +37,12 @@ public class UpdateUserAdapter extends UserDetailAdapter {
         View rootView = LayoutInflater.from(context).inflate(getLayoutResource(), viewGroup, false);
         return new UpdateUserAdapter.UpdateUserItemViewHolder(Objects.requireNonNull(DataBindingUtil.bind(rootView)));
     }
+
+//    public BaseModel getModelData(int userCode) {
+//        for (int index = 0; index < mDataList.size(); index++) {
+//
+//        }
+//    }
 
     public class UpdateUserItemViewHolder extends BaseViewHolder {
 
