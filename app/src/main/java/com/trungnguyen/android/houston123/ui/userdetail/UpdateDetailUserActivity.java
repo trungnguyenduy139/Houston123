@@ -83,7 +83,7 @@ public class UpdateDetailUserActivity extends DetailUserActivity {
                 viewModel.onAddNewClicked(mUserCode);
                 break;
             case R.id.update_action:
-//                BaseModel model = mUserDetailAdapter.getModelData(mUserCode);
+                mUserDetailAdapter.getModelData(mUserCode, binding.detailUserRecycler);
                 viewModel.onUpdateClick(DetailServiceType.DO_UPDATE);
                 break;
             default:

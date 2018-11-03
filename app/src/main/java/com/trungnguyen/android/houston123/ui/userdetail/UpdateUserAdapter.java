@@ -2,17 +2,21 @@ package com.trungnguyen.android.houston123.ui.userdetail;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.trungnguyen.android.houston123.R;
-import com.trungnguyen.android.houston123.anotation.UserType;
-import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.UpdateUserDetailItemBinding;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
+import com.trungnguyen.android.houston123.util.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +24,8 @@ import java.util.Objects;
  * Created by trungnd4 on 26/08/2018.
  */
 public class UpdateUserAdapter extends UserDetailAdapter {
+
+    private UpdateUserDetailItemBinding mBinding;
 
     public UpdateUserAdapter(@NonNull List<ItemDetailModel> dataList) {
         super(dataList);
@@ -38,21 +44,31 @@ public class UpdateUserAdapter extends UserDetailAdapter {
         return new UpdateUserAdapter.UpdateUserItemViewHolder(Objects.requireNonNull(DataBindingUtil.bind(rootView)));
     }
 
-//    public BaseModel getModelData(int userCode) {
-//        for (int index = 0; index < mDataList.size(); index++) {
-//
-//        }
-//    }
+    public void getModelData(int code, RecyclerView recyclerView) {
+        ArrayList<String> list = new ArrayList<>();
+        ViewGroup view;
+        View et;
+        for (int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
+            view = (ViewGroup) recyclerView.getChildAt(i);
+            LinearLayout layout1 = (LinearLayout) view.getChildAt(0);
+            et = layout1.getChildAt(1);
+            if (!(et instanceof AppCompatEditText)) {
+                continue;
+            }
+            Editable editable = ((AppCompatEditText) et).getText();
+            String data = TextUtils.isEmpty(editable) ? Constants.EMPTY : editable.toString();
+            list.add(data);
+        }
+    }
 
     public class UpdateUserItemViewHolder extends BaseViewHolder {
 
         private UpdateUserItemViewModel userDetailItemViewModel;
 
-        private UpdateUserDetailItemBinding mBinding;
 
         UpdateUserItemViewHolder(@NonNull UpdateUserDetailItemBinding binding) {
             super(binding.getRoot());
-            this.mBinding = binding;
+            mBinding = binding;
         }
 
         @Override

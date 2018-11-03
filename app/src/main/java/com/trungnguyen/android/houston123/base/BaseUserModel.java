@@ -15,6 +15,10 @@ public abstract class BaseUserModel extends BaseModel {
     protected String email;
     protected String cmnd;
 
+    public BaseUserModel() {
+        super();
+    }
+
     public BaseUserModel(String name, String phoneNumber, String address, String userId, String email, String cmnd) {
         super(name, phoneNumber);
         this.address = address;

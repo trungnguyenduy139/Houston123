@@ -28,6 +28,11 @@ public class ManagerModel extends BaseUserModel {
         this.position = position;
     }
 
+
+    public ManagerModel() {
+        super();
+    }
+
     public String getImg() {
         return img;
     }
@@ -69,5 +74,10 @@ public class ManagerModel extends BaseUserModel {
     @Override
     public List<String> getValue() {
         return Arrays.asList(userId, getMainContent(), getSubCotent(), address, email, cmnd, position, getOutDate(), getOutReason(), department);
+    }
+
+    public ManagerModel convertToModel() {
+        ManagerModel managerModel = new ManagerModel();
+        return managerModel;
     }
 }

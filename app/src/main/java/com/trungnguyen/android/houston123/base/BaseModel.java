@@ -3,11 +3,8 @@ package com.trungnguyen.android.houston123.base;
 import android.databinding.BaseObservable;
 
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
-import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -21,6 +18,10 @@ public abstract class BaseModel extends BaseObservable implements Serializable {
     private String mainContent;
 
     private String subContent;
+
+    public BaseModel() {
+
+    }
 
     public BaseModel(String mainContent, String subContent) {
         this.mainContent = mainContent;

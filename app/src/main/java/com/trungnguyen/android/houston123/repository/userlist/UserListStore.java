@@ -44,20 +44,6 @@ public class UserListStore {
         Observable<BaseResponse> deleteUser(@Path(value = "user_type", encoded = true) String userType,
                                             @Path(value = "user_id", encoded = true) String userId);
 
-        @PUT(Constants.Api.MANAGER + "/{user_id}")
-        Observable<BaseResponse> updateManager(@Path(value = "user_id") String userId,
-                                               @Query("hovaten") String name,
-                                               @Query("hinhanh") String img,
-                                               @Query("permission") String permission,
-                                               @Query("available") String available,
-                                               @Query("sdt") String sdt,
-                                               @Query("diachi") String address,
-                                               @Query("email") String email,
-                                               @Query("cmnd") String cmnd,
-                                               @Query("chucvu") String position,
-                                               @Query("coso") String department,
-                                               @Query("ngaynghi") String out,
-                                               @Query("lydonghi") String reason);
 
         @GET(Constants.Api.CLAZZ)
         Observable<ListBaseResponse<ClassResponse>> getLisClazz(@Query("page") int page);
