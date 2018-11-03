@@ -49,27 +49,6 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public Observable<List<BaseModel>> handleUserService(int page, int api) {
-        switch (api) {
-            case UserType.MANAGER:
-                Observable<DataResponse<ManagerResponse>> observableManager = mRequestService.getListManager(page);
-                return processUserFlow(observableManager);
-            case UserType.LECTURER:
-                Observable<DataResponse<LecturerResponse>> observableLecturer = mRequestService.getListLecturer(page);
-                return processUserFlow(observableLecturer);
-            case UserType.STUDENT:
-                Observable<DataResponse<StudentResponse>> observableStudent = mRequestService.getListStudents(page);
-                return processUserFlow(observableStudent);
-            case UserType.CLAZZ:
-                Observable<DataResponse<ClassResponse>> observableClazz = mRequestService.getLisClazz(page);
-                return processUserFlow(observableClazz);
-            default:
-                return Observable.just(new ArrayList<>());
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private <R extends EmptyResponse> Observable<List<BaseModel>> processUserFlow(Observable<DataResponse<R>> observable) {
         return observable
                 .filter(Objects::nonNull)
@@ -123,15 +102,25 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page) {
+    public <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page) {
         if (page == Constants.LOADING_MORE_ERROR) {
             return Observable.just(new ArrayList<>());
         }
-        return this.handleUserService(page, code);
+        String userType = apiChooser(code);
+        Observable<DataResponse<R>> userObservable = mRequestService.getListOfUser(page, userType);
+        return processUserFlow(userObservable);
     }
 
     @Override
     public Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId) {
+        String userType = apiChooser(code);
+        if (code == Constants.DEFAULT_CODE_VALUE || TextUtils.isEmpty(userType) || TextUtils.isEmpty(userId)) {
+            return Observable.error(new HttpEmptyResponseException());
+        }
+        return this.callApiDeleteUser(userType, userId);
+    }
+
+    private String apiChooser(int code) {
         String userType = Constants.EMPTY;
         switch (code) {
             case UserType.STUDENT:
@@ -146,10 +135,7 @@ public class UserListRepository implements UserListStore.Repository {
             default:
                 break;
         }
-        if (code == Constants.DEFAULT_CODE_VALUE || TextUtils.isEmpty(userType) || TextUtils.isEmpty(userId)) {
-            return Observable.error(new HttpEmptyResponseException());
-        }
-        return this.callApiDeleteUser(userType, userId);
+        return userType;
     }
 
     @Override

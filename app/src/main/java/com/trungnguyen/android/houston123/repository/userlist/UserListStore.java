@@ -6,6 +6,7 @@ import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.BaseUserResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.DataResponse;
+import com.trungnguyen.android.houston123.data.EmptyResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
@@ -31,14 +32,15 @@ import retrofit2.http.Query;
  */
 public class UserListStore {
     public interface RequestService {
-        @GET(Constants.Api.LECTURER)
-        Observable<DataResponse<LecturerResponse>> getListLecturer(@Query("page") int page);
+//        @GET(Constants.Api.LECTURER)
+//        Observable<DataResponse<LecturerResponse>> getListLecturer(@Query("page") int page);
+//
+//        @GET(Constants.Api.STUDENT)
+//        Observable<DataResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
-        @GET(Constants.Api.STUDENT)
-        Observable<DataResponse<StudentResponse>> getListStudents(@Query("page") int page);
-
-        @GET(Constants.Api.MANAGER)
-        Observable<DataResponse<ManagerResponse>> getListManager(@Query("page") int page);
+        @GET("{user_type}")
+        <R extends EmptyResponse> Observable<DataResponse<R>> getListOfUser(@Query("page") int page,
+                                                                            @Path("user_type") String userType);
 
         @Headers({
                 "Content-Type: application/json",
@@ -63,8 +65,8 @@ public class UserListStore {
                                                @Query("ngaynghi") String out,
                                                @Query("lydonghi") String reason);
 
-        @GET(Constants.Api.CLAZZ)
-        Observable<DataResponse<ClassResponse>> getLisClazz(@Query("page") int page);
+//        @GET(Constants.Api.CLAZZ)
+//        Observable<DataResponse<ClassResponse>> getLisClazz(@Query("page") int page);
     }
 
     public interface Repository {
@@ -72,11 +74,9 @@ public class UserListStore {
 //
 //        Observable<List<StudentModel>> handleStudentService(int page);
 
-        Observable<List<BaseModel>> handleUserService(int page, int api);
-
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
-        Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page);
+        <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page);
 
         Observable<Integer> getPageFromLocal();
 
