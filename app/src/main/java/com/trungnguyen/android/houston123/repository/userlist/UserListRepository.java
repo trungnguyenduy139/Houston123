@@ -124,6 +124,9 @@ public class UserListRepository implements UserListStore.Repository {
             case UserType.LECTURER:
                 userType = Constants.Api.LECTURER;
                 break;
+            case UserType.CLAZZ:
+                userType = Constants.Api.CLAZZ;
+                break;
             default:
                 break;
         }
