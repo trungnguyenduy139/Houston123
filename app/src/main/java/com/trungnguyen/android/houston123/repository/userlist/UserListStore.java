@@ -72,7 +72,7 @@ public class UserListStore {
 //
 //        Observable<List<StudentModel>> handleStudentService(int page);
 
-        Observable<List<BaseUserModel>> handleManagerService(int page, int api);
+        Observable<List<BaseModel>> handleUserService(int page, int api);
 
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
@@ -86,7 +86,7 @@ public class UserListStore {
 
         Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel);
 
-        Observable<List<ClassModel>> handleClassService(int page);
+//        Observable<List<BaseModel>> handleClassService(int page);
 
         boolean getHasLoader();
     }

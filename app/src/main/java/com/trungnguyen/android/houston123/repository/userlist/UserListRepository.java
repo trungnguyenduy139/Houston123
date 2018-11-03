@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.BaseUserResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.DataResponse;
+import com.trungnguyen.android.houston123.data.EmptyResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
@@ -49,7 +50,7 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<List<BaseUserModel>> handleManagerService(int page, int api) {
+    public Observable<List<BaseModel>> handleUserService(int page, int api) {
         switch (api) {
             case UserType.MANAGER:
                 Observable<DataResponse<ManagerResponse>> observableManager = mRequestService.getListManager(page);
@@ -60,13 +61,16 @@ public class UserListRepository implements UserListStore.Repository {
             case UserType.STUDENT:
                 Observable<DataResponse<StudentResponse>> observableStudent = mRequestService.getListStudents(page);
                 return processUserFlow(observableStudent);
+            case UserType.CLAZZ:
+                Observable<DataResponse<ClassResponse>> observableClazz = mRequestService.getLisClazz(page);
+                return processUserFlow(observableClazz);
             default:
                 return Observable.just(new ArrayList<>());
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private <R extends BaseUserResponse> Observable<List<BaseUserModel>> processUserFlow(Observable<DataResponse<R>> observable) {
+    private <R extends EmptyResponse> Observable<List<BaseModel>> processUserFlow(Observable<DataResponse<R>> observable) {
         return observable
                 .filter(Objects::nonNull)
                 .flatMap(baseUserResponseDataResponse -> {
@@ -97,7 +101,7 @@ public class UserListRepository implements UserListStore.Repository {
                 .filter(Objects::nonNull)
                 .flatMapIterable(responses -> responses)
                 .filter(Objects::nonNull)
-                .map(BaseUserResponse::convertToModel)
+                .map(EmptyResponse::convertToModel)
                 .toList()
                 .toObservable();
     }
@@ -123,16 +127,7 @@ public class UserListRepository implements UserListStore.Repository {
         if (page == Constants.LOADING_MORE_ERROR) {
             return Observable.just(new ArrayList<>());
         }
-        switch (code) {
-            case UserType.STUDENT:
-            case UserType.MANAGER:
-            case UserType.LECTURER:
-                return this.handleManagerService(page, code);
-            case UserType.CLAZZ:
-                return this.handleClassService(page);
-            default:
-                return Observable.just(new ArrayList<>());
-        }
+        return this.handleUserService(page, code);
     }
 
     @Override
@@ -160,25 +155,6 @@ public class UserListRepository implements UserListStore.Repository {
     @Override
     public Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel) {
         return Observable.just(new BaseResponse());
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public Observable<List<ClassModel>> handleClassService(int page) {
-        return mRequestService.getLisClazz(page)
-                .filter(Objects::nonNull)
-                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
-                .doOnNext(managerResponseListBaseResponse -> {
-                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
-                    mLocalStorage.putHasLoader(!TextUtils.isEmpty(managerResponseListBaseResponse.getNextPageUrl()));
-                })
-                .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
-                .filter(Objects::nonNull)
-                .flatMapIterable(managerResponses -> managerResponses)
-                .filter(Objects::nonNull)
-                .map(ClassResponse::convertToModel)
-                .toList()
-                .toObservable();
     }
 
     @Override

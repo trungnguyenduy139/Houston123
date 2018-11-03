@@ -14,5 +14,4 @@ public abstract class BaseUserResponse extends EmptyResponse {
     @SerializedName("Địa Chỉ")
     String address;
 
-    public abstract BaseUserModel convertToModel();
 }
