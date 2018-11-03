@@ -23,6 +23,7 @@ public class LecturerResponse extends BaseUserResponse {
     @SerializedName("Cơ Sở")
     String department;
 
+    @Override
     public LecturerModel convertToModel() {
         return new LecturerModel(userName, phoneNumber, lecturerId, img, address, email, cmnd, outDate, outReason, department);
     }

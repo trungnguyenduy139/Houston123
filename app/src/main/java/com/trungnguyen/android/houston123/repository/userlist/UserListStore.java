@@ -1,7 +1,9 @@
 package com.trungnguyen.android.houston123.repository.userlist;
 
 import com.trungnguyen.android.houston123.base.BaseModel;
+import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
+import com.trungnguyen.android.houston123.data.BaseUserResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.DataResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
@@ -35,8 +37,9 @@ public class UserListStore {
         @GET(Constants.Api.STUDENT)
         Observable<DataResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
-        @GET(Constants.Api.MANAGER)
-        Observable<DataResponse<ManagerResponse>> getListManager(@Query("page") int page);
+        @GET("{user_type}")
+        Observable<DataResponse<ManagerResponse>> getListManager(@Query("page") int page,
+                                                                                @Path(value = "user_type") String userType);
 
         @Headers({
                 "Content-Type: application/json",
@@ -66,17 +69,19 @@ public class UserListStore {
     }
 
     public interface Repository {
-        Observable<List<LecturerModel>> handleLecturerService(int page);
+//        Observable<List<LecturerModel>> handleLecturerService(int page);
+//
+//        Observable<List<StudentModel>> handleStudentService(int page);
 
-        Observable<List<StudentModel>> handleStudentService(int page);
-
-        Observable<List<ManagerModel>> handleManagerService(int page);
+        Observable<List<BaseUserModel>> handleManagerService(int page, int api);
 
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
         Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page);
 
         Observable<Integer> getPageFromLocal();
+
+        Observable<Integer> handleLocalPageData();
 
         Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId);
 

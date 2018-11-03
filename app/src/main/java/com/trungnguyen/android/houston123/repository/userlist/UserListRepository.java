@@ -6,8 +6,11 @@ import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
+import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
+import com.trungnguyen.android.houston123.data.BaseUserResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
+import com.trungnguyen.android.houston123.data.DataResponse;
 import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
@@ -46,76 +49,55 @@ public class UserListRepository implements UserListStore.Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Observable<List<LecturerModel>> handleLecturerService(int page) {
-        return mRequestService.getListLecturer(page)
-                .filter(Objects::nonNull)
-                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
-                .doOnNext(managerResponseListBaseResponse -> {
-                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
-                    mLocalStorage.putHasLoader(!TextUtils.isEmpty(managerResponseListBaseResponse.getNextPageUrl()));
-                })
-                .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
-                .filter(Objects::nonNull)
-                .flatMapIterable(managerResponses -> managerResponses)
-                .filter(Objects::nonNull)
-                .map(LecturerResponse::convertToModel)
-                .toList()
-                .toObservable();
+    public Observable<List<BaseUserModel>> handleManagerService(int page, int api) {
+        switch (api) {
+            case UserType.MANAGER:
+                Observable<DataResponse<ManagerResponse>> observable = mRequestService.getListManager(page, Constants.Api.MANAGER);
+                return tempMethod(observable);
+            case UserType.LECTURER:
+                Observable<DataResponse<ManagerResponse>> observable2 = mRequestService.getListManager(page, Constants.Api.LECTURER);
+                return tempMethod(observable2);
+            case UserType.STUDENT:
+                Observable<DataResponse<ManagerResponse>> observable3 = mRequestService.getListManager(page, Constants.Api.STUDENT);
+                return tempMethod(observable3);
+            default:
+                return Observable.just(new ArrayList<>());
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public Observable<List<StudentModel>> handleStudentService(int page) {
-        return mRequestService.getListStudents(page)
+    private <R extends BaseUserResponse> Observable<List<BaseUserModel>> tempMethod(Observable<DataResponse<R>> observable) {
+        return observable
                 .filter(Objects::nonNull)
-                .flatMap(managerResponseDataResponse -> Observable.just(managerResponseDataResponse.getListBaseResponse()))
-                .doOnNext(managerResponseListBaseResponse -> {
-                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
-                    mLocalStorage.putHasLoader(!TextUtils.isEmpty(managerResponseListBaseResponse.getNextPageUrl()));
-                })
-                .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
-                .filter(Objects::nonNull)
-                .flatMapIterable(managerResponses -> managerResponses)
-                .filter(Objects::nonNull)
-                .map(StudentResponse::convertToModel)
-                .toList()
-                .toObservable();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public Observable<List<ManagerModel>> handleManagerService(int page) {
-        return mRequestService.getListManager(page)
-                .filter(Objects::nonNull)
-                .flatMap(managerResponseDataResponse -> {
-                    if (managerResponseDataResponse == null) {
+                .flatMap(baseUserResponseDataResponse -> {
+                    if (baseUserResponseDataResponse == null) {
                         return Observable.error(HttpEmptyResponseException::new);
                     }
-                    if (managerResponseDataResponse.getReturncode().equals(Constants.ServerCode.SUCCESS)) {
-                        return Observable.just(managerResponseDataResponse.getListBaseResponse());
+                    if (baseUserResponseDataResponse.getReturncode().equals(Constants.ServerCode.SUCCESS)) {
+                        return Observable.just(baseUserResponseDataResponse.getListBaseResponse());
                     }
                     return Observable.error(new BodyException(Constants.ServerCode.FAILED, ""));
                 })
-                .flatMap(managerResponseListBaseResponse -> {
-                    if (managerResponseListBaseResponse == null) {
+                .flatMap(responseListBaseResponse -> {
+                    if (responseListBaseResponse == null) {
                         return Observable.error(HttpEmptyResponseException::new);
                     }
-                    return Observable.just(managerResponseListBaseResponse);
+                    return Observable.just(responseListBaseResponse);
                 })
-                .doOnNext(managerResponseListBaseResponse -> {
-                    if (managerResponseListBaseResponse == null) {
+                .doOnNext(responseListBaseResponse -> {
+                    if (responseListBaseResponse == null) {
                         return;
                     }
-                    String url = managerResponseListBaseResponse.getNextPageUrl();
+                    String url = responseListBaseResponse.getNextPageUrl();
                     String nextPageUrl = url == null ? "" : url;
-                    mLocalStorage.putCurrentListPageLocal(managerResponseListBaseResponse.getPage());
+                    mLocalStorage.putCurrentListPageLocal(responseListBaseResponse.getPage());
                     mLocalStorage.putHasLoader(!TextUtils.isEmpty(nextPageUrl));
                 })
-                .flatMap(managerResponseListBaseResponse -> Observable.just(managerResponseListBaseResponse.getDataList()))
+                .flatMap(responseListBaseResponse -> Observable.just(responseListBaseResponse.getDataList()))
                 .filter(Objects::nonNull)
-                .flatMapIterable(managerResponses -> managerResponses)
+                .flatMapIterable(responses -> responses)
                 .filter(Objects::nonNull)
-                .map(ManagerResponse::convertToModel)
+                .map(BaseUserResponse::convertToModel)
                 .toList()
                 .toObservable();
     }
@@ -143,11 +125,9 @@ public class UserListRepository implements UserListStore.Repository {
         }
         switch (code) {
             case UserType.STUDENT:
-                return this.handleStudentService(page);
             case UserType.MANAGER:
-                return this.handleManagerService(page);
             case UserType.LECTURER:
-                return this.handleLecturerService(page);
+                return this.handleManagerService(page, code);
             case UserType.CLAZZ:
                 return this.handleClassService(page);
             default:
@@ -209,5 +189,19 @@ public class UserListRepository implements UserListStore.Repository {
     @Override
     public Observable<Integer> getPageFromLocal() {
         return Observable.just(mLocalStorage.getCurrentPage());
+    }
+
+    @Override
+    public Observable<Integer> handleLocalPageData() {
+        return this.getPageFromLocal()
+                .map(integer -> ++integer)
+                .map(integer -> {
+                    if (!this.getHasLoader()) {
+                        return Constants.LOADING_MORE_ERROR;
+                    }
+                    return integer;
+                })
+                .firstOrError()
+                .toObservable();
     }
 }

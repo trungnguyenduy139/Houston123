@@ -36,6 +36,7 @@ public class ManagerResponse extends BaseUserResponse {
         this.department = department;
     }
 
+    @Override
     public ManagerModel convertToModel() {
         return new ManagerModel(userName, phoneNumber, lecturerId, img, address, email, cmnd, outDate, outReason, department, position);
     }

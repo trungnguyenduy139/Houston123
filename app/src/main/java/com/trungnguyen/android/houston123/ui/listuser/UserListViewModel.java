@@ -108,18 +108,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     }
 
     public void nextPage(int code) {
-        Observable<Integer> localPageObservable = mUserListRepository.getPageFromLocal()
-                .map(integer -> ++integer)
-                .map(integer -> {
-                    if (!mUserListRepository.getHasLoader()) {
-                        return Constants.LOADING_MORE_ERROR;
-                    }
-                    return integer;
-                })
-                .firstOrError()
-                .toObservable();
-
-        Disposable subscription = localPageObservable
+        Disposable subscription = mUserListRepository.handleLocalPageData()
                 .doOnNext(integer -> Timber.d("current page is [%s]", integer))
                 .flatMap(integer -> mUserListRepository.handleUserServiceFlow(code, integer))
                 .compose(SchedulerHelper.applySchedulers())
