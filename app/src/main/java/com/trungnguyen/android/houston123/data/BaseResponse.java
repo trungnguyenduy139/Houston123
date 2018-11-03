@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class BaseResponse {
     @SerializedName("returncode")
-    public String returncode = "";
+    public int returncode = -1;
 
     @SerializedName("message")
     public String message = "Yêu cầu thất bại";

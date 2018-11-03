@@ -1,7 +1,7 @@
 package com.trungnguyen.android.houston123.repository.updateuser;
 
 import com.trungnguyen.android.houston123.data.ClassResponse;
-import com.trungnguyen.android.houston123.data.DataResponse;
+import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.util.Constants;
 
@@ -18,7 +18,7 @@ public class UpdateUserStore {
 
     public interface RequestService {
         @GET(Constants.Api.CLAZZ + "/{lecturer_id}")
-        Observable<DataResponse<ClassResponse>> getClassOfLecturer(@Path(value = "lecturer_id") String lecturerId);
+        Observable<ListBaseResponse<ClassResponse>> getClassOfLecturer(@Path(value = "lecturer_id") String lecturerId);
     }
 
     public interface Repository {

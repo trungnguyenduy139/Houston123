@@ -39,9 +39,9 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
                     if (classResponseDataResponse == null) {
                         return Observable.error(new HttpEmptyResponseException());
                     }
-                    String returnCode = classResponseDataResponse.getReturncode();
-                    if (returnCode.equals(Constants.ServerCode.SUCCESS)) {
-                        return Observable.just(classResponseDataResponse.getListBaseResponse());
+                    int returnCode = classResponseDataResponse.getReturncode();
+                    if (returnCode == Constants.ServerCode.SUCCESS) {
+                        return Observable.just(classResponseDataResponse);
                     }
                     return Observable.error(new BodyException(returnCode, ""));
                 })

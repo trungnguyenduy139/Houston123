@@ -9,6 +9,8 @@ import java.util.List;
  */
 
 public class ListBaseResponse<T extends EmptyResponse> {
+    @SerializedName("code")
+    private int returncode;
     @SerializedName("current_page")
     private int page;
     @SerializedName("data")
@@ -22,6 +24,10 @@ public class ListBaseResponse<T extends EmptyResponse> {
 
     public List<T> getDataList() {
         return this.dataList;
+    }
+
+    public int getReturncode() {
+        return returncode;
     }
 
     public String getNextPageUrl() {

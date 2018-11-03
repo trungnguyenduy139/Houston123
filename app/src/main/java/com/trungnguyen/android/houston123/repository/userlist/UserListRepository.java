@@ -7,8 +7,12 @@ import android.text.TextUtils;
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
-import com.trungnguyen.android.houston123.data.DataResponse;
+import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.EmptyResponse;
+import com.trungnguyen.android.houston123.data.LecturerResponse;
+import com.trungnguyen.android.houston123.data.ListBaseResponse;
+import com.trungnguyen.android.houston123.data.ManagerResponse;
+import com.trungnguyen.android.houston123.data.StudentResponse;
 import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
@@ -40,23 +44,17 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private <R extends EmptyResponse> Observable<List<BaseModel>> processUserFlow(Observable<DataResponse<R>> observable) {
+    private <R extends EmptyResponse> Observable<List<BaseModel>> processUserFlow(Observable<ListBaseResponse<R>> observable) {
         return observable
                 .filter(Objects::nonNull)
-                .flatMap(baseUserResponseDataResponse -> {
-                    if (baseUserResponseDataResponse == null) {
-                        return Observable.error(HttpEmptyResponseException::new);
-                    }
-                    if (baseUserResponseDataResponse.getReturncode().equals(Constants.ServerCode.SUCCESS)) {
-                        return Observable.just(baseUserResponseDataResponse.getListBaseResponse());
-                    }
-                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
-                })
                 .flatMap(responseListBaseResponse -> {
                     if (responseListBaseResponse == null) {
                         return Observable.error(HttpEmptyResponseException::new);
                     }
-                    return Observable.just(responseListBaseResponse);
+                    if (responseListBaseResponse.getReturncode() == Constants.ServerCode.SUCCESS) {
+                        return Observable.just(responseListBaseResponse);
+                    }
+                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
                 })
                 .doOnNext(responseListBaseResponse -> {
                     if (responseListBaseResponse == null) {
@@ -98,9 +96,28 @@ public class UserListRepository implements UserListStore.Repository {
         if (page == Constants.LOADING_MORE_ERROR) {
             return Observable.just(new ArrayList<>());
         }
-        String userType = apiChooser(code);
-        Observable<DataResponse<R>> userObservable = mRequestService.getListOfUser(page, userType);
-        return processUserFlow(userObservable);
+        return handleUserService(page, code);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Observable<List<BaseModel>> handleUserService(int page, int api) {
+        switch (api) {
+            case UserType.MANAGER:
+                Observable<ListBaseResponse<ManagerResponse>> observableManager = mRequestService.getListManager(page);
+                return processUserFlow(observableManager);
+            case UserType.LECTURER:
+                Observable<ListBaseResponse<LecturerResponse>> observableLecturer = mRequestService.getListLecturer(page);
+                return processUserFlow(observableLecturer);
+            case UserType.STUDENT:
+                Observable<ListBaseResponse<StudentResponse>> observableStudent = mRequestService.getListStudents(page);
+                return processUserFlow(observableStudent);
+            case UserType.CLAZZ:
+                Observable<ListBaseResponse<ClassResponse>> observableClazz = mRequestService.getLisClazz(page);
+                return processUserFlow(observableClazz);
+            default:
+                return Observable.just(new ArrayList<>());
+        }
     }
 
     @Override

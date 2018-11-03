@@ -2,12 +2,17 @@ package com.trungnguyen.android.houston123.repository.userlist;
 
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
-import com.trungnguyen.android.houston123.data.DataResponse;
+import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.EmptyResponse;
+import com.trungnguyen.android.houston123.data.LecturerResponse;
+import com.trungnguyen.android.houston123.data.ListBaseResponse;
+import com.trungnguyen.android.houston123.data.ManagerResponse;
+import com.trungnguyen.android.houston123.data.StudentResponse;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.Collection;
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.DELETE;
@@ -22,15 +27,14 @@ import retrofit2.http.Query;
  */
 public class UserListStore {
     public interface RequestService {
-//        @GET(Constants.Api.LECTURER)
-//        Observable<DataResponse<LecturerResponse>> getListLecturer(@Query("page") int page);
-//
-//        @GET(Constants.Api.STUDENT)
-//        Observable<DataResponse<StudentResponse>> getListStudents(@Query("page") int page);
+        @GET(Constants.Api.LECTURER)
+        Observable<ListBaseResponse<LecturerResponse>> getListLecturer(@Query("page") int page);
 
-        @GET("{user_type}")
-        <R extends EmptyResponse> Observable<DataResponse<R>> getListOfUser(@Query("page") int page,
-                                                                            @Path("user_type") String userType);
+        @GET(Constants.Api.STUDENT)
+        Observable<ListBaseResponse<StudentResponse>> getListStudents(@Query("page") int page);
+
+        @GET(Constants.Api.MANAGER)
+        Observable<ListBaseResponse<ManagerResponse>> getListManager(@Query("page") int page);
 
         @Headers({
                 "Content-Type: application/json",
@@ -55,14 +59,13 @@ public class UserListStore {
                                                @Query("ngaynghi") String out,
                                                @Query("lydonghi") String reason);
 
-//        @GET(Constants.Api.CLAZZ)
-//        Observable<DataResponse<ClassResponse>> getLisClazz(@Query("page") int page);
+        @GET(Constants.Api.CLAZZ)
+        Observable<ListBaseResponse<ClassResponse>> getLisClazz(@Query("page") int page);
     }
 
     public interface Repository {
-//        Observable<List<LecturerModel>> handleLecturerService(int page);
-//
-//        Observable<List<StudentModel>> handleStudentService(int page);
+
+        Observable<List<BaseModel>> handleUserService(int page, int api);
 
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
@@ -75,8 +78,6 @@ public class UserListStore {
         Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId);
 
         Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel);
-
-//        Observable<List<BaseModel>> handleClassService(int page);
 
         boolean getHasLoader();
     }

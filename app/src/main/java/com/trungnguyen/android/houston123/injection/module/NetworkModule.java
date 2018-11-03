@@ -45,7 +45,7 @@ import timber.log.Timber;
 @Module
 public class NetworkModule {
 
-    public static final String BASE_URL = "http://18.136.26.204/api/";
+    public static final String BASE_URL = "http://houston123.xyz/api/";
 
     private static final HttpUrl API_HTTP_URL = HttpUrl.parse(BASE_URL);
 
