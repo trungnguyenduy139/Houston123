@@ -1,7 +1,6 @@
 package com.trungnguyen.android.houston123.data;
 
 import com.google.gson.annotations.SerializedName;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 
 /**
  * Created by trungnd4 on 07/10/2018.

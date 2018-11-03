@@ -1,23 +1,13 @@
 package com.trungnguyen.android.houston123.repository.userlist;
 
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
-import com.trungnguyen.android.houston123.data.BaseUserResponse;
-import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.DataResponse;
 import com.trungnguyen.android.houston123.data.EmptyResponse;
-import com.trungnguyen.android.houston123.data.LecturerResponse;
-import com.trungnguyen.android.houston123.data.ManagerResponse;
-import com.trungnguyen.android.houston123.data.StudentResponse;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.Collection;
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.DELETE;

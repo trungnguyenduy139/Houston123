@@ -37,6 +37,7 @@ public class ClassResponse extends EmptyResponse {
     @SerializedName("Tên Cơ Sở")
     public String departmen;
 
+    @Override
     public ClassModel convertToModel() {
         return new ClassModel(clazzName, subjectId, clazzId, clazz, lecturerId, lecturerName, startDate, endDate, branch, departmen);
     }

@@ -6,21 +6,12 @@ import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
-import com.trungnguyen.android.houston123.data.BaseUserResponse;
-import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.DataResponse;
 import com.trungnguyen.android.houston123.data.EmptyResponse;
-import com.trungnguyen.android.houston123.data.LecturerResponse;
-import com.trungnguyen.android.houston123.data.ManagerResponse;
-import com.trungnguyen.android.houston123.data.StudentResponse;
 import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.ArrayList;
@@ -59,7 +50,7 @@ public class UserListRepository implements UserListStore.Repository {
                     if (baseUserResponseDataResponse.getReturncode().equals(Constants.ServerCode.SUCCESS)) {
                         return Observable.just(baseUserResponseDataResponse.getListBaseResponse());
                     }
-                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, ""));
+                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
                 })
                 .flatMap(responseListBaseResponse -> {
                     if (responseListBaseResponse == null) {
@@ -69,10 +60,11 @@ public class UserListRepository implements UserListStore.Repository {
                 })
                 .doOnNext(responseListBaseResponse -> {
                     if (responseListBaseResponse == null) {
+                        Timber.d("[UserList] List of response User api is NULL");
                         return;
                     }
                     String url = responseListBaseResponse.getNextPageUrl();
-                    String nextPageUrl = url == null ? "" : url;
+                    String nextPageUrl = url == null ? Constants.EMPTY : url;
                     mLocalStorage.putCurrentListPageLocal(responseListBaseResponse.getPage());
                     mLocalStorage.putHasLoader(!TextUtils.isEmpty(nextPageUrl));
                 })

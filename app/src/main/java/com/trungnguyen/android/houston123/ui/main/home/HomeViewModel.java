@@ -11,7 +11,6 @@ import com.trungnguyen.android.houston123.util.CommonResourceLoader;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
 
-
 import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
