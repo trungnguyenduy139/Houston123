@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.TextUtils
 import com.trungnguyen.android.houston123.anotation.OnClick
 import com.trungnguyen.android.houston123.base.BaseViewModel
-import com.trungnguyen.android.houston123.data.AuthenticateResponse
+import com.trungnguyen.android.houston123.data.AccountInfoResponse
 import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore
 import com.trungnguyen.android.houston123.rx.DefaultSubscriber
@@ -55,12 +55,12 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
 
         val subscription = mAuthRepository.callLoginApi(userName, password)
                 .compose(SchedulerHelper.applySchedulers())
-                .filter { t: AuthenticateResponse -> !TextUtils.isEmpty(t.userToken) }
-                .doOnNext { response: AuthenticateResponse -> Timber.d("[Auth] User access token [%s]", response.userToken) }
+                .filter { t: AccountInfoResponse -> !TextUtils.isEmpty(t.permission) }
+                .doOnNext { response: AccountInfoResponse -> Timber.d("[Auth] User access token [%s]", response.permission) }
                 .doOnSubscribe { mView?.showLoadingDialog() }
                 .doOnTerminate { mView?.hideLoadingDialog() }
                 .subscribe({
-                    liveUserToken.value = it.userToken
+                    liveUserToken.value = it.permission
                 }, {
                     mView?.onAuthFailed()
                 })

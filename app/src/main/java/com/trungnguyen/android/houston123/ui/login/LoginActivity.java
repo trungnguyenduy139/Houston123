@@ -58,15 +58,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public void onAuthSuccess(String accessToken) {
-        if (TextUtils.isEmpty(accessToken)) {
+    public void onAuthSuccess(String permission) {
+        if (TextUtils.isEmpty(permission)) {
             return;
         }
         String message = getString(R.string.login_success);
-        viewModel.putAuthInfoToLocal(true, accessToken);
         ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_OK);
         Bundle bundle = new BundleBuilder()
-                .putValue(BundleConstants.USER_NAME, accessToken)
+                .putValue(BundleConstants.USER_NAME, permission)
                 .build();
         mNavigator.startMainActivity(this, bundle);
         finish();
@@ -74,7 +73,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void onAuthFailed() {
-        viewModel.putAuthInfoToLocal(false, "");
         String message = getString(R.string.login_failed);
         ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR);
     }

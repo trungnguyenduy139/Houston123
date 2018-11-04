@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.repository.login;
 
+import com.trungnguyen.android.houston123.data.AccountInfoResponse;
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
@@ -30,12 +31,21 @@ public class AuthenticateStore {
         })
         @GET(Constants.LoginApi.LOGOUT)
         Observable<AuthenticateResponse> logoutService(@Header(value = "Authorization") String userToken);
+
+        @Headers({
+                "Content-Type: application/json",
+                "X-Requested-With: XMLHttpRequest",
+        })
+        @GET(Constants.LoginApi.ACCOUNT_INFO)
+        Observable<AccountInfoResponse> getAccountInfo(@Header(value = "Authorization") String userToken);
     }
 
     public interface Repository {
-        Observable<AuthenticateResponse> callLoginApi(String userName, String password);
+        Observable<AccountInfoResponse> callLoginApi(String userName, String password);
 
         Observable<AuthenticateResponse> callLogoutApi();
+
+        Observable<AccountInfoResponse> callAccountInformationApi(String token);
 
         Observable<Boolean> getLoginState();
 

@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.repository.login;
 
 import android.text.TextUtils;
 
+import com.trungnguyen.android.houston123.data.AccountInfoResponse;
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
@@ -35,17 +36,25 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     }
 
     @Override
-    public Observable<AuthenticateResponse> callLoginApi(String userName, String password) {
+    public Observable<AccountInfoResponse> callLoginApi(String userName, String password) {
         return mRequestService.loginService(userName, password)
                 .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
-                .doOnNext(authenticateResponse -> Timber.d("[Auth] Authenticate api response %s", authenticateResponse.toString()))
-                .doOnError(throwable -> Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage()))
                 .flatMap(authenticateResponse -> {
                     if (authenticateResponse == null) {
-                        return Observable.just(DEFAULT_AUTHENTICATE_RESPONSE);
+                        return Observable.just(DEFAULT_AUTHENTICATE_RESPONSE.userToken);
                     }
-                    return Observable.just(authenticateResponse);
-                });
+                    return Observable.just(authenticateResponse.userToken);
+                })
+                .doOnNext(token -> {
+                    Timber.d("[Auth] Authenticate api response %s", token);
+                    putAuthInfoLocal(true, token);
+                })
+                .doOnError(throwable -> {
+                    Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
+                    putAuthInfoLocal(false, Constants.EMPTY);
+                })
+                .map(userToken -> Constants.TOKEN_PREFIX + Constants.SPACE + userToken)
+                .flatMap(this::callAccountInformationApi);
     }
 
     @Override
@@ -64,6 +73,24 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                             }
                             return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
                         }));
+    }
+
+    @Override
+    public Observable<AccountInfoResponse> callAccountInformationApi(String token) {
+        return mRequestService.getAccountInfo(token)
+                .doOnError(throwable -> {
+                    Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
+                    putAuthInfoLocal(false, Constants.EMPTY);
+                })
+                .flatMap(accountInfoResponse -> {
+                    if (accountInfoResponse == null) {
+                        return Observable.error(HttpEmptyResponseException::new);
+                    }
+                    if (!TextUtils.isEmpty(accountInfoResponse.permission)) {
+                        return Observable.just(accountInfoResponse);
+                    }
+                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
+                });
     }
 
     @Override
