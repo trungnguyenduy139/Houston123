@@ -15,7 +15,7 @@ import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
 import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
+import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.ArrayList;
@@ -47,15 +47,7 @@ public class UserListRepository implements UserListStore.Repository {
     private <R extends EmptyResponse> Observable<List<BaseModel>> processUserFlow(Observable<ListBaseResponse<R>> observable) {
         return observable
                 .filter(Objects::nonNull)
-                .flatMap(responseListBaseResponse -> {
-                    if (responseListBaseResponse == null) {
-                        return Observable.error(HttpEmptyResponseException::new);
-                    }
-                    if (responseListBaseResponse.getReturncode() == Constants.ServerCode.SUCCESS) {
-                        return Observable.just(responseListBaseResponse);
-                    }
-                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
-                })
+                .flatMap(ObservablePattern::responseProcessingPattern)
                 .doOnNext(responseListBaseResponse -> {
                     if (responseListBaseResponse == null) {
                         Timber.d("[UserList] List of response User api is NULL");
@@ -151,18 +143,8 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @Override
-    public Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel) {
-        return Observable.just(new BaseResponse());
-    }
-
-    @Override
     public boolean getHasLoader() {
         return mLocalStorage.getHasLoader();
-    }
-
-    @Override
-    public void callApiUpdateUser(BaseModel model) {
-
     }
 
     @Override

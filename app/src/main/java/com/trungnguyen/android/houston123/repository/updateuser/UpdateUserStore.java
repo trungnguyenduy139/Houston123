@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.repository.updateuser;
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
@@ -56,6 +57,7 @@ public class UpdateUserStore {
 
     public interface Repository {
         Observable<List<ClassModel>> callApiClassOfLecturer(String id);
+        Observable<BaseResponse> callApiUpdateUser(BaseModel model);
     }
 
     public interface LocalStorage {

@@ -14,6 +14,7 @@ import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserReposi
 import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserStore;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
+import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
@@ -76,7 +77,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
     @OnClick
-    public void onUpdateClick(int code) {
+    public void onUpdateClick(int code, BaseModel model) {
         if (mUserModel == null) {
             return;
         }
@@ -86,11 +87,21 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                 mNavigator.startEditDetailActivity(context, bundle);
                 break;
             case DetailServiceType.DO_UPDATE:
-//                mUserListRepository.callApiUpdateUser();
+                if (model == null) {
+                    return;
+                }
+                handleUpdateUser(model);
                 break;
             default:
                 break;
         }
+    }
+
+    public void handleUpdateUser(BaseModel model) {
+        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(model)
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .subscribeWith(new DefaultSubscriber<>());
+        mSubscription.add(subscription);
     }
 
     public void deleteCurrentUser(int code, String userId) {

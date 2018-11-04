@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.trungnguyen.android.houston123.R;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseViewHolder;
 import com.trungnguyen.android.houston123.databinding.UpdateUserDetailItemBinding;
 import com.trungnguyen.android.houston123.util.Constants;
+import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +46,19 @@ public class UpdateUserAdapter extends UserDetailAdapter {
         return new UpdateUserAdapter.UpdateUserItemViewHolder(Objects.requireNonNull(DataBindingUtil.bind(rootView)));
     }
 
-    public void getModelData(int code, RecyclerView recyclerView) {
+    public BaseModel getModelData(int code, RecyclerView recyclerView) {
         ArrayList<String> list = new ArrayList<>();
         ViewGroup view;
         View et;
-        for (int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
+        for (int i = 0; i < getItemCount(); i++) {
             view = (ViewGroup) recyclerView.getChildAt(i);
+            if (!(view instanceof LinearLayout)) {
+                continue;
+            }
             LinearLayout layout1 = (LinearLayout) view.getChildAt(0);
+            if (layout1 == null) {
+                continue;
+            }
             et = layout1.getChildAt(1);
             if (!(et instanceof AppCompatEditText)) {
                 continue;
@@ -59,6 +67,8 @@ public class UpdateUserAdapter extends UserDetailAdapter {
             String data = TextUtils.isEmpty(editable) ? Constants.EMPTY : editable.toString();
             list.add(data);
         }
+
+        return ModelResourceLoader.convertModel(code, list);
     }
 
     public class UpdateUserItemViewHolder extends BaseViewHolder {

@@ -1,7 +1,12 @@
 package com.trungnguyen.android.houston123.rx;
 
+import android.text.TextUtils;
+
+import com.trungnguyen.android.houston123.data.BaseResponse;
+import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.exception.NetworkConnectionException;
+import com.trungnguyen.android.houston123.util.Constants;
 
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -14,7 +19,7 @@ import io.reactivex.ObservableTransformer;
 import retrofit2.HttpException;
 import timber.log.Timber;
 
-public class ObservableRetryPattern {
+public class ObservablePattern {
     private static final List<Class<?>> NETWORK_EXCEPTION_CLAZZ =
             Arrays.asList(HttpEmptyResponseException.class,
                     HttpException.class,
@@ -26,6 +31,7 @@ public class ObservableRetryPattern {
     /**
      * onErrorResumeNext: When the main stream throw an Exception
      * an Exception will be catch, continue doing some stuff is defined in onErrorResumeNext() ->
+     *
      * @param defaultValue
      * @param <R>
      * @return a new Observable from onErrorResumeNext and merge to the main stream
@@ -41,6 +47,26 @@ public class ObservableRetryPattern {
         })
                 .first(defaultValue)
                 .toObservable();
+    }
+
+    /**
+     * A pattern for the first step process response
+     *
+     * @param response
+     * @param <R>
+     * @return response or an error Observable with common exception
+     */
+
+    public static <R extends BaseResponse> Observable<R> responseProcessingPattern(R response) {
+        if (response == null) {
+            return Observable.error(HttpEmptyResponseException::new);
+        }
+        if (response.returncode == Constants.ServerCode.SUCCESS) {
+            return Observable.just(response);
+        }
+        String message = response.message;
+        String clientMessage = TextUtils.isEmpty(message) ? Constants.EMPTY : message;
+        return Observable.error(new BodyException(response.returncode, clientMessage));
     }
 }
 

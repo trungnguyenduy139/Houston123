@@ -1,7 +1,9 @@
 package com.trungnguyen.android.houston123.util;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,5 +48,18 @@ public final class ModelResourceLoader {
             resourcesModel.add(new ItemDetailModel(resources.get(index), Constants.EMPTY));
         }
         return resourcesModel;
+    }
+
+    public static BaseModel convertModel(int code, List<String> resources) {
+        BaseModel model;
+        switch (code) {
+            case UserType.LECTURER:
+            case UserType.MANAGER:
+            case UserType.CLAZZ:
+            default:
+                model = ManagerModel.initFromResource(resources);
+        }
+
+        return model;
     }
 }

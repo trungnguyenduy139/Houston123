@@ -7,7 +7,7 @@ import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservableHelper;
-import com.trungnguyen.android.houston123.rx.ObservableRetryPattern;
+import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.rx.Optional;
 import com.trungnguyen.android.houston123.util.Constants;
 
@@ -37,7 +37,7 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     @Override
     public Observable<AuthenticateResponse> callLoginApi(String userName, String password) {
         return mRequestService.loginService(userName, password)
-                .compose(ObservableRetryPattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
+                .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
                 .doOnNext(authenticateResponse -> Timber.d("[Auth] Authenticate api response %s", authenticateResponse.toString()))
                 .doOnError(throwable -> Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage()))
                 .flatMap(authenticateResponse -> {
@@ -54,7 +54,7 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                 .doOnNext(token -> Timber.d("Get access token from Local [%s]", token))
                 .map(token -> Constants.TOKEN_PREFIX + Constants.SPACE + token)
                 .flatMap(token -> mRequestService.logoutService(token)
-                        .compose(ObservableRetryPattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
+                        .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
                         .flatMap(authenticateResponse -> {
                             if (authenticateResponse == null) {
                                 return Observable.error(new HttpEmptyResponseException());

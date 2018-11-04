@@ -130,7 +130,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         int id = item.getItemId();
         switch (id) {
             case R.id.detail_update:
-                viewModel.onUpdateClick(DetailServiceType.START_UPDATE);
+                viewModel.onUpdateClick(DetailServiceType.START_UPDATE, null);
                 break;
             case R.id.detail_delete:
                 String modelId = "";

@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.ui.userdetail.detailmodel;
 
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
@@ -31,6 +32,23 @@ public class ManagerModel extends BaseUserModel {
 
     public ManagerModel() {
         super();
+    }
+
+    public static BaseModel initFromResource(List<String> resources) {
+        int index = 0;
+        String name = resources.get(index++);
+        String phone = resources.get(index++);
+        String address = resources.get(index++);
+        String lecturerId = resources.get(index++);
+        String email = resources.get(index++);
+        String cmnd = resources.get(index++);
+        String img = resources.get(index++);
+        String outDate = resources.get(index++);
+        String outReason = resources.get(index++);
+        String department = resources.get(index++);
+        String position = resources.get(index++);
+
+        return new ManagerModel(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department, position);
     }
 
     public String getImg() {

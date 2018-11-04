@@ -8,7 +8,6 @@ import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.Collection;
@@ -18,7 +17,6 @@ import io.reactivex.Observable;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -63,11 +61,8 @@ public class UserListStore {
 
         Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId);
 
-        Observable<BaseResponse> callApiUpdateManager(ManagerModel managerModel);
-
         boolean getHasLoader();
 
-        void callApiUpdateUser(BaseModel model);
     }
 
     public interface LocalStorage {
