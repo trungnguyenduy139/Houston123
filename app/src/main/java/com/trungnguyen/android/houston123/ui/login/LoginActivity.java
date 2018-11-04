@@ -10,6 +10,7 @@ import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityLoginBinding;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Navigator;
 import com.trungnguyen.android.houston123.widget.ToastCustom;
 
@@ -62,7 +63,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         if (TextUtils.isEmpty(permission)) {
             return;
         }
-        String message = getString(R.string.login_success);
+        String message = getString(R.string.login_success) + Constants.SPACE + permission;
         ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_OK);
         Bundle bundle = new BundleBuilder()
                 .putValue(BundleConstants.USER_NAME, permission)

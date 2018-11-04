@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.repository.login;
 
 import com.trungnguyen.android.houston123.data.AccountInfoResponse;
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
+import com.trungnguyen.android.houston123.data.LoginInfoResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import io.reactivex.Observable;
@@ -41,11 +42,11 @@ public class AuthenticateStore {
     }
 
     public interface Repository {
-        Observable<AccountInfoResponse> callLoginApi(String userName, String password);
+        Observable<LoginInfoResponse> callLoginApi(String userName, String password);
 
         Observable<AuthenticateResponse> callLogoutApi();
 
-        Observable<AccountInfoResponse> callAccountInformationApi(String token);
+        Observable<LoginInfoResponse> callAccountInformationApi(String token);
 
         Observable<Boolean> getLoginState();
 

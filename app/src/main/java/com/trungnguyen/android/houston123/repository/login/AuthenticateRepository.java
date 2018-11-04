@@ -3,12 +3,16 @@ package com.trungnguyen.android.houston123.repository.login;
 
 import android.text.TextUtils;
 
-import com.trungnguyen.android.houston123.data.AccountInfoResponse;
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
+import com.trungnguyen.android.houston123.data.LoginInfoResponse;
+import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservableHelper;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.rx.Optional;
 import com.trungnguyen.android.houston123.util.Constants;
+import com.trungnguyen.android.houston123.util.Lists;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,6 +30,8 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
 
     private AuthenticateResponse DEFAULT_AUTHENTICATE_RESPONSE = new AuthenticateResponse();
 
+    private int DEFAULT_ACCOUNT_INFO_POSITION = 0;
+
     @Inject
     public AuthenticateRepository(AuthenticateStore.RequestService requestService,
                                   AuthenticateStore.LocalStorage localStorage) {
@@ -34,7 +40,7 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     }
 
     @Override
-    public Observable<AccountInfoResponse> callLoginApi(String userName, String password) {
+    public Observable<LoginInfoResponse> callLoginApi(String userName, String password) {
         return mRequestService.loginService(userName, password)
                 .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
                 .flatMap(authenticateResponse -> {
@@ -62,19 +68,24 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                 .map(token -> Constants.TOKEN_PREFIX + Constants.SPACE + token)
                 .flatMap(token -> mRequestService.logoutService(token)
                         .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
-                        .flatMap(authenticateResponse -> ObservablePattern
-                                .handleResponseWithCondition(authenticateResponse, () -> TextUtils.isEmpty(authenticateResponse.message))));
+                        .flatMap(ObservablePattern::responseProcessingPattern));
     }
 
     @Override
-    public Observable<AccountInfoResponse> callAccountInformationApi(String token) {
+    public Observable<LoginInfoResponse> callAccountInformationApi(String token) {
         return mRequestService.getAccountInfo(token)
                 .doOnError(throwable -> {
                     Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
                     putAuthInfoLocal(false, Constants.EMPTY);
                 })
-                .flatMap(accountInfoResponse -> ObservablePattern
-                        .handleResponseWithCondition(accountInfoResponse, () -> TextUtils.isEmpty(accountInfoResponse.permission)));
+                .flatMap(ObservablePattern::responseProcessingPattern)
+                .flatMap(accountInfoResponse -> {
+                    List<LoginInfoResponse> data = accountInfoResponse.loginInfo;
+                    if (Lists.isEmptyOrNull(data) || data.get(this.DEFAULT_ACCOUNT_INFO_POSITION) == null) {
+                        return Observable.error(HttpEmptyResponseException::new);
+                    }
+                    return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
+                });
     }
 
     @Override
