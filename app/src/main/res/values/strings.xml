@@ -26,6 +26,7 @@
     <string name="logout">Đăng xuất</string>
     <string name="search_hint">Tìm kiếm</string>
     <string name="delete_user_failed">Xóa người dùng thất bại. Vui lòng thử lại</string>
+    <string name="delete_user_success">Xóa người dùng thành công</string>
     <string name="close_dialog">ĐÓNG</string>
     <string-array name="home_resources_array">
         <item>Giáo viên</item>

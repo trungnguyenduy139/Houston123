@@ -71,15 +71,7 @@ public class UserListRepository implements UserListStore.Repository {
     public Observable<BaseResponse> callApiDeleteUser(String userType, String userId) {
         return mRequestService.deleteUser(userType, userId)
                 .doOnNext(baseResponse -> Timber.d("[DeleteManager] Success to delete record manager"))
-                .flatMap(baseResponse -> {
-                    if (baseResponse == null) {
-                        return Observable.error(new HttpEmptyResponseException());
-                    }
-                    if (TextUtils.equals(baseResponse.message, Constants.ServerCode.DELETE_SUCCESS_MESSAGE)) {
-                        return Observable.just(baseResponse);
-                    }
-                    return Observable.error(new BodyException(baseResponse.returncode, baseResponse.message));
-                });
+                .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -163,18 +163,19 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         if (mListAdapter != null) {
             mListAdapter.removeUser(position);
         }
-    }
-
-    @Override
-    public void failedToDeleteUser() {
         new SweetAlertDialog(this)
-                .setContentText(getString(R.string.delete_user_failed)).
+                .setContentText(getString(R.string.delete_user_success)).
                 setConfirmText(getString(R.string.close_dialog)).
                 setConfirmClickListener(sweetAlertDialog1 -> {
                     if (sweetAlertDialog1 != null) {
                         sweetAlertDialog1.dismissWithAnimation();
                     }
                 }).show();
+    }
+
+    @Override
+    public void failedToDeleteUser() {
+        showErrorDialog(getString(R.string.delete_user_failed));
     }
 
     @Override
