@@ -12,6 +12,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 import io.reactivex.Observable;
@@ -67,6 +68,26 @@ public class ObservablePattern {
         String message = response.message;
         String clientMessage = TextUtils.isEmpty(message) ? Constants.EMPTY : message;
         return Observable.error(new BodyException(response.returncode, clientMessage));
+    }
+
+    /**
+     * A pattern for the first step process response with condition params
+     *
+     * @param response
+     * @param <R>
+     * @return response or an error Observable with common exception
+     */
+
+    public static <R extends BaseResponse> Observable<R> handleResponseWithCondition(R response, Callable<Boolean> successCondition) throws Exception {
+        if (response == null) {
+            return Observable.error(HttpEmptyResponseException::new);
+        }
+        if (successCondition.call()) {
+            return Observable.just(response);
+        }
+        String message = response.message;
+        String clientMessage = TextUtils.isEmpty(message) ? Constants.EMPTY : message;
+        return Observable.error(new BodyException(Constants.ServerCode.FAILED, clientMessage));
     }
 }
 

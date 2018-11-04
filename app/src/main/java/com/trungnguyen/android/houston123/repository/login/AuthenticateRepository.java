@@ -5,8 +5,6 @@ import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.data.AccountInfoResponse;
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
-import com.trungnguyen.android.houston123.exception.BodyException;
-import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservableHelper;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.rx.Optional;
@@ -64,15 +62,8 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                 .map(token -> Constants.TOKEN_PREFIX + Constants.SPACE + token)
                 .flatMap(token -> mRequestService.logoutService(token)
                         .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
-                        .flatMap(authenticateResponse -> {
-                            if (authenticateResponse == null) {
-                                return Observable.error(new HttpEmptyResponseException());
-                            }
-                            if (!TextUtils.isEmpty(authenticateResponse.message)) {
-                                return Observable.just(authenticateResponse);
-                            }
-                            return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
-                        }));
+                        .flatMap(authenticateResponse -> ObservablePattern
+                                .handleResponseWithCondition(authenticateResponse, () -> TextUtils.isEmpty(authenticateResponse.message))));
     }
 
     @Override
@@ -82,15 +73,8 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
                     putAuthInfoLocal(false, Constants.EMPTY);
                 })
-                .flatMap(accountInfoResponse -> {
-                    if (accountInfoResponse == null) {
-                        return Observable.error(HttpEmptyResponseException::new);
-                    }
-                    if (!TextUtils.isEmpty(accountInfoResponse.permission)) {
-                        return Observable.just(accountInfoResponse);
-                    }
-                    return Observable.error(new BodyException(Constants.ServerCode.FAILED, Constants.EMPTY));
-                });
+                .flatMap(accountInfoResponse -> ObservablePattern
+                        .handleResponseWithCondition(accountInfoResponse, () -> TextUtils.isEmpty(accountInfoResponse.permission)));
     }
 
     @Override
