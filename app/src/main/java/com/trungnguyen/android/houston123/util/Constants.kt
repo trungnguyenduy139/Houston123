@@ -19,6 +19,7 @@ object Constants {
         const val LOGIN = "login"
         const val LOGOUT = "logout"
         const val ACCOUNT_INFO = "account"
+        const val CHANGE_PASSWORD = "change_pass"
     }
 
     object Api {

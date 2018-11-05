@@ -3,9 +3,12 @@ package com.trungnguyen.android.houston123.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -63,5 +66,23 @@ public final class ToastCustom {
         }
         toast.setView(view);
         toast.show();
+    }
+
+    public static void makeTopToastText(Context context, String content) {
+        final Toast toast = Toast.makeText(context, content, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, getActionBarHeight(context));
+        View toastView = toast.getView();
+        toastView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        toast.show();
+        new Handler().postDelayed(toast::cancel, 800);
+    }
+
+    private static int getActionBarHeight(Context context) {
+        int actionBarHeight = 0;
+        TypedValue typedValue = new TypedValue();
+        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, context.getResources().getDisplayMetrics());
+        }
+        return actionBarHeight;
     }
 }

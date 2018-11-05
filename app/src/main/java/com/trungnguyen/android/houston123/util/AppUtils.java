@@ -36,4 +36,8 @@ public final class AppUtils {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+    public static String transformToken(String oldToken) {
+        return Constants.TOKEN_PREFIX + Constants.SPACE + oldToken;
+    }
 }

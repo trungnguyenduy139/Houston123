@@ -1,11 +1,15 @@
 package com.trungnguyen.android.houston123.ui.main.personal;
 
+import android.content.Context;
+
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
+import com.trungnguyen.android.houston123.ui.main.ChangePasswordActivity;
 import com.trungnguyen.android.houston123.util.Constants;
+import com.trungnguyen.android.houston123.util.Navigator;
 
 import javax.inject.Inject;
 
@@ -18,10 +22,14 @@ import timber.log.Timber;
 public class PersonalViewModel extends BaseViewModel<IPersonalView> {
 
     private AuthenticateStore.Repository mAuthRepository;
+    private Navigator mNavigator;
 
     @Inject
-    public PersonalViewModel(AuthenticateRepository authRepository) {
-        super();
+    public PersonalViewModel(AuthenticateRepository authRepository,
+                             Navigator navigator,
+                             Context context) {
+        super(context);
+        this.mNavigator = navigator;
         this.mAuthRepository = authRepository;
     }
 
@@ -36,5 +44,10 @@ public class PersonalViewModel extends BaseViewModel<IPersonalView> {
                     }
                 }, throwable -> Timber.d("Failed to Logout [%s]", throwable.getMessage()));
         mSubscription.add(subscription);
+    }
+
+    @OnClick
+    public void onUserChangePassword() {
+        mNavigator.startActivity(context, ChangePasswordActivity.class);
     }
 }

@@ -4,11 +4,13 @@ package com.trungnguyen.android.houston123.repository.login;
 import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
+import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.LoginInfoResponse;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservableHelper;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.rx.Optional;
+import com.trungnguyen.android.houston123.util.AppUtils;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
 
@@ -57,7 +59,7 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
                     putAuthInfoLocal(false, Constants.EMPTY);
                 })
-                .map(userToken -> Constants.TOKEN_PREFIX + Constants.SPACE + userToken)
+                .map(AppUtils::transformToken)
                 .flatMap(this::callAccountInformationApi);
     }
 
@@ -65,7 +67,7 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     public Observable<AuthenticateResponse> callLogoutApi() {
         return mLocalStorage.getSafeAccessToken()
                 .doOnNext(token -> Timber.d("Get access token from Local [%s]", token))
-                .map(token -> Constants.TOKEN_PREFIX + Constants.SPACE + token)
+                .map(AppUtils::transformToken)
                 .flatMap(token -> mRequestService.logoutService(token)
                         .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
                         .flatMap(ObservablePattern::responseProcessingPattern));
@@ -86,6 +88,14 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     }
                     return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
                 });
+    }
+
+    @Override
+    public Observable<BaseResponse> callChangePasswordApi(String passOld, String passNew, String passConfirm) {
+        return mLocalStorage.getSafeAccessToken()
+                .map(AppUtils::transformToken)
+                .flatMap(formattedToken -> mRequestService.changePassword(formattedToken, passOld, passNew, passConfirm))
+                .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
     @Override

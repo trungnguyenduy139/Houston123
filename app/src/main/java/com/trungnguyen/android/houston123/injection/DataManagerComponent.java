@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.injection.module.LoginModule;
 import com.trungnguyen.android.houston123.injection.module.UserListModule;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
+import com.trungnguyen.android.houston123.ui.main.ChangePasswordActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
 import com.trungnguyen.android.houston123.ui.main.home.HomeFragment;
 import com.trungnguyen.android.houston123.ui.main.personal.PersonalFragment;
@@ -47,5 +48,7 @@ public interface DataManagerComponent {
     void inject(ToolFragment fragment);
 
     void inject(PersonalFragment fragment);
+
+    void inject(ChangePasswordActivity activity);
 
 }

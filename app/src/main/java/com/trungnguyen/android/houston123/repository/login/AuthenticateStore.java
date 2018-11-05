@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.repository.login;
 
 import com.trungnguyen.android.houston123.data.AccountInfoResponse;
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
+import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.LoginInfoResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
@@ -39,6 +40,13 @@ public class AuthenticateStore {
         })
         @GET(Constants.LoginApi.ACCOUNT_INFO)
         Observable<AccountInfoResponse> getAccountInfo(@Header(value = "Authorization") String userToken);
+
+
+        @POST(Constants.LoginApi.CHANGE_PASSWORD)
+        Observable<BaseResponse> changePassword(@Header(value = "Authorization") String userToken,
+                                                @Query("pass_old") String passOld,
+                                                @Query("pass_new") String passNew,
+                                                @Query("pass_confirm") String passConfirm);
     }
 
     public interface Repository {
@@ -47,6 +55,8 @@ public class AuthenticateStore {
         Observable<AuthenticateResponse> callLogoutApi();
 
         Observable<LoginInfoResponse> callAccountInformationApi(String token);
+
+        Observable<BaseResponse> callChangePasswordApi(String passOld, String passNew, String passConfirm);
 
         Observable<Boolean> getLoginState();
 
