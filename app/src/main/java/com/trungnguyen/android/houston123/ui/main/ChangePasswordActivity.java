@@ -4,15 +4,16 @@ import android.os.Bundle;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
-import com.trungnguyen.android.houston123.base.BaseActivity;
+import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityChangePasswordBinding;
+import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.widget.ToastCustom;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 /**
  * Created by trungnd4 on 05/11/2018.
  */
-public class ChangePasswordActivity extends BaseActivity<ActivityChangePasswordBinding, ChangePasswordViewModel> implements IChangePassword {
+public class ChangePasswordActivity extends BaseToolbarActivity<ActivityChangePasswordBinding, ChangePasswordViewModel> implements IChangePassword {
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -22,12 +23,6 @@ public class ChangePasswordActivity extends BaseActivity<ActivityChangePasswordB
     @Override
     public int initVariableId() {
         return BR.viewModel;
-    }
-
-    @Override
-    public void initData() {
-        super.initData();
-
     }
 
     @Override
@@ -45,6 +40,11 @@ public class ChangePasswordActivity extends BaseActivity<ActivityChangePasswordB
         new SweetAlertDialog(this)
                 .setContentText(message)
                 .show();
+
+        binding.edtConfirmNew.setText(Constants.EMPTY);
+        binding.edtNewPassword.setText(Constants.EMPTY);
+        binding.edtOldPassword.setText(Constants.EMPTY);
+
     }
 
     @Override

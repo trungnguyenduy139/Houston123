@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123.ui.main;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.OnClick;
@@ -30,7 +31,7 @@ public class ChangePasswordViewModel extends BaseViewModel<IChangePassword> {
 
 
     @OnClick
-    public void onChangePasswordAction(String oldPass, String newPass, String confirmPass) {
+    public void onChangePasswordAction(View view, String oldPass, String newPass, String confirmPass) {
 
         if (!shouldAllowChangePassword(oldPass, newPass, confirmPass) && mView != null) {
             mView.onVerifyPasswordFailed();

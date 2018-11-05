@@ -70,9 +70,20 @@ public final class ToastCustom {
 
     public static void makeTopToastText(Context context, String content) {
         final Toast toast = Toast.makeText(context, content, Toast.LENGTH_SHORT);
+        if (toast == null) {
+            return;
+        }
         toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, getActionBarHeight(context));
         View toastView = toast.getView();
-        toastView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        if (toastView == null) {
+            return;
+        }
+        toastView.setBackgroundColor(context.getResources().getColor(R.color.fbutton_color_sun_flower));
+        TextView textView = toastView.findViewById(android.R.id.message);
+        if (textView == null) {
+            return;
+        }
+        textView.setTextColor(context.getResources().getColor(R.color.white));
         toast.show();
         new Handler().postDelayed(toast::cancel, 800);
     }
@@ -80,7 +91,7 @@ public final class ToastCustom {
     private static int getActionBarHeight(Context context) {
         int actionBarHeight = 0;
         TypedValue typedValue = new TypedValue();
-        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
+        if (context != null && context.getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
             actionBarHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, context.getResources().getDisplayMetrics());
         }
         return actionBarHeight;
