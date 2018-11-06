@@ -4,14 +4,14 @@ import android.content.Context
 import android.text.TextUtils
 import com.trungnguyen.android.houston123.anotation.OnClick
 import com.trungnguyen.android.houston123.base.BaseViewModel
+import com.trungnguyen.android.houston123.data.LoginInfoModel
 import com.trungnguyen.android.houston123.data.LoginInfoResponse
+import com.trungnguyen.android.houston123.injection.Injector
 import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore
-import com.trungnguyen.android.houston123.rx.DefaultSubscriber
 import com.trungnguyen.android.houston123.rx.SchedulerHelper
 import com.trungnguyen.android.houston123.util.AppUtils
 import com.trungnguyen.android.houston123.util.SingleLiveEvent
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,15 +29,20 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
     val liveUserToken = SingleLiveEvent<String>()
 
     init {
-        isLoggedIn.value = mLoginState
         this.mAuthRepository = authenticateRepository
         mLoginModel = LoginModel()
     }
 
     fun getLoginStatus() {
         val disposable = mAuthRepository.loginState
-                .compose(SchedulerHelper.applySchedulers())
-                .subscribe({ isLoggedIn.setValue(it) }, { Timber.d(it) })
+                .compose(SchedulerHelper.applySchedulersLoadingAction({ showLoading() }, { hideLoading() }))
+                .subscribe({
+                    initGlobalUserCallback(it.convertToModel())
+                    isLoggedIn.setValue(true)
+                }, {
+                    isLoggedIn.value = false
+                    Timber.d(it)
+                })
         mSubscription.add(disposable)
     }
 
@@ -61,6 +66,7 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
                 .doOnTerminate { mView?.hideLoadingDialog() }
                 .subscribe({
                     liveUserToken.value = it.permission
+                    initGlobalUserCallback(it.convertToModel())
                 }, {
                     mView?.onAuthFailed()
                 })
@@ -69,10 +75,10 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
 
     }
 
-    fun putAuthInfoToLocal(loginState: Boolean, accessToken: String) {
-        val disposable = mAuthRepository.putAuthInfoLocal(loginState, accessToken)
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(DefaultSubscriber())
-        mSubscription.add(disposable)
+    private fun initGlobalUserCallback(model: LoginInfoModel?) {
+        if (model == null) {
+            return
+        }
+        Injector.getInstance().createUserScope(model)
     }
 }

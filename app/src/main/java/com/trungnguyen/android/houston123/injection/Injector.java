@@ -4,6 +4,8 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.trungnguyen.android.houston123.data.LoginInfoModel;
+
 public enum Injector {
 
     INSTANCE;
@@ -12,6 +14,9 @@ public enum Injector {
 
     @Nullable
     private DataManagerComponent mDataManagerComponent;
+
+    @Nullable
+    private UserComponent mUserComponent;
 
     @NonNull
     public static Injector getInstance() {
@@ -38,7 +43,26 @@ public enum Injector {
         return mDataManagerComponent;
     }
 
+    @NonNull
+    public void createUserScope(LoginInfoModel model) {
+        mUserComponent = mApplicationComponent.userComponentBuilder().initUser(model).build();
+    }
+
+
+    @Nullable
+    public UserComponent getUserComponent() {
+        if (mUserComponent != null) {
+            return mUserComponent;
+        }
+        return null;
+    }
+
     public void releaseViewModelScope() {
         mDataManagerComponent = null;
     }
+
+    public void releaseUserScope() {
+        mUserComponent = null;
+    }
+
 }

@@ -31,6 +31,7 @@ public interface DataManagerComponent {
 
     @Subcomponent.Builder
     interface Builder {
+
         @NonNull
         DataManagerComponent build();
     }
@@ -50,5 +51,4 @@ public interface DataManagerComponent {
     void inject(PersonalFragment fragment);
 
     void inject(ChangePasswordActivity activity);
-
 }

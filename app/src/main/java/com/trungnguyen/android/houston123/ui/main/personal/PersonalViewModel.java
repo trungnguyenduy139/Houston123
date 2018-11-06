@@ -4,12 +4,16 @@ import android.content.Context;
 
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
+import com.trungnguyen.android.houston123.data.LoginInfoModel;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.ui.main.ChangePasswordActivity;
+import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Navigator;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -49,5 +53,18 @@ public class PersonalViewModel extends BaseViewModel<IPersonalView> {
     @OnClick
     public void onUserChangePassword() {
         mNavigator.startActivity(context, ChangePasswordActivity.class);
+    }
+
+    public void loadUserInfoResource(LoginInfoModel model) {
+        Disposable subscription = model
+                .convert()
+                .compose(SchedulerHelper.applySchedulers())
+                .subscribe(items -> {
+                    if (mView != null) {
+                        mView.onLoadResourceCompleted((List<ItemDetailModel>) items);
+                    }
+                }, throwable -> Timber.d("[DetailUser] Failed to load model resource %s", throwable.toString()));
+
+        mSubscription.add(subscription);
     }
 }

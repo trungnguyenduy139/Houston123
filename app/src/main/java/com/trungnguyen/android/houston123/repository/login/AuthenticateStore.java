@@ -54,11 +54,11 @@ public class AuthenticateStore {
 
         Observable<AuthenticateResponse> callLogoutApi();
 
-        Observable<LoginInfoResponse> callAccountInformationApi(String token);
+        Observable<LoginInfoResponse> callAccountInformationApi(String token, boolean shouldReSaveState);
 
         Observable<BaseResponse> callChangePasswordApi(String passOld, String passNew, String passConfirm);
 
-        Observable<Boolean> getLoginState();
+        Observable<LoginInfoResponse> getLoginState();
 
         Observable<Boolean> putAuthInfoLocal(boolean state, String accessToken);
 
@@ -72,6 +72,10 @@ public class AuthenticateStore {
         boolean getLoginStatus();
 
         Observable<Boolean> setLoginState(boolean state);
+
+        void putGlobalPermissionLocal(String permission);
+
+        String getGlobalPermission(String permission);
     }
 
 }

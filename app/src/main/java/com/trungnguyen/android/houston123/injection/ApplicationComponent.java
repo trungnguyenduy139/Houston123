@@ -35,4 +35,6 @@ public interface ApplicationComponent {
 
     @NonNull
     DataManagerComponent.Builder dataManagerComponentBuilder();
+
+    UserComponent.Builder userComponentBuilder();
 }

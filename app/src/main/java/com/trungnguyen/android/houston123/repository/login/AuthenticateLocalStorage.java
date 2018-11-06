@@ -1,7 +1,5 @@
 package com.trungnguyen.android.houston123.repository.login;
 
-import android.text.TextUtils;
-
 import com.trungnguyen.android.houston123.util.PreferencesConst;
 import com.trungnguyen.android.houston123.util.PrefsUtil;
 import com.trungnguyen.android.houston123.util.Security;
@@ -56,5 +54,15 @@ public class AuthenticateLocalStorage implements AuthenticateStore.LocalStorage 
     public Observable<Boolean> setLoginState(boolean state) {
         mPreferences.saveBoolPreferences(PreferencesConst.LOGIN_STATUS, state);
         return Observable.just(state);
+    }
+
+    @Override
+    public void putGlobalPermissionLocal(String permission) {
+        mPreferences.saveStringPreferences(PreferencesConst.PERMISSION, permission);
+    }
+
+    @Override
+    public String getGlobalPermission(String permission) {
+        return mPreferences.getStringPreferences(PreferencesConst.PERMISSION);
     }
 }

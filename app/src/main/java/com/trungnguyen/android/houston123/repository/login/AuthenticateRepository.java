@@ -60,7 +60,7 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     putAuthInfoLocal(false, Constants.EMPTY);
                 })
                 .map(AppUtils::transformToken)
-                .flatMap(this::callAccountInformationApi);
+                .flatMap(token -> callAccountInformationApi(token, false));
     }
 
     @Override
@@ -74,11 +74,11 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     }
 
     @Override
-    public Observable<LoginInfoResponse> callAccountInformationApi(String token) {
+    public Observable<LoginInfoResponse> callAccountInformationApi(String token, boolean shouldReSaveState) {
         return mRequestService.getAccountInfo(token)
                 .doOnError(throwable -> {
                     Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
-                    putAuthInfoLocal(false, Constants.EMPTY);
+                    putAuthInfoLocal(shouldReSaveState, Constants.EMPTY);
                 })
                 .flatMap(ObservablePattern::responseProcessingPattern)
                 .flatMap(accountInfoResponse -> {
@@ -87,7 +87,8 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                         return Observable.error(HttpEmptyResponseException::new);
                     }
                     return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
-                });
+                })
+                .doOnNext(loginInfoResponse -> mLocalStorage.putGlobalPermissionLocal(loginInfoResponse.permission));
     }
 
     @Override
@@ -99,8 +100,19 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     }
 
     @Override
-    public Observable<Boolean> getLoginState() {
-        return ObservableHelper.makeObservableOptional(() -> mLocalStorage.getLoginStatus()).map(Optional::get);
+    public Observable<LoginInfoResponse> getLoginState() {
+        return ObservableHelper.makeObservableOptional(() -> mLocalStorage.getLoginStatus())
+                .map(Optional::get)
+                .doOnNext(aBoolean -> Timber.d("Login state [%s]", aBoolean))
+                .flatMap(aBoolean -> {
+                    if (aBoolean) {
+                        return mLocalStorage.getSafeAccessToken()
+                                .map(AppUtils::transformToken)
+                                .flatMap(token -> callAccountInformationApi(token, true));
+
+                    }
+                    return Observable.error(HttpEmptyResponseException::new);
+                });
     }
 
     @Override

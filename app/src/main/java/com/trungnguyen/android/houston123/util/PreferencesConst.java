@@ -10,4 +10,6 @@ public interface PreferencesConst {
 
     String LIST_CURRENT_PAGE = "list_current_page";
     String HAS_LOADER_PREF = "has_loader_pref";
+
+    String PERMISSION = "global_permission";
 }

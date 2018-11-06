@@ -30,4 +30,8 @@ public class LoginInfoResponse {
 
     @SerializedName("Chức Vụ")
     public String position;
+
+    public LoginInfoModel convertToModel() {
+        return new LoginInfoModel(name, phone, address, cmnd, email, position);
+    }
 }
