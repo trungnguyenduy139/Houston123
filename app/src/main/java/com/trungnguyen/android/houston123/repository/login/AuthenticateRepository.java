@@ -59,7 +59,6 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
                     putAuthInfoLocal(false, Constants.EMPTY);
                 })
-                .map(AppUtils::transformToken)
                 .flatMap(token -> callAccountInformationApi(token, false));
     }
 
@@ -75,20 +74,22 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
 
     @Override
     public Observable<LoginInfoResponse> callAccountInformationApi(String token, boolean shouldReSaveState) {
-        return mRequestService.getAccountInfo(token)
-                .doOnError(throwable -> {
-                    Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
-                    putAuthInfoLocal(shouldReSaveState, Constants.EMPTY);
-                })
-                .flatMap(ObservablePattern::responseProcessingPattern)
-                .flatMap(accountInfoResponse -> {
-                    List<LoginInfoResponse> data = accountInfoResponse.loginInfo;
-                    if (Lists.isEmptyOrNull(data) || data.get(this.DEFAULT_ACCOUNT_INFO_POSITION) == null) {
-                        return Observable.error(HttpEmptyResponseException::new);
-                    }
-                    return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
-                })
-                .doOnNext(loginInfoResponse -> mLocalStorage.putGlobalPermissionLocal(loginInfoResponse.permission));
+        return Observable.just(token)
+                .map(AppUtils::transformToken)
+                .flatMap(formattedToken -> mRequestService.getAccountInfo(formattedToken)
+                        .doOnError(throwable -> {
+                            Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
+                            putAuthInfoLocal(shouldReSaveState, shouldReSaveState ? token : Constants.EMPTY);
+                        })
+                        .flatMap(ObservablePattern::responseProcessingPattern)
+                        .flatMap(accountInfoResponse -> {
+                            List<LoginInfoResponse> data = accountInfoResponse.loginInfo;
+                            if (Lists.isEmptyOrNull(data) || data.get(this.DEFAULT_ACCOUNT_INFO_POSITION) == null) {
+                                return Observable.error(HttpEmptyResponseException::new);
+                            }
+                            return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
+                        })
+                        .doOnNext(loginInfoResponse -> mLocalStorage.putGlobalPermissionLocal(loginInfoResponse.permission)));
     }
 
     @Override
@@ -105,13 +106,11 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                 .map(Optional::get)
                 .doOnNext(aBoolean -> Timber.d("Login state [%s]", aBoolean))
                 .flatMap(aBoolean -> {
-                    if (aBoolean) {
-                        return mLocalStorage.getSafeAccessToken()
-                                .map(AppUtils::transformToken)
-                                .flatMap(token -> callAccountInformationApi(token, true));
-
+                    if (!aBoolean) {
+                        return Observable.error(HttpEmptyResponseException::new);
                     }
-                    return Observable.error(HttpEmptyResponseException::new);
+                    return mLocalStorage.getSafeAccessToken()
+                            .flatMap(token -> callAccountInformationApi(token, true));
                 });
     }
 
