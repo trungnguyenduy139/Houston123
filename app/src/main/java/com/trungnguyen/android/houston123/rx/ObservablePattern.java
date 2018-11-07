@@ -89,5 +89,13 @@ public class ObservablePattern {
         String clientMessage = TextUtils.isEmpty(message) ? Constants.EMPTY : message;
         return Observable.error(new BodyException(Constants.ServerCode.FAILED, clientMessage));
     }
+
+
+    public static <R> Observable<R> checkResponseWithCondition(R object, Callable<Boolean> failCondition, Throwable throwable) throws Exception {
+        if (failCondition.call()) {
+            return Observable.error(throwable);
+        }
+        return Observable.just(object);
+    }
 }
 

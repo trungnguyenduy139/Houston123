@@ -13,7 +13,6 @@ import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
-import com.trungnguyen.android.houston123.exception.BodyException;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.util.Constants;

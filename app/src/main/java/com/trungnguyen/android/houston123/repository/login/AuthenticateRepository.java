@@ -1,6 +1,8 @@
 package com.trungnguyen.android.houston123.repository.login;
 
 
+import android.text.TextUtils;
+
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.LoginInfoResponse;
@@ -65,29 +67,30 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
         return mLocalStorage.getSafeAccessToken()
                 .doOnNext(token -> Timber.d("Get access token from Local [%s]", token))
                 .map(AppUtils::transformToken)
-                .flatMap(token -> mRequestService.logoutService(token)
-                        .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
-                        .flatMap(ObservablePattern::responseProcessingPattern));
+                .flatMap(token -> mRequestService.logoutService(token))
+                .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
+                .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
     @Override
     public Observable<LoginInfoResponse> callAccountInformationApi(String token, boolean shouldReSaveState) {
         return Observable.just(token)
+                .flatMap(userToken -> ObservablePattern.checkResponseWithCondition(userToken, () -> TextUtils.isEmpty(userToken), new HttpEmptyResponseException()))
                 .map(AppUtils::transformToken)
-                .flatMap(formattedToken -> mRequestService.getAccountInfo(formattedToken)
-                        .doOnError(throwable -> {
-                            Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
-                            putAuthInfoLocal(shouldReSaveState, shouldReSaveState ? token : Constants.EMPTY);
-                        })
-                        .flatMap(ObservablePattern::responseProcessingPattern)
-                        .flatMap(accountInfoResponse -> {
-                            List<LoginInfoResponse> data = accountInfoResponse.loginInfo;
-                            if (Lists.isEmptyOrNull(data) || data.get(this.DEFAULT_ACCOUNT_INFO_POSITION) == null) {
-                                return Observable.error(HttpEmptyResponseException::new);
-                            }
-                            return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
-                        })
-                        .doOnNext(loginInfoResponse -> mLocalStorage.putGlobalPermissionLocal(loginInfoResponse.permission)));
+                .flatMap(formattedToken -> mRequestService.getAccountInfo(formattedToken))
+                .doOnError(throwable -> {
+                    Timber.d("[Auth] Authenticate failed with %s", throwable.getMessage());
+                    putAuthInfoLocal(shouldReSaveState, shouldReSaveState ? token : Constants.EMPTY);
+                })
+                .flatMap(ObservablePattern::responseProcessingPattern)
+                .flatMap(accountInfoResponse -> {
+                    List<LoginInfoResponse> data = accountInfoResponse.loginInfo;
+                    if (Lists.isEmptyOrNull(data) || data.get(this.DEFAULT_ACCOUNT_INFO_POSITION) == null) {
+                        return Observable.error(HttpEmptyResponseException::new);
+                    }
+                    return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
+                })
+                .doOnNext(loginInfoResponse -> mLocalStorage.putGlobalPermissionLocal(loginInfoResponse.permission));
     }
 
     @Override
@@ -107,9 +110,9 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     if (!aBoolean) {
                         return Observable.error(HttpEmptyResponseException::new);
                     }
-                    return mLocalStorage.getSafeAccessToken()
-                            .flatMap(token -> callAccountInformationApi(token, true));
-                });
+                    return mLocalStorage.getSafeAccessToken();
+                })
+                .flatMap(token -> callAccountInformationApi(token, true));
     }
 
     @Override
