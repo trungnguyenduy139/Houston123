@@ -152,6 +152,24 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         mSubscription.add(subscription);
     }
 
+
+    public void studentInClass(String userId) {
+        Disposable subscription = mUpdateUserRepository.callApiStudentInClass(userId)
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .doOnError(throwable -> Timber.d("Failed to load 2 %s", throwable.getMessage()))
+                .subscribe(dataList -> {
+                    if (mNavigator != null) {
+                        Bundle bundle = new BundleBuilder()
+                                .putValue(BundleConstants.LIST_USER_BUNDLE, dataList)
+                                .build();
+                        mNavigator.startUserListActivity(mContext, bundle);
+                    }
+                }, throwable -> showFailedActionDialog(mContext.getString(R.string.general_error_message)));
+
+        mSubscription.add(subscription);
+    }
+
+
     public void onAddNewClicked(int userCode) {
 
     }

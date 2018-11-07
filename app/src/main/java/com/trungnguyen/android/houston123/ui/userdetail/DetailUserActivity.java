@@ -121,7 +121,18 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        int menuId = mCode == UserType.LECTURER ? R.menu.teacher_menu : R.menu.detail_user_menu;
+        int menuId;
+        switch (mCode) {
+            case UserType.LECTURER:
+                menuId = R.menu.teacher_menu;
+                break;
+            case UserType.CLAZZ:
+                menuId = R.menu.student_class_menu;
+                break;
+            default:
+                menuId = R.menu.detail_user_menu;
+                break;
+        }
         inflater.inflate(menuId, menu);
         return true;
     }
@@ -150,6 +161,12 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
             case R.id.detail_class_teacher:
                 if (mUserModel instanceof LecturerModel) {
                     viewModel.classOfLecturer(((LecturerModel) mUserModel).getUserId());
+                }
+                break;
+
+            case R.id.student_in_class:
+                if (mUserModel instanceof ClassModel) {
+                    viewModel.studentInClass(((ClassModel) mUserModel).clazzId);
                 }
                 break;
             default:

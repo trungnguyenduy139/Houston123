@@ -28,6 +28,7 @@ object Constants {
         const val MANAGER = "quanly"
         const val CLAZZ = "lophoc"
         const val SUBJECT = "monhoc"
+        const val DETAIL_CLASS = "chitietlop"
     }
 
     object ServerCode {
