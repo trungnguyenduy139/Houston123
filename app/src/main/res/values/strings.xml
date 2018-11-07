@@ -36,13 +36,9 @@
     <string name="change_password_failed">Đổi mật khẩu thất bại, vui lòng thử lại</string>
     <string-array name="home_resources_array">
         <item>Giáo viên</item>
-        <item>Giáo viên</item>
-        <item>Giáo viên</item>
-        <item>Giáo viên</item>
-        <item>Giáo viên</item>
-        <item>Giáo viên</item>
-        <item>Giáo viên</item>
-        <item>Giáo viên</item>
-        <item>Giáo viên</item>
+        <item>Quản lí</item>
+        <item>Học viên</item>
+        <item>Lớp học</item>
+        <item>Môn học</item>
     </string-array>
 </resources>

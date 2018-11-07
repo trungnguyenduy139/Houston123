@@ -19,8 +19,7 @@ public final class CommonResourceLoader {
 
     public Observable<List<HomeItem>> getHomeResource(Context context) {
         int[] imgResArr = {R.drawable.lecture, R.drawable.lecture,
-                R.drawable.lecture, R.drawable.lecture, R.drawable.lecture,
-                R.drawable.lecture, R.drawable.lecture, R.drawable.lecture, R.drawable.lecture};
+                R.drawable.lecture, R.drawable.lecture, R.drawable.lecture};
         String[] titleResArr = context.getResources().getStringArray(R.array.home_resources_array);
 
         if (imgResArr.length != titleResArr.length) {

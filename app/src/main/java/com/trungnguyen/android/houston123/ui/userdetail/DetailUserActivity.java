@@ -19,6 +19,7 @@ import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.databinding.ActivityDetailUserBinding;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -140,6 +141,9 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                 } else if (mUserModel instanceof ClassModel) {
                     ClassModel model = (ClassModel) mUserModel;
                     modelId = model.clazzId;
+                } else if (mUserModel instanceof SubjectModel) {
+                    SubjectModel model = (SubjectModel) mUserModel;
+                    modelId = model.getSubCotent();
                 }
                 viewModel.deleteCurrentUser(mCode, modelId);
                 break;

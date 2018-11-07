@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
+import com.trungnguyen.android.houston123.data.SubjectResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.Collection;
@@ -33,6 +34,9 @@ public class UserListStore {
 
         @GET(Constants.Api.MANAGER)
         Observable<ListBaseResponse<ManagerResponse>> getListManager(@Query("page") int page);
+
+        @GET(Constants.Api.SUBJECT)
+        Observable<ListBaseResponse<SubjectResponse>> getListSubject(@Query("page") int page);
 
         @Headers({
                 "Content-Type: application/json",

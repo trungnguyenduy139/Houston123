@@ -13,6 +13,7 @@ import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.ManagerResponse;
 import com.trungnguyen.android.houston123.data.StudentResponse;
+import com.trungnguyen.android.houston123.data.SubjectResponse;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.util.Constants;
@@ -98,6 +99,10 @@ public class UserListRepository implements UserListStore.Repository {
             case UserType.CLAZZ:
                 Observable<ListBaseResponse<ClassResponse>> observableClazz = mRequestService.getLisClazz(page);
                 return processUserFlow(observableClazz);
+            case UserType.SUBJECT:
+                Observable<ListBaseResponse<SubjectResponse>> observableSubject = mRequestService.getListSubject(page);
+                return processUserFlow(observableSubject);
+
             default:
                 return Observable.just(new ArrayList<>());
         }
@@ -126,6 +131,9 @@ public class UserListRepository implements UserListStore.Repository {
                 break;
             case UserType.CLAZZ:
                 userType = Constants.Api.CLAZZ;
+                break;
+            case UserType.SUBJECT:
+                userType = Constants.Api.SUBJECT;
                 break;
             default:
                 break;

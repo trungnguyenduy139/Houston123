@@ -27,10 +27,10 @@ object Constants {
         const val STUDENT = "hocvien"
         const val MANAGER = "quanly"
         const val CLAZZ = "lophoc"
+        const val SUBJECT = "monhoc"
     }
 
     object ServerCode {
-        const val DELETE_SUCCESS_MESSAGE = "Account deleted successfully"
         const val SUCCESS = 200
         const val FAILED = -200
     }

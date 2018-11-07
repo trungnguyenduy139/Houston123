@@ -27,6 +27,10 @@ public final class ModelResourceLoader {
         return Arrays.asList("Mã Lớp", "Lớp", "Mã Môn Học", "Tên", "Mã Giáo Viên", "Họ Và Tên", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Nhánh", "Cơ sở");
     }
 
+    public static List<String> loadSubjectResource() {
+        return Arrays.asList("Tên môn học", "Mã môn học", "Manager allow");
+    }
+
     public static List<ItemDetailModel> loadEmptyResources(int userCode) {
         List<String> resources;
         List<ItemDetailModel> resourcesModel = new ArrayList<>();
@@ -39,6 +43,9 @@ public final class ModelResourceLoader {
                 break;
             case UserType.CLAZZ:
                 resources = loadClassResource();
+                break;
+            case UserType.SUBJECT:
+                resources = loadSubjectResource();
                 break;
             default:
                 resources = new ArrayList<>();
