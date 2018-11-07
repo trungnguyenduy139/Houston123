@@ -60,7 +60,7 @@ public class AuthenticateStore {
 
         Observable<LoginInfoResponse> getLoginState();
 
-        Observable<Boolean> putAuthInfoLocal(boolean state, String accessToken);
+        void putAuthInfoLocal(boolean state, String accessToken);
 
     }
 
@@ -71,7 +71,7 @@ public class AuthenticateStore {
 
         boolean getLoginStatus();
 
-        Observable<Boolean> setLoginState(boolean state);
+        void setLoginState(boolean state);
 
         void putGlobalPermissionLocal(String permission);
 

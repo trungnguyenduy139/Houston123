@@ -1,8 +1,6 @@
 package com.trungnguyen.android.houston123.repository.login;
 
 
-import android.text.TextUtils;
-
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.LoginInfoResponse;
@@ -115,13 +113,8 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     }
 
     @Override
-    public Observable<Boolean> putAuthInfoLocal(boolean state, final String accessToken) {
-        return mLocalStorage.setLoginState(state)
-                .flatMap(aBoolean -> {
-                    if (aBoolean && !TextUtils.isEmpty(accessToken)) {
-                        mLocalStorage.putSafeAccessToken(accessToken);
-                    }
-                    return Observable.just(aBoolean);
-                });
+    public void putAuthInfoLocal(boolean state, final String accessToken) {
+        mLocalStorage.setLoginState(state);
+        mLocalStorage.putSafeAccessToken(accessToken);
     }
 }

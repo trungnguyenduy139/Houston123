@@ -51,9 +51,8 @@ public class AuthenticateLocalStorage implements AuthenticateStore.LocalStorage 
     }
 
     @Override
-    public Observable<Boolean> setLoginState(boolean state) {
+    public void setLoginState(boolean state) {
         mPreferences.saveBoolPreferences(PreferencesConst.LOGIN_STATUS, state);
-        return Observable.just(state);
     }
 
     @Override
