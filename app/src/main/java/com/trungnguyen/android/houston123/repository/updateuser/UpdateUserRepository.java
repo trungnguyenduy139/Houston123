@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
-import com.trungnguyen.android.houston123.data.StudentResponse;
+import com.trungnguyen.android.houston123.data.StudentShortResponse;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentShortModel;
 
 import java.util.List;
 
@@ -49,14 +49,14 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
     }
 
     @Override
-    public Observable<List<StudentModel>> callApiStudentInClass(String id) {
+    public Observable<List<StudentShortModel>> callApiStudentInClass(String id) {
         return mRequestService.getStudentInClass(id)
                 .flatMap(ObservablePattern::responseProcessingPattern)
                 .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
                 .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
                 .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
                 .flatMapIterable(data -> data)
-                .map(StudentResponse::convertToModel)
+                .map(StudentShortResponse::convertToModel)
                 .toList()
                 .toObservable();
     }

@@ -4,9 +4,9 @@ import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
-import com.trungnguyen.android.houston123.data.StudentResponse;
+import com.trungnguyen.android.houston123.data.StudentShortResponse;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentShortModel;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class UpdateUserStore {
         Observable<ListBaseResponse<ClassResponse>> getClassOfLecturer(@Path(value = "lecturer_id") String lecturerId);
 
         @GET(Constants.Api.DETAIL_CLASS + "/{class_id}")
-        Observable<ListBaseResponse<StudentResponse>> getStudentInClass(@Path(value = "class_id") String lecturerId);
+        Observable<ListBaseResponse<StudentShortResponse>> getStudentInClass(@Path(value = "class_id") String lecturerId);
 
         @PUT(Constants.Api.MANAGER + "/{user_id}")
         Observable<BaseResponse> updateManager(@Path(value = "user_id") String userId,
@@ -62,7 +62,7 @@ public class UpdateUserStore {
 
     public interface Repository {
         Observable<List<ClassModel>> callApiClassOfLecturer(String id);
-        Observable<List<StudentModel>> callApiStudentInClass(String id);
+        Observable<List<StudentShortModel>> callApiStudentInClass(String id);
         Observable<BaseResponse> callApiUpdateUser(BaseModel model);
     }
 

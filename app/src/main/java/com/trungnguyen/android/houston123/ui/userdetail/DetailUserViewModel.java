@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.DetailServiceType;
 import com.trungnguyen.android.houston123.anotation.OnClick;
+import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseListViewModel;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserRepository;
@@ -144,6 +145,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                     if (mNavigator != null) {
                         Bundle bundle = new BundleBuilder()
                                 .putValue(BundleConstants.LIST_USER_BUNDLE, dataList)
+                                .putValue(BundleConstants.USER_CODE_BUNDLE, UserType.CLAZZ)
                                 .build();
                         mNavigator.startUserListActivity(mContext, bundle);
                     }
@@ -161,6 +163,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                     if (mNavigator != null) {
                         Bundle bundle = new BundleBuilder()
                                 .putValue(BundleConstants.LIST_USER_BUNDLE, dataList)
+                                .putValue(BundleConstants.USER_CODE_BUNDLE, UserType.STUDENT)
                                 .build();
                         mNavigator.startUserListActivity(mContext, bundle);
                     }
