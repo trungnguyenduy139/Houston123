@@ -30,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:onClick="@{() -> viewModel.onUserChangePassword()}"
                 android:background="@color/color_background"
                 android:orientation="vertical">
 
@@ -49,7 +50,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
                         android:gravity="start"
-                        android:onClick="@{() -> viewModel.onUserChangePassword()}"
                         android:text="@string/change_password"
                         android:textColor="@color/color_text"
                         android:textSize="16sp" />
@@ -62,6 +62,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.onUserLogout()}"
                 android:background="@color/color_background"
                 android:orientation="vertical">
 
@@ -81,7 +82,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
                         android:gravity="start"
-                        android:onClick="@{() -> viewModel.onUserLogout()}"
                         android:text="@string/logout"
                         android:textColor="@color/color_text"
                         android:textSize="16sp" />
