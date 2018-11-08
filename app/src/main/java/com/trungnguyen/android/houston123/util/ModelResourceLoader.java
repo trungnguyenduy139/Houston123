@@ -27,6 +27,11 @@ public final class ModelResourceLoader {
         return Arrays.asList("Mã Lớp", "Lớp", "Mã Môn Học", "Tên", "Mã Giáo Viên", "Họ Và Tên", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Nhánh", "Cơ sở");
     }
 
+
+    public static List<String> loadStudentResource() {
+        return Arrays.asList("Họ tên", "SĐT", "Địa chỉ", "Mã Học Viên", "Lớp", "Ngày Sinh", "Học Lực Đầu Vào", "Ngày Bắt Đầu", "Trường", "Cơ sở");
+    }
+
     public static List<String> loadSubjectResource() {
         return Arrays.asList("Tên môn học", "Mã môn học", "Manager allow");
     }

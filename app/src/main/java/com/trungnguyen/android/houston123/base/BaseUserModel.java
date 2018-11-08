@@ -27,6 +27,12 @@ public abstract class BaseUserModel extends BaseModel {
         this.cmnd = cmnd;
     }
 
+
+    public BaseUserModel(String name, String phoneNumber, String address, String userId) {
+        super(name, phoneNumber);
+        this.address = address;
+        this.userId = userId;
+    }
     public String getUserImg() {
         return userImg;
     }
