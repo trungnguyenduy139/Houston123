@@ -13,8 +13,6 @@ public class StudentShortModel extends BaseModel {
 
     String userId;
 
-    String studentId;
-
     String clazzId;
 
     String transClazz;
@@ -22,7 +20,7 @@ public class StudentShortModel extends BaseModel {
     String transTime;
 
     public StudentShortModel(String id, String mainContent, String subContent, String transClazz, String transTime) {
-        super(mainContent, subContent);
+        super(subContent, transClazz, mainContent);
         this.transClazz = transClazz;
         this.userId = id;
         this.transTime = transTime;

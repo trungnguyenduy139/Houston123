@@ -19,7 +19,6 @@ import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.databinding.ActivityDetailUserBinding;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -145,28 +144,18 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                 viewModel.onUpdateClick(DetailServiceType.START_UPDATE, null);
                 break;
             case R.id.detail_delete:
-                String modelId = "";
-                if (mUserModel instanceof BaseUserModel) {
-                    BaseUserModel model = (BaseUserModel) mUserModel;
-                    modelId = model.getUserId();
-                } else if (mUserModel instanceof ClassModel) {
-                    ClassModel model = (ClassModel) mUserModel;
-                    modelId = model.clazzId;
-                } else if (mUserModel instanceof SubjectModel) {
-                    SubjectModel model = (SubjectModel) mUserModel;
-                    modelId = model.getSubCotent();
-                }
+                String modelId = mUserModel.getModelId();
                 viewModel.deleteCurrentUser(mCode, modelId);
                 break;
             case R.id.detail_class_teacher:
                 if (mUserModel instanceof LecturerModel) {
-                    viewModel.classOfLecturer(((LecturerModel) mUserModel).getUserId());
+                    viewModel.classOfLecturer(mUserModel.getModelId());
                 }
                 break;
 
             case R.id.student_in_class:
                 if (mUserModel instanceof ClassModel) {
-                    viewModel.studentInClass(((ClassModel) mUserModel).clazzId);
+                    viewModel.studentInClass(mUserModel.getModelId());
                 }
                 break;
             default:

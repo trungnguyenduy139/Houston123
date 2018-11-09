@@ -31,12 +31,8 @@ public class ClassModel extends BaseModel {
 
     public String departmen;
 
-    public ClassModel(String mainContent, String subCotent) {
-        super(mainContent, subCotent);
-    }
-
     public ClassModel(String mainContent, String subCotent, String clazzId, String clazz, String lecturerId, String lecturerName, String startDate, String endDate, String branch, String departmen) {
-        super(mainContent, subCotent);
+        super(mainContent, subCotent, clazzId);
         this.clazzId = clazzId;
         this.clazz = clazz;
         this.lecturerId = lecturerId;

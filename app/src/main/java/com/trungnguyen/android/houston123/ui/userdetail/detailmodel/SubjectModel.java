@@ -14,15 +14,12 @@ public class SubjectModel extends BaseModel {
     private String managerAllow;
 
     public SubjectModel(String name, String subjectId, String managerAllow) {
-        super(name, subjectId);
+        super(name, managerAllow, subjectId);
         this.managerAllow = managerAllow;
     }
 
     public String getManagerAllow() {
-        if (managerAllow == null) {
-            return "";
-        }
-        return managerAllow;
+        return getSafeObject(managerAllow);
     }
 
     @Override

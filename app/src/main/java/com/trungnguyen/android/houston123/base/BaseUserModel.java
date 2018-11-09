@@ -20,7 +20,7 @@ public abstract class BaseUserModel extends BaseModel {
     }
 
     public BaseUserModel(String name, String phoneNumber, String address, String userId, String email, String cmnd) {
-        super(name, phoneNumber);
+        super(name, phoneNumber, userId);
         this.address = address;
         this.userId = userId;
         this.email = email;
@@ -29,7 +29,7 @@ public abstract class BaseUserModel extends BaseModel {
 
 
     public BaseUserModel(String name, String phoneNumber, String address, String userId) {
-        super(name, phoneNumber);
+        super(name, phoneNumber, userId);
         this.address = address;
         this.userId = userId;
     }
