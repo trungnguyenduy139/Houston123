@@ -40,8 +40,8 @@ public class PersonalViewModel extends BaseViewModel<IPersonalView> {
     @OnClick
     public void onUserLogout() {
         Disposable subscription = mAuthRepository.callLogoutApi()
-                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .doOnNext(authenticateResponse -> mAuthRepository.putAuthInfoLocal(false, Constants.EMPTY))
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(authenticateResponse -> {
                     if (mView != null) {
                         mView.successToLogout();

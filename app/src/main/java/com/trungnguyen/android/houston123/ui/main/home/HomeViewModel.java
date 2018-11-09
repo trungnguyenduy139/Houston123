@@ -64,8 +64,8 @@ public class HomeViewModel extends BaseListViewModel<IHomeView, HomeAdapterListe
 
     private void processUserFlow(int code) {
         Disposable subscription = mUserListRepository.handleUserServiceFlow(code, Constants.FIRST_PAGE_REQUEST)
-                .compose(SchedulerHelper.applySchedulers())
                 .filter(models -> !Lists.isEmptyOrNull(models))
+                .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> showLoading())
                 .doOnTerminate(this::hideLoading)
                 .subscribe(userModels -> {
