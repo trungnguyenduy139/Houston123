@@ -69,7 +69,6 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
         EventBus.getDefault().register(this);
     }
 
-
     @SuppressWarnings("unchecked")
     private List<BaseModel> getData(Intent intent) {
         List<BaseModel> data;

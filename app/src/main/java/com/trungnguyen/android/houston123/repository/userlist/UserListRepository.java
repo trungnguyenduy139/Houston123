@@ -1,7 +1,5 @@
 package com.trungnguyen.android.houston123.repository.userlist;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 
 import com.trungnguyen.android.houston123.anotation.UserType;
@@ -17,11 +15,11 @@ import com.trungnguyen.android.houston123.data.SubjectResponse;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.util.Constants;
+import com.trungnguyen.android.houston123.util.Lists;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -43,10 +41,8 @@ public class UserListRepository implements UserListStore.Repository {
         this.mLocalStorage = localStorage;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private <R extends EmptyResponse> Observable<List<BaseModel>> processUserFlow(Observable<ListBaseResponse<R>> observable) {
         return observable
-                .filter(Objects::nonNull)
                 .flatMap(ObservablePattern::responseProcessingPattern)
                 .doOnNext(responseListBaseResponse -> {
                     if (responseListBaseResponse == null) {
@@ -59,9 +55,8 @@ public class UserListRepository implements UserListStore.Repository {
                     mLocalStorage.putHasLoader(!TextUtils.isEmpty(nextPageUrl));
                 })
                 .flatMap(responseListBaseResponse -> Observable.just(responseListBaseResponse.getDataList()))
-                .filter(Objects::nonNull)
+                .filter(dataList -> !Lists.isEmptyOrNull(dataList))
                 .flatMapIterable(responses -> responses)
-                .filter(Objects::nonNull)
                 .map(EmptyResponse::convertToModel)
                 .toList()
                 .toObservable();
@@ -74,7 +69,6 @@ public class UserListRepository implements UserListStore.Repository {
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page) {
         if (page == Constants.LOADING_MORE_ERROR) {
@@ -83,7 +77,6 @@ public class UserListRepository implements UserListStore.Repository {
         return handleUserService(page, code);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Observable<List<BaseModel>> handleUserService(int page, int api) {
         switch (api) {

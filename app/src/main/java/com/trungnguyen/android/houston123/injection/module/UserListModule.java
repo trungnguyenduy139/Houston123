@@ -12,7 +12,7 @@ import dagger.Provides;
  * Created by trungnd4 on 08/10/2018.
  */
 @Module
-public class UserListModule {
+public abstract class UserListModule {
     @Provides
     @ViewModelScope
     static protected UserListStore.LocalStorage provideUserListLocalStorage(PrefsUtil prefsUtil) {
