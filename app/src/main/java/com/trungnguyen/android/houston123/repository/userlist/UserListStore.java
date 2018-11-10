@@ -53,8 +53,6 @@ public class UserListStore {
 
     public interface Repository {
 
-        Observable<List<BaseModel>> handleUserService(int page, int api);
-
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
         <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page);

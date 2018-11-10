@@ -2,17 +2,12 @@ package com.trungnguyen.android.houston123.repository.userlist;
 
 import android.text.TextUtils;
 
-import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
-import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.EmptyResponse;
-import com.trungnguyen.android.houston123.data.LecturerResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
-import com.trungnguyen.android.houston123.data.ManagerResponse;
-import com.trungnguyen.android.houston123.data.StudentResponse;
-import com.trungnguyen.android.houston123.data.SubjectResponse;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
+import com.trungnguyen.android.houston123.repository.IDataFactory;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -33,15 +28,18 @@ public class UserListRepository implements UserListStore.Repository {
 
     private UserListStore.RequestService mRequestService;
     private UserListStore.LocalStorage mLocalStorage;
+    private IDataFactory mDataFactory;
 
     @Inject
     public UserListRepository(UserListStore.RequestService requestService,
-                              UserListStore.LocalStorage localStorage) {
+                              UserListStore.LocalStorage localStorage,
+                              IDataFactory dataFactory) {
         this.mRequestService = requestService;
         this.mLocalStorage = localStorage;
+        this.mDataFactory = dataFactory;
     }
 
-    private <R extends EmptyResponse> Observable<List<BaseModel>> processUserFlow(Observable<ListBaseResponse<R>> observable) {
+    private Observable<List<BaseModel>> processUserFlow(Observable<? extends ListBaseResponse<? extends EmptyResponse>> observable) {
         return observable
                 .flatMap(ObservablePattern::responseProcessingPattern)
                 .doOnNext(responseListBaseResponse -> {
@@ -74,64 +72,19 @@ public class UserListRepository implements UserListStore.Repository {
         if (page == Constants.LOADING_MORE_ERROR) {
             return Observable.just(new ArrayList<>());
         }
-        return handleUserService(page, code);
-    }
 
-    @Override
-    public Observable<List<BaseModel>> handleUserService(int page, int api) {
-        switch (api) {
-            case UserType.MANAGER:
-                Observable<ListBaseResponse<ManagerResponse>> observableManager = mRequestService.getListManager(page);
-                return processUserFlow(observableManager);
-            case UserType.LECTURER:
-                Observable<ListBaseResponse<LecturerResponse>> observableLecturer = mRequestService.getListLecturer(page);
-                return processUserFlow(observableLecturer);
-            case UserType.STUDENT:
-                Observable<ListBaseResponse<StudentResponse>> observableStudent = mRequestService.getListStudents(page);
-                return processUserFlow(observableStudent);
-            case UserType.CLAZZ:
-                Observable<ListBaseResponse<ClassResponse>> observableClazz = mRequestService.getLisClazz(page);
-                return processUserFlow(observableClazz);
-            case UserType.SUBJECT:
-                Observable<ListBaseResponse<SubjectResponse>> observableSubject = mRequestService.getListSubject(page);
-                return processUserFlow(observableSubject);
+        Observable<? extends ListBaseResponse<? extends EmptyResponse>> dataListFlow = mDataFactory.getUserFlow(code, page);
 
-            default:
-                return Observable.just(new ArrayList<>());
-        }
+        return processUserFlow(dataListFlow);
     }
 
     @Override
     public Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId) {
-        String userType = apiChooser(code);
+        String userType = mDataFactory.getDataType(code);
         if (code == Constants.DEFAULT_CODE_VALUE || TextUtils.isEmpty(userType) || TextUtils.isEmpty(userId)) {
             return Observable.error(new HttpEmptyResponseException());
         }
         return this.callApiDeleteUser(userType, userId);
-    }
-
-    private String apiChooser(int code) {
-        String userType = Constants.EMPTY;
-        switch (code) {
-            case UserType.STUDENT:
-                userType = Constants.Api.STUDENT;
-                break;
-            case UserType.MANAGER:
-                userType = Constants.Api.MANAGER;
-                break;
-            case UserType.LECTURER:
-                userType = Constants.Api.LECTURER;
-                break;
-            case UserType.CLAZZ:
-                userType = Constants.Api.CLAZZ;
-                break;
-            case UserType.SUBJECT:
-                userType = Constants.Api.SUBJECT;
-                break;
-            default:
-                break;
-        }
-        return userType;
     }
 
     @Override
