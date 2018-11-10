@@ -12,6 +12,17 @@ import java.util.regex.Pattern;
 public class StringUtils {
     public static final String EMPTY = "";
 
+    public static boolean safeEquals(String string1, String string2) {
+        return safeEqualsIgnoreCase(string1, string2, false);
+    }
+
+    public static boolean safeEqualsIgnoreCase(String string1, String string2, boolean isIgnored) {
+        if (string1 == null) {
+            return string2 == null;
+        }
+        return isIgnored ? string1.equalsIgnoreCase(string2) : string1.equals(string2);
+    }
+
     public static boolean isCharacterMatchPattern(@NonNull String sInput, @NonNull String sPattern) {
         Pattern pattern = Pattern.compile(sPattern, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
         return pattern.matcher(sInput).find();

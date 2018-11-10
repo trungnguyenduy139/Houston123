@@ -10,17 +10,17 @@ import com.trungnguyen.android.houston123.injection.Injector
 import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore
 import com.trungnguyen.android.houston123.rx.SchedulerHelper
-import com.trungnguyen.android.houston123.util.AppUtils
-import com.trungnguyen.android.houston123.util.SingleLiveEvent
+import com.trungnguyen.android.houston123.ui.listuser.UserListActivity
+import com.trungnguyen.android.houston123.ui.main.MainActivity
+import com.trungnguyen.android.houston123.util.*
 import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel
 @Inject
 constructor(private val mContext: Context, authenticateRepository: AuthenticateRepository) : BaseViewModel<ILoginView>(mContext) {
-    var mLoginModel: LoginModel
 
-    private val mLoginState = false
+    var mLoginModel: LoginModel
 
     private val mAuthRepository: AuthenticateStore.Repository
 
@@ -65,14 +65,26 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
                 .doOnSubscribe { mView?.showLoadingDialog() }
                 .doOnTerminate { mView?.hideLoadingDialog() }
                 .subscribe({
-                    liveUserToken.value = it.permission
+//                    liveUserToken.value = it.permission
                     initGlobalUserCallback(it.convertToModel())
+                    handleAuthenticateSuccess(it.permission)
                 }, {
                     mView?.onAuthFailed()
                 })
 
         mSubscription.add(subscription)
 
+    }
+
+
+    private fun handleAuthenticateSuccess(permission: String) {
+        val isLecturer = StringUtils.safeEquals(permission, Constants.Api.LECTURER)
+        val clz = if (isLecturer) UserListActivity::class.java else MainActivity::class.java
+        val bundle = BundleBuilder()
+        if (isLecturer) {
+//            bundle.putValue(BundleConstants.SHOULD_CALL_API_FROM_START, true)
+        }
+        mView?.onAuthSuccess(permission)
     }
 
     private fun initGlobalUserCallback(model: LoginInfoModel?) {
