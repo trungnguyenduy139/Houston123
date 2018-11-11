@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.ui.login
 import android.content.Context
 import android.text.TextUtils
 import com.trungnguyen.android.houston123.anotation.OnClick
+import com.trungnguyen.android.houston123.anotation.UserType
 import com.trungnguyen.android.houston123.base.BaseViewModel
 import com.trungnguyen.android.houston123.data.LoginInfoModel
 import com.trungnguyen.android.houston123.data.LoginInfoResponse
@@ -38,9 +39,10 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
                 .compose(SchedulerHelper.applySchedulersLoadingAction({ showLoading() }, { hideLoading() }))
                 .subscribe({
                     initGlobalUserCallback(it.convertToModel())
-                    isLoggedIn.setValue(true)
+                    handleAuthenticateSuccess(it.permission)
+//                    isLoggedIn.setValue(true)
                 }, {
-                    isLoggedIn.value = false
+//                    isLoggedIn.value = false
                     Timber.d(it)
                 })
         mSubscription.add(disposable)
@@ -65,7 +67,6 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
                 .doOnSubscribe { mView?.showLoadingDialog() }
                 .doOnTerminate { mView?.hideLoadingDialog() }
                 .subscribe({
-//                    liveUserToken.value = it.permission
                     initGlobalUserCallback(it.convertToModel())
                     handleAuthenticateSuccess(it.permission)
                 }, {
@@ -82,9 +83,10 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
         val clz = if (isLecturer) UserListActivity::class.java else MainActivity::class.java
         val bundle = BundleBuilder()
         if (isLecturer) {
-//            bundle.putValue(BundleConstants.SHOULD_CALL_API_FROM_START, true)
+            bundle.putValue(BundleConstants.LECTURER_LOGGED_IN, isLecturer)
+            bundle.putValue(BundleConstants.USER_CODE_BUNDLE, UserType.CLAZZ)
         }
-        mView?.onAuthSuccess(permission)
+        mView?.onAuthSuccess(permission, clz, bundle.build())
     }
 
     private fun initGlobalUserCallback(model: LoginInfoModel?) {

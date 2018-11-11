@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
+import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserRepository;
+import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserStore;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
@@ -32,6 +34,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
 
     private Navigator mNavigator;
     private UserListStore.Repository mUserListRepository;
+    private UpdateUserStore.Repository mUpdateUserListRepository;
     private UserListAdapter<BaseModel> mAdapter;
     private Context mContext;
 
@@ -39,11 +42,13 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
 
     @Inject
-    UserListViewModel(Context context, Navigator navigator, UserListRepository userListRepository) {
+    UserListViewModel(Context context, Navigator navigator, UserListRepository userListRepository,
+                      UpdateUserRepository updateUserListRepository) {
         super(context);
         this.mContext = context;
         this.mUserListLiveData = new MutableLiveData<>();
         this.mNavigator = navigator;
+        this.mUpdateUserListRepository = updateUserListRepository;
         this.mUserListRepository = userListRepository;
     }
 
@@ -165,5 +170,24 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
         }
         mNavigator.startActivity(mContext, UpdateDetailUserActivity.class, new BundleBuilder()
                 .putValue(BundleConstants.ADD_NEW_USER_BUNDLE, userCode).build());
+    }
+
+    public void getClassOfLecturer(String model) {
+        Disposable subscription = mUpdateUserListRepository.callApiClassOfLecturer(model)
+                .compose(SchedulerHelper.applySchedulers())
+                .doOnSubscribe(disposable -> showLoading())
+                .doOnTerminate(() -> {
+                    hideLoading();
+                    if (mView != null) {
+                        mView.setRefreshing(false);
+                    }
+                })
+                .subscribe(list -> {
+                    if (mView != null) {
+                        mView.doRefreshList(list, false);
+                    }
+                }, throwable -> Timber.d("Fail to load resource lecturer logged in [%s]", throwable.getMessage()));
+
+        mSubscription.add(subscription);
     }
 }

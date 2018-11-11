@@ -12,7 +12,6 @@ import com.trungnguyen.android.houston123.data.SubjectResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.Collection;
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.DELETE;

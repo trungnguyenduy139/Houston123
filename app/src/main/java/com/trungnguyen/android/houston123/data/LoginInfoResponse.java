@@ -32,6 +32,6 @@ public class LoginInfoResponse {
     public String position;
 
     public LoginInfoModel convertToModel() {
-        return new LoginInfoModel(name, phone, address, cmnd, email, position);
+        return new LoginInfoModel(name, phone, address, cmnd, email, position, accountId);
     }
 }

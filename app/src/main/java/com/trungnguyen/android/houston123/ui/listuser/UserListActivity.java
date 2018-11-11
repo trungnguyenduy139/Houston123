@@ -13,7 +13,9 @@ import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.bus.DeletedUserEvent;
+import com.trungnguyen.android.houston123.data.LoginInfoModel;
 import com.trungnguyen.android.houston123.databinding.ActivityUserListBinding;
+import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -39,13 +41,25 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     private UserListAdapter<BaseModel> mListAdapter;
     private int mUserCode;
     private List<BaseModel> mDataList;
+    private boolean mLecturerLogged = false;
+    private String mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        if (intent.hasExtra(BundleConstants.LECTURER_LOGGED_IN)) {
+            mLecturerLogged = intent.getBooleanExtra(BundleConstants.LECTURER_LOGGED_IN, false);
+        }
         mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, Constants.DEFAULT_CODE_VALUE);
-        mDataList = getData(intent);
+        if (!mLecturerLogged) {
+            mDataList = getData(intent);
+        } else {
+            mDataList = new ArrayList<>();
+            LoginInfoModel model = Injector.getInstance().getUserComponent().getLoginModel();
+            mId = model.getModelId();
+            viewModel.getClassOfLecturer(mId);
+        }
         mListAdapter = new UserListAdapter<>(mDataList);
         viewModel.attachAdapter(mListAdapter);
         mListAdapter.setLoaderState(viewModel.getHasLoader());
@@ -217,7 +231,12 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
     @Override
     public void onRefresh() {
         if (viewModel != null && mUserCode != Constants.DEFAULT_CODE_VALUE) {
-            viewModel.refreshList(mUserCode);
+            if (!mLecturerLogged) {
+                viewModel.refreshList(mUserCode);
+            } else {
+                viewModel.getClassOfLecturer(mId);
+
+            }
         }
     }
 }

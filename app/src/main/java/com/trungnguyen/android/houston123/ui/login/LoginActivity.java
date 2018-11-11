@@ -8,8 +8,6 @@ import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseActivity;
 import com.trungnguyen.android.houston123.databinding.ActivityLoginBinding;
-import com.trungnguyen.android.houston123.util.BundleBuilder;
-import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Navigator;
 import com.trungnguyen.android.houston123.widget.ToastCustom;
@@ -31,16 +29,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void initViewObservable() {
         super.initViewObservable();
-        viewModel.isLoggedIn().observe(this, this::handleState);
-        viewModel.getLiveUserToken().observe(this, this::onAuthSuccess);
+//        viewModel.isLoggedIn().observe(this, this::handleState);
+//        viewModel.getLiveUserToken().observe(this, permission -> onAuthSuccess(permission, MainActivity.class));
     }
 
-    public void handleState(boolean isLoggedIn) {
-        if (isLoggedIn) {
-            mNavigator.startMainActivity(this, new Bundle());
-            finish();
-        }
-    }
+//    public void handleState(boolean isLoggedIn) {
+//        if (isLoggedIn) {
+//            mNavigator.startMainActivity(this, new Bundle());
+//            finish();
+//        }
+//    }
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -59,16 +57,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public void onAuthSuccess(String permission) {
+    public void onAuthSuccess(String permission, Class clz, Bundle bundle) {
         if (TextUtils.isEmpty(permission)) {
             return;
         }
         String message = getString(R.string.login_success) + Constants.SPACE + permission;
         ToastCustom.makeText(this, message, ToastCustom.LENGTH_SHORT, ToastType.TYPE_OK);
-        Bundle bundle = new BundleBuilder()
-                .putValue(BundleConstants.USER_NAME, permission)
-                .build();
-        mNavigator.startMainActivity(this, bundle);
+        mNavigator.startActivity(this, clz, bundle);
         finish();
     }
 

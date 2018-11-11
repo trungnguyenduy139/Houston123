@@ -18,4 +18,5 @@ object BundleConstants {
     const val LIST_USER_BUNDLE = "list_lecturer_bundle"
     const val USER_CODE_BUNDLE = "user_code_bundle"
     const val ADD_NEW_USER_BUNDLE = "user_code_bundle"
+    const val LECTURER_LOGGED_IN = "lecturer_logged_in"
 }

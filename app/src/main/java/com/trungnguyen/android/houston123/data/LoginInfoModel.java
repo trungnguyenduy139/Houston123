@@ -14,8 +14,6 @@ public class LoginInfoModel extends BaseModel {
 
     public String name;
 
-    public String accountId;
-
     public String phone;
 
     public String address;
@@ -26,9 +24,8 @@ public class LoginInfoModel extends BaseModel {
 
     public String position;
 
-    public LoginInfoModel(String name, String phone, String address, String cmnd, String email, String position) {
-        this.name = name;
-        this.phone = phone;
+    public LoginInfoModel(String name, String phone, String address, String cmnd, String email, String position, String accountId) {
+        super(name, phone, accountId);
         this.address = address;
         this.cmnd = cmnd;
         this.email = email;
@@ -42,6 +39,6 @@ public class LoginInfoModel extends BaseModel {
 
     @Override
     public List<String> getValue() {
-        return Arrays.asList(name, phone, address, cmnd, email, position);
+        return Arrays.asList(getSafeObject(getMainContent()), getSafeObject(getSubCotent()), getSafeObject(address), getSafeObject(email), getSafeObject(cmnd), getSafeObject(position));
     }
 }
