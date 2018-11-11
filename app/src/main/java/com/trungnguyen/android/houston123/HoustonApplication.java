@@ -2,6 +2,7 @@ package com.trungnguyen.android.houston123;
 
 import android.app.Activity;
 import android.app.Application;
+import android.net.TrafficStats;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ public class HoustonApplication extends Application {
 
     private static HoustonApplication mInstance;
     private static RefWatcher mRefWatcher;
+    private static final int THREAD_ID = 10000;
 
     @Override
     public void onCreate() {
@@ -32,6 +34,8 @@ public class HoustonApplication extends Application {
         if (isDebugBuild()) {
             StrictMode.enableDefaults();
         }
+
+        TrafficStats.setThreadStatsTag(THREAD_ID);
 
         initLeakCanary();
 
