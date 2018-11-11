@@ -12,17 +12,19 @@
             type="com.trungnguyen.android.houston123.ui.userdetail.DetailUserViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_background"
         android:orientation="vertical"
         android:weightSum="10">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/detail_user_recycler"
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/detail_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="9" />
-    </LinearLayout>
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+    </ScrollView>
 </layout>

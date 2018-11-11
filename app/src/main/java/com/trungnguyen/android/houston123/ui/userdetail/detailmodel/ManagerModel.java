@@ -42,7 +42,7 @@ public class ManagerModel extends BaseUserModel {
         String lecturerId = resources.get(index++);
         String email = resources.get(index++);
         String cmnd = resources.get(index++);
-        String img = resources.get(index++);
+        String img = "";
         String outDate = resources.get(index++);
         String outReason = resources.get(index++);
         String department = resources.get(index++);

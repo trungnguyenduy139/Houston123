@@ -2,10 +2,13 @@ package com.trungnguyen.android.houston123.ui.userdetail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.AppCompatTextView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
@@ -26,7 +29,6 @@ import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,11 +37,10 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         implements IDetailUserView {
 
     @NonNull
-    private List<ItemDetailModel> mItemDetailList = new ArrayList<>();
-    private UserDetailAdapter mUserDetailAdapter;
     private BaseModel mUserModel;
     private int mCode;
     private int mPosition;
+    protected LinearLayout mDetailContainer;
 
     @Inject
     EventBus mEventBus;
@@ -60,12 +61,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
             mUserModel = baseUserModel;
         }
 
-        mUserDetailAdapter = new UserDetailAdapter(mItemDetailList);
-
-        viewModel.attachAdapter(mUserDetailAdapter);
-
-        binding.detailUserRecycler.setLayoutManager(new LinearLayoutManager(this));
-        binding.detailUserRecycler.setAdapter(mUserDetailAdapter);
+        mDetailContainer = findViewById(R.id.detail_container);
 
         setTitle(getResources().getString(R.string.user_detail));
 
@@ -88,10 +84,22 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
 
     @Override
     public void updateResourceList(List<ItemDetailModel> list) {
-        if (Lists.isEmptyOrNull(list) || mUserDetailAdapter == null) {
+        if (Lists.isEmptyOrNull(list)) {
             return;
         }
-        mUserDetailAdapter.addItems(list);
+        ViewGroup view;
+        for (ItemDetailModel item : list) {
+            view = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.user_detail_item, null);
+            LinearLayout container = (LinearLayout) view.getChildAt(0);
+            AppCompatTextView tvKey = (AppCompatTextView) container.getChildAt(0);
+            AppCompatTextView tvVal = (AppCompatTextView) container.getChildAt(1);
+            tvKey.setText(item.getKey());
+            tvVal.setText(item.getValue());
+
+            mDetailContainer.addView(view);
+
+            mDetailContainer.invalidate();
+        }
     }
 
     @Override
@@ -115,6 +123,24 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     @Override
     public void loadClassOfLecturerSuccess(List<ClassResponse> dataList) {
 
+    }
+
+    @Override
+    public void onUpdateActionSuccess() {
+        new SweetAlertDialog(this)
+                .setContentText(getString(R.string.delete_user_success))
+                .setConfirmText(getString(R.string.close_dialog))
+                .setConfirmClickListener(sweetAlertDialog -> {
+                    if (sweetAlertDialog != null) {
+                        sweetAlertDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void onUpdateActionFailed() {
+        showErrorDialog(getString(R.string.update_user_failed));
     }
 
     @Override

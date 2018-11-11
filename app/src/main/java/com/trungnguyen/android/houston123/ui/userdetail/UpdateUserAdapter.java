@@ -46,31 +46,6 @@ public class UpdateUserAdapter extends UserDetailAdapter {
         return new UpdateUserAdapter.UpdateUserItemViewHolder(Objects.requireNonNull(DataBindingUtil.bind(rootView)));
     }
 
-    public BaseModel getModelData(int code, RecyclerView recyclerView) {
-        ArrayList<String> list = new ArrayList<>();
-        ViewGroup view;
-        View et;
-        for (int i = 0; i < getItemCount(); i++) {
-            view = (ViewGroup) recyclerView.getChildAt(i);
-            if (!(view instanceof LinearLayout)) {
-                continue;
-            }
-            LinearLayout layout1 = (LinearLayout) view.getChildAt(0);
-            if (layout1 == null) {
-                continue;
-            }
-            et = layout1.getChildAt(1);
-            if (!(et instanceof AppCompatEditText)) {
-                continue;
-            }
-            Editable editable = ((AppCompatEditText) et).getText();
-            String data = TextUtils.isEmpty(editable) ? Constants.EMPTY : editable.toString();
-            list.add(data);
-        }
-
-        return ModelResourceLoader.convertModel(code, list);
-    }
-
     public class UpdateUserItemViewHolder extends BaseViewHolder {
 
         private UpdateUserItemViewModel userDetailItemViewModel;

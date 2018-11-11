@@ -15,7 +15,6 @@ import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserReposi
 import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserStore;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
-import com.trungnguyen.android.houston123.rx.DefaultSubscriber;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
@@ -101,7 +100,15 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     public void handleUpdateUser(BaseModel model) {
         Disposable subscription = mUpdateUserRepository.callApiUpdateUser(model)
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
-                .subscribeWith(new DefaultSubscriber<>());
+                .subscribe(response -> {
+                    if (mView != null) {
+                        mView.onUpdateActionSuccess();
+                    }
+                }, throwable -> {
+                    if (mView != null) {
+                        mView.onUpdateActionFailed();
+                    }
+                });
         mSubscription.add(subscription);
     }
 

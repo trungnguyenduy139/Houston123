@@ -19,4 +19,7 @@ public interface IDetailUserView extends IBaseLoadingView {
     void deleteUserFailed();
 
     void loadClassOfLecturerSuccess(List<ClassResponse> dataList);
+
+    void onUpdateActionSuccess();
+    void onUpdateActionFailed();
 }
