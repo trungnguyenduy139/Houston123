@@ -27,7 +27,10 @@ public class ManagerModel extends BaseUserModel {
         this.outReason = outReason;
         this.department = department;
         this.position = position;
+        this.permission = "quanly";
     }
+
+
 
 
     public ManagerModel() {

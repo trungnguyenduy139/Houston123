@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.repository.updateuser;
 
 import android.text.TextUtils;
 
+import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
@@ -10,8 +11,10 @@ import com.trungnguyen.android.houston123.data.StudentShortResponse;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentShortModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
 
 import java.util.List;
 
@@ -63,7 +66,60 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
 
 
     @Override
-    public Observable<BaseResponse> callApiUpdateUser(BaseModel model) {
+    public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model) {
+        switch (code) {
+            case UserType.MANAGER:
+                return handleUpdateManager(model);
+            case UserType.LECTURER:
+                return handleUpdateLecturer(model);
+            case UserType.SUBJECT:
+                return handleUpdateSubject(model);
+            case UserType.CLAZZ:
+                return handleUpdateClazz(model);
+            default:
+                throw new IllegalStateException("User code not contains in 'UserType' defined");
+        }
+    }
+
+    private Observable<BaseResponse> handleUpdateLecturer(BaseModel model) {
+        LecturerModel managerModel = (LecturerModel) model;
+        String name = managerModel.getName();
+        String phone = managerModel.getPhoneNumber();
+        String address = managerModel.getAddress();
+        String lecturerId = managerModel.getCmnd();
+        String email = managerModel.getEmail();
+        String cmnd = managerModel.getCmnd();
+        String img = managerModel.getImg();
+        String outDate = managerModel.getOutDate();
+        String outReason = managerModel.getOutReason();
+        String department = managerModel.getDepartment();
+        String permission = managerModel.getPermission();
+        return mRequestService.updateLecturer(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department, permission, outDate, outReason)
+                .flatMap(ObservablePattern::responseProcessingPattern);
+    }
+
+    private Observable<BaseResponse> handleUpdateClazz(BaseModel model) {
+        ClassModel managerModel = (ClassModel) model;
+        String name = managerModel.getMainContent();
+        String phone = managerModel.getSubCotent();
+        String address = managerModel.lecturerId;
+        String lecturerId = managerModel.startDate;
+        String email = managerModel.endDate;
+        String cmnd = managerModel.departmen;
+        return mRequestService.updateClazz(model.getModelId(), name, phone, address, lecturerId, email, cmnd)
+                .flatMap(ObservablePattern::responseProcessingPattern);
+    }
+
+
+    private Observable<BaseResponse> handleUpdateSubject(BaseModel model) {
+        SubjectModel managerModel = (SubjectModel) model;
+        String name = managerModel.getMainContent();
+        String phone = managerModel.getManagerAllow();
+        return mRequestService.updateSubject(model.getModelId(), name, phone)
+                .flatMap(ObservablePattern::responseProcessingPattern);
+    }
+
+    private Observable<BaseResponse> handleUpdateManager(BaseModel model) {
         ManagerModel managerModel = (ManagerModel) model;
         String name = managerModel.getName();
         String phone = managerModel.getPhoneNumber();

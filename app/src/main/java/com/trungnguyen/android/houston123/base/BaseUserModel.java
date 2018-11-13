@@ -15,6 +15,8 @@ public abstract class BaseUserModel extends BaseModel {
     protected String email;
     protected String cmnd;
 
+    protected String permission = "";
+
     public BaseUserModel() {
         super();
     }
@@ -27,6 +29,10 @@ public abstract class BaseUserModel extends BaseModel {
         this.cmnd = cmnd;
     }
 
+
+    public String getPermission() {
+        return permission;
+    }
 
     public BaseUserModel(String name, String phoneNumber, String address, String userId) {
         super(name, phoneNumber, userId);

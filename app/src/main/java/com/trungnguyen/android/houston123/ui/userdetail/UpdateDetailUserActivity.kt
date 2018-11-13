@@ -82,7 +82,10 @@ class UpdateDetailUserActivity : DetailUserActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
-            R.id.add_new_action -> viewModel.onAddNewClicked(mUserCode)
+            R.id.add_new_action -> {
+                val model = ModelResourceLoader.convertModel(mUserCode, listOfVal)
+                viewModel.onAddNewClicked(mUserCode, model)
+            }
             R.id.update_action -> {
                 val model = ModelResourceLoader.convertModel(mUserCode, listOfVal)
                 viewModel.onUpdateClick(DetailServiceType.DO_UPDATE, model)

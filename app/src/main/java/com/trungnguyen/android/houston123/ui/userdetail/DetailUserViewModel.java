@@ -90,15 +90,15 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                 if (model == null) {
                     return;
                 }
-                handleUpdateUser(model);
+                handleUpdateUser(code, model);
                 break;
             default:
                 break;
         }
     }
 
-    public void handleUpdateUser(BaseModel model) {
-        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(model)
+    public void handleUpdateUser(int code, BaseModel model) {
+        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(code, model)
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(response -> {
                     if (mView != null) {
@@ -180,7 +180,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
 
-    public void onAddNewClicked(int userCode) {
-
+    public void onAddNewClicked(int userCode, BaseModel model) {
+        handleUpdateUser(userCode, model);
     }
 }

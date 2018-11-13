@@ -58,12 +58,26 @@ public class UpdateUserStore {
                                                @Query("coso") String department,
                                                @Query("ngaynghi") String out,
                                                @Query("lydonghi") String reason);
+
+        @PUT(Constants.Api.LECTURER + "/{user_id}")
+        Observable<BaseResponse> updateClazz(@Path(value = "user_id") String userId,
+                                                @Query("lop") String name,
+                                                @Query("mamonhoc") String img,
+                                                @Query("magiaovien") String permission,
+                                                @Query("batdau") String available,
+                                                @Query("ketthuc") String sdt,
+                                                @Query("coso") String address);
+
+        @PUT(Constants.Api.LECTURER + "/{user_id}")
+        Observable<BaseResponse> updateSubject(@Path(value = "user_id") String userId,
+                                                @Query("ten") String name,
+                                                @Query("bophanquanly") String img);
     }
 
     public interface Repository {
         Observable<List<ClassModel>> callApiClassOfLecturer(String id);
         Observable<List<StudentShortModel>> callApiStudentInClass(String id);
-        Observable<BaseResponse> callApiUpdateUser(BaseModel model);
+        Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model);
     }
 
     public interface LocalStorage {

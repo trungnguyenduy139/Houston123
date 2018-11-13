@@ -18,6 +18,14 @@ public class SubjectModel extends BaseModel {
         this.managerAllow = managerAllow;
     }
 
+    public static BaseModel initFromResource(List<String> resources) {
+        int index = 0;
+        String name = resources.get(index++);
+        String phone = resources.get(index++);
+        String subjectId = resources.get(index++);
+        return new SubjectModel(name, subjectId, phone);
+    }
+
     public String getManagerAllow() {
         return getSafeObject(managerAllow);
     }

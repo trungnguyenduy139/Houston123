@@ -3,7 +3,10 @@ package com.trungnguyen.android.houston123.util;
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,10 +69,19 @@ public final class ModelResourceLoader {
         BaseModel model;
         switch (code) {
             case UserType.LECTURER:
+                model = LecturerModel.initFromResource(resources);
+                break;
             case UserType.MANAGER:
-            case UserType.CLAZZ:
-            default:
                 model = ManagerModel.initFromResource(resources);
+                break;
+            case UserType.CLAZZ:
+                model = ClassModel.initFromResource(resources);
+                break;
+            case UserType.SUBJECT:
+                model = SubjectModel.initFromResource(resources);
+                break;
+            default:
+                throw new IllegalStateException();
         }
 
         return model;
