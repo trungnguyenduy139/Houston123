@@ -64,6 +64,19 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
                 .toObservable();
     }
 
+    @Override
+    public Observable<List<ClassModel>> clazzIsLearningSubject(String id) {
+        return mRequestService.getListClazzLearningSubject(id)
+                .flatMap(ObservablePattern::responseProcessingPattern)
+                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
+                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
+                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
+                .flatMapIterable(data -> data)
+                .map(ClassResponse::convertToModel)
+                .toList()
+                .toObservable();
+    }
+
 
     @Override
     public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model) {

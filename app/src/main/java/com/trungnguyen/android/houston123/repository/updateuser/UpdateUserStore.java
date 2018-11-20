@@ -72,11 +72,15 @@ public class UpdateUserStore {
         Observable<BaseResponse> updateSubject(@Path(value = "user_id") String userId,
                                                 @Query("ten") String name,
                                                 @Query("bophanquanly") String img);
+
+        @GET(Constants.Api.CLAZZ + "/{subject_id}")
+        Observable<ListBaseResponse<ClassResponse>> getListClazzLearningSubject(@Path(value = "subject_id") String subjectIdz);
     }
 
     public interface Repository {
         Observable<List<ClassModel>> callApiClassOfLecturer(String id);
         Observable<List<StudentShortModel>> callApiStudentInClass(String id);
+        Observable<List<ClassModel>> clazzIsLearningSubject(String id);
         Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model);
     }
 

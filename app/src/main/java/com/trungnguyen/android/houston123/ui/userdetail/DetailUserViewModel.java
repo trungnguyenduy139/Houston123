@@ -128,6 +128,23 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         mSubscription.add(subscription);
     }
 
+
+    public void listClazzLearningSubject(String userId) {
+        Disposable subscription = mUpdateUserRepository.clazzIsLearningSubject(userId)
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .subscribe(dataList -> {
+                    if (mNavigator != null) {
+                        Bundle bundle = new BundleBuilder()
+                                .putValue(BundleConstants.LIST_USER_BUNDLE, dataList)
+                                .putValue(BundleConstants.USER_CODE_BUNDLE, UserType.CLAZZ)
+                                .build();
+                        mNavigator.startUserListActivity(mContext, bundle);
+                    }
+                }, throwable -> showFailedActionDialog(mContext.getString(R.string.general_error_message)));
+
+        mSubscription.add(subscription);
+    }
+
     public void setApply(int apply) {
         mServiceActionCode = apply;
     }

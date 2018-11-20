@@ -154,6 +154,9 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
             case UserType.CLAZZ:
                 menuId = R.menu.student_class_menu;
                 break;
+            case UserType.SUBJECT:
+                menuId = R.menu.class_menu;
+                break;
             default:
                 menuId = R.menu.detail_user_menu;
                 break;
@@ -172,6 +175,10 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
             case R.id.detail_delete:
                 String modelId = mUserModel.getModelId();
                 viewModel.deleteCurrentUser(mCode, modelId);
+                break;
+            case R.id.detai_subject_class:
+                String subjetId = mUserModel.getModelId();
+                viewModel.listClazzLearningSubject(subjetId);
                 break;
             case R.id.detail_class_teacher:
                 if (mUserModel instanceof LecturerModel) {
