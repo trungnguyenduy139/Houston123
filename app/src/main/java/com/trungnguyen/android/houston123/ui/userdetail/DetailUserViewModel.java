@@ -18,6 +18,7 @@ import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Navigator;
 
 import java.util.List;
@@ -130,7 +131,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
 
     public void listClazzLearningSubject(String userId) {
-        Disposable subscription = mUpdateUserRepository.clazzIsLearningSubject(userId)
+        Disposable subscription = mUpdateUserRepository.handleUpdateRepositoryMainFlow(Constants.UpdateFlowAction.CLAZZ_IS_LEARNING_SUBJECT, userId)
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(dataList -> {
                     if (mNavigator != null) {
@@ -162,7 +163,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
     public void classOfLecturer(String userId) {
-        Disposable subscription = mUpdateUserRepository.callApiClassOfLecturer(userId)
+        Disposable subscription = mUpdateUserRepository.handleUpdateRepositoryMainFlow(Constants.UpdateFlowAction.CLAZZ_OF_LECTURER, userId)
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .doOnError(throwable -> Timber.d("Failed to load 2 %s", throwable.getMessage()))
                 .subscribe(dataList -> {
@@ -180,7 +181,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
 
     public void studentInClass(String userId) {
-        Disposable subscription = mUpdateUserRepository.callApiStudentInClass(userId)
+        Disposable subscription = mUpdateUserRepository.handleUpdateRepositoryMainFlow(Constants.UpdateFlowAction.STUDENT_IN_CLAZZ, userId)
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .doOnError(throwable -> Timber.d("Failed to load 2 %s", throwable.getMessage()))
                 .subscribe(dataList -> {

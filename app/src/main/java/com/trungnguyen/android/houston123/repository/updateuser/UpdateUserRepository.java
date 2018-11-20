@@ -6,19 +6,19 @@ import android.text.TextUtils;
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.data.BaseResponse;
-import com.trungnguyen.android.houston123.data.ClassResponse;
-import com.trungnguyen.android.houston123.data.StudentShortResponse;
+import com.trungnguyen.android.houston123.data.EmptyResponse;
+import com.trungnguyen.android.houston123.repository.IDataFactory;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentShortModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.Observable;
 import timber.log.Timber;
@@ -30,52 +30,71 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
 
     private UpdateUserStore.RequestService mRequestService;
     private UserListStore.LocalStorage mLocalStorage;
+    private UpdateUserFactory mDataFactory;
 
     @Inject
     public UpdateUserRepository(UpdateUserStore.RequestService requestService,
-                                UserListStore.LocalStorage localStorage) {
+                                UserListStore.LocalStorage localStorage,
+                                @Named("updateUserFactory")
+                                        IDataFactory dataFactory) {
         this.mRequestService = requestService;
         this.mLocalStorage = localStorage;
+        this.mDataFactory = (UpdateUserFactory) dataFactory;
     }
 
+//    @Override
+//    public Observable<List<ClassModel>> callApiClassOfLecturer(String id) {
+//        return mRequestService.getClassOfLecturer(id)
+//                .flatMap(ObservablePattern::responseProcessingPattern)
+//                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
+//                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
+//                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
+//                .flatMapIterable(data -> data)
+//                .map(ClassResponse::convertToModel)
+//                .toList()
+//                .toObservable();
+//
+//
+//    }
+
     @Override
-    public Observable<List<ClassModel>> callApiClassOfLecturer(String id) {
-        return mRequestService.getClassOfLecturer(id)
+    public Observable<List<BaseModel>> handleUpdateRepositoryMainFlow(int code, String id) {
+        return mDataFactory.handleUpdateRepositoryFlow(code, id)
                 .flatMap(ObservablePattern::responseProcessingPattern)
                 .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
                 .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
                 .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
                 .flatMapIterable(data -> data)
-                .map(ClassResponse::convertToModel)
+                .map(EmptyResponse::convertToModel)
                 .toList()
                 .toObservable();
     }
 
-    @Override
-    public Observable<List<StudentShortModel>> callApiStudentInClass(String id) {
-        return mRequestService.getStudentInClass(id)
-                .flatMap(ObservablePattern::responseProcessingPattern)
-                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
-                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
-                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
-                .flatMapIterable(data -> data)
-                .map(StudentShortResponse::convertToModel)
-                .toList()
-                .toObservable();
-    }
+//    @Override
+//    public Observable<List<StudentShortModel>> callApiStudentInClass(String id) {
+//        return mRequestService.getStudentInClass(id)
+//                .flatMap(ObservablePattern::responseProcessingPattern)
+//                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
+//                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
+//                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
+//                .flatMapIterable(data -> data)
+//                .map(StudentShortResponse::convertToModel)
+//                .toList()
+//                .toObservable();
+//    }
 
-    @Override
-    public Observable<List<ClassModel>> clazzIsLearningSubject(String id) {
-        return mRequestService.getListClazzLearningSubject(id)
-                .flatMap(ObservablePattern::responseProcessingPattern)
-                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
-                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
-                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
-                .flatMapIterable(data -> data)
-                .map(ClassResponse::convertToModel)
-                .toList()
-                .toObservable();
-    }
+//    @Override
+//    public Observable<List<ClassModel>> clazzIsLearningSubject(String id) {
+//        return mRequestService.getListClazzLearningSubject(id)
+//                .flatMap(ObservablePattern::responseProcessingPattern)
+//                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
+//                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
+//                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
+//                .flatMapIterable(data -> data)
+//                .map(ClassResponse::convertToModel)
+//                .toList()
+//                .toObservable();
+//    }
 
 
     @Override

@@ -173,7 +173,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     }
 
     public void getClassOfLecturer(String model) {
-        Disposable subscription = mUpdateUserListRepository.callApiClassOfLecturer(model)
+        Disposable subscription = mUpdateUserListRepository.handleUpdateRepositoryMainFlow(Constants.UpdateFlowAction.CLAZZ_OF_LECTURER, model)
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> showLoading())
                 .doOnTerminate(() -> {

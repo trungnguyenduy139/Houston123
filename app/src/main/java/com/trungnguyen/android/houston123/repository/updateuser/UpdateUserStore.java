@@ -5,8 +5,6 @@ import com.trungnguyen.android.houston123.data.BaseResponse;
 import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.StudentShortResponse;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
-import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentShortModel;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.List;
@@ -78,10 +76,11 @@ public class UpdateUserStore {
     }
 
     public interface Repository {
-        Observable<List<ClassModel>> callApiClassOfLecturer(String id);
-        Observable<List<StudentShortModel>> callApiStudentInClass(String id);
-        Observable<List<ClassModel>> clazzIsLearningSubject(String id);
+//        Observable<List<ClassModel>> callApiClassOfLecturer(String id);
+//        Observable<List<StudentShortModel>> callApiStudentInClass(String id);
+//        Observable<List<ClassModel>> clazzIsLearningSubject(String id);
         Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model);
+        Observable<List<BaseModel>> handleUpdateRepositoryMainFlow(int code, String id);
     }
 
     public interface LocalStorage {

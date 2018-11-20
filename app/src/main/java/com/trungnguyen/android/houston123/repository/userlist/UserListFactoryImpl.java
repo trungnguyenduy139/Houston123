@@ -3,7 +3,7 @@ package com.trungnguyen.android.houston123.repository.userlist;
 import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.data.EmptyResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
-import com.trungnguyen.android.houston123.repository.IDataFactory;
+import com.trungnguyen.android.houston123.repository.UserListFactory;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import io.reactivex.Observable;
@@ -11,11 +11,11 @@ import io.reactivex.Observable;
 /**
  * Created by trungnd4 on 11/11/2018.
  */
-public class UserListFactory implements IDataFactory {
+public class UserListFactoryImpl implements UserListFactory {
 
     private UserListStore.RequestService mUserListRequestService;
 
-    public UserListFactory(UserListStore.RequestService requestService) {
+    public UserListFactoryImpl(UserListStore.RequestService requestService) {
         this.mUserListRequestService = requestService;
     }
 

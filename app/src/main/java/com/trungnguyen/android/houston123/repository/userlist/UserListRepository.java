@@ -8,6 +8,7 @@ import com.trungnguyen.android.houston123.data.EmptyResponse;
 import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.exception.HttpEmptyResponseException;
 import com.trungnguyen.android.houston123.repository.IDataFactory;
+import com.trungnguyen.android.houston123.repository.UserListFactory;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -17,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.Observable;
 import timber.log.Timber;
@@ -28,15 +30,16 @@ public class UserListRepository implements UserListStore.Repository {
 
     private UserListStore.RequestService mRequestService;
     private UserListStore.LocalStorage mLocalStorage;
-    private IDataFactory mDataFactory;
+    private UserListFactory mDataFactory;
 
     @Inject
     public UserListRepository(UserListStore.RequestService requestService,
                               UserListStore.LocalStorage localStorage,
+                              @Named("userListFactory")
                               IDataFactory dataFactory) {
         this.mRequestService = requestService;
         this.mLocalStorage = localStorage;
-        this.mDataFactory = dataFactory;
+        this.mDataFactory = (UserListFactory) dataFactory;
     }
 
     private Observable<List<BaseModel>> processUserFlow(Observable<? extends ListBaseResponse<? extends EmptyResponse>> observable) {

@@ -35,4 +35,11 @@ object Constants {
         const val SUCCESS = 200
         const val FAILED = -200
     }
+
+
+    object UpdateFlowAction {
+        const val STUDENT_IN_CLAZZ = 0
+        const val CLAZZ_IS_LEARNING_SUBJECT = 1
+        const val CLAZZ_OF_LECTURER = 2
+    }
 }
