@@ -52,6 +52,14 @@
             android:label="@string/change_password"
             android:screenOrientation="portrait">
         </activity>
+
+
+        <activity android:name=".ui.updateaccount.UpdateAccountActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/update_account_info"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

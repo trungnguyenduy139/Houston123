@@ -1,8 +1,8 @@
 package com.trungnguyen.android.houston123.repository.login;
 
-import com.trungnguyen.android.houston123.data.AccountInfoResponse;
 import com.trungnguyen.android.houston123.data.AuthenticateResponse;
 import com.trungnguyen.android.houston123.data.BaseResponse;
+import com.trungnguyen.android.houston123.data.ListBaseResponse;
 import com.trungnguyen.android.houston123.data.LoginInfoResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -39,7 +40,7 @@ public class AuthenticateStore {
                 "X-Requested-With: XMLHttpRequest",
         })
         @GET(Constants.LoginApi.ACCOUNT_INFO)
-        Observable<AccountInfoResponse> getAccountInfo(@Header(value = "Authorization") String userToken);
+        Observable<ListBaseResponse<LoginInfoResponse>> getAccountInfo(@Header(value = "Authorization") String userToken);
 
 
         @POST(Constants.LoginApi.CHANGE_PASSWORD)
@@ -47,6 +48,18 @@ public class AuthenticateStore {
                                                 @Query("pass_old") String passOld,
                                                 @Query("pass_new") String passNew,
                                                 @Query("pass_confirm") String passConfirm);
+
+        @Headers({
+                "Content-Type: application/json",
+                "X-Requested-With: XMLHttpRequest",
+        })
+        @PUT(Constants.LoginApi.ACCOUNT_INFO)
+        Observable<BaseResponse> updateAccountInfo(@Header(value = "Authorization") String userToken,
+                                                   @Query("HoVaTen") String name,
+                                                   @Query("Cmnd") String cmnd,
+                                                   @Query("Sdt") String phone,
+                                                   @Query("Email") String email,
+                                                   @Query("DiaChi") String address);
     }
 
     public interface Repository {
@@ -61,6 +74,8 @@ public class AuthenticateStore {
         Observable<LoginInfoResponse> getLoginState();
 
         void putAuthInfoLocal(boolean state, String accessToken);
+
+        Observable<BaseResponse> callApiUpdateAccountInfo(String name, String cmnd, String phone, String email, String address);
 
     }
 
