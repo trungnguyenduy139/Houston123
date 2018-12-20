@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.trello.rxlifecycle2:rxlifecycle-android-2.2.2">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rxlifecycle-android-2.2.2.aar/37e49724ec1894b96d8de9a41df136fd/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rxlifecycle-android-2.2.2.aar/37e49724ec1894b96d8de9a41df136fd/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rxlifecycle-android-2.2.2.aar/662c93cb5f82a1ece3b8d6092da018c7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rxlifecycle-android-2.2.2.aar/662c93cb5f82a1ece3b8d6092da018c7/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
