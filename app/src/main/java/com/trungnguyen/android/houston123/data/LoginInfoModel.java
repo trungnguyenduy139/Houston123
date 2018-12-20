@@ -32,20 +32,6 @@ public class LoginInfoModel extends BaseModel {
         this.position = position;
     }
 
-    public BaseModel updateModelLoginInfo(List<String> resources) {
-        try {
-            int i = 0;
-            name = resources.get(i++);
-            cmnd = resources.get(i++);
-            phone = resources.get(i++);
-            email = resources.get(i++);
-            address = resources.get(i++);
-        } catch (Exception ignored) {
-
-        }
-        return this;
-    }
-
     @Override
     public List<String> getSource() {
         return Arrays.asList("Họ và tên", "Số điện thoại", "Địa chỉ", "CMND", "Email", "Chức vụ");

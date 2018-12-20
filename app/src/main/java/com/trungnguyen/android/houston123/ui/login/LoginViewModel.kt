@@ -3,6 +3,7 @@ package com.trungnguyen.android.houston123.ui.login
 import android.content.Context
 import android.text.TextUtils
 import com.trungnguyen.android.houston123.anotation.OnClick
+import com.trungnguyen.android.houston123.anotation.UserType
 import com.trungnguyen.android.houston123.base.BaseViewModel
 import com.trungnguyen.android.houston123.data.LoginInfoModel
 import com.trungnguyen.android.houston123.data.LoginInfoResponse
@@ -10,10 +11,9 @@ import com.trungnguyen.android.houston123.injection.Injector
 import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore
 import com.trungnguyen.android.houston123.rx.SchedulerHelper
+import com.trungnguyen.android.houston123.ui.listuser.UserListActivity
 import com.trungnguyen.android.houston123.ui.main.MainActivity
-import com.trungnguyen.android.houston123.util.AppUtils
-import com.trungnguyen.android.houston123.util.BundleBuilder
-import com.trungnguyen.android.houston123.util.SingleLiveEvent
+import com.trungnguyen.android.houston123.util.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -79,8 +79,13 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
 
 
     private fun handleAuthenticateSuccess(permission: String) {
-        val clz = MainActivity::class.java
+        val isLecturer = StringUtils.safeEquals(permission, Constants.Api.LECTURER)
+        val clz = if (isLecturer) UserListActivity::class.java else MainActivity::class.java
         val bundle = BundleBuilder()
+        if (isLecturer) {
+            bundle.putValue(BundleConstants.LECTURER_LOGGED_IN, isLecturer)
+            bundle.putValue(BundleConstants.USER_CODE_BUNDLE, UserType.CLAZZ)
+        }
         mView?.onAuthSuccess(permission, clz, bundle.build())
     }
 

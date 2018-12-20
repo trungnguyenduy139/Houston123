@@ -24,13 +24,11 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="LOADING">Loading...</string>
     <string name="logout">Đăng xuất</string>
-    <string name="update_account_info">Cập nhật tài khoản</string>
     <string name="search_hint">Tìm kiếm</string>
     <string name="old_password">Nhập mật khẩu cũ</string>
     <string name="new_password">Nhập mật khẩu mới</string>
     <string name="confirm_new">Xác nhận mật khẩu mới</string>
     <string name="change_password">Đổi mật khẩu</string>
-    <string name="update_account">Cập nhật tài khoản</string>
     <string name="delete_user_failed">Xóa người dùng thất bại. Vui lòng thử lại</string>
     <string name="delete_user_success">Xóa người dùng thành công</string>
     <string name="update_user_success">Cập nhật thông tin người dùng thành công</string>

@@ -13,7 +13,6 @@ import com.trungnguyen.android.houston123.ui.main.MainActivity;
 import com.trungnguyen.android.houston123.ui.main.home.HomeFragment;
 import com.trungnguyen.android.houston123.ui.main.personal.PersonalFragment;
 import com.trungnguyen.android.houston123.ui.main.tool.ToolFragment;
-import com.trungnguyen.android.houston123.ui.updateaccount.UpdateAccountActivity;
 import com.trungnguyen.android.houston123.ui.userdetail.DetailUserActivity;
 
 import dagger.Subcomponent;
@@ -38,8 +37,6 @@ public interface DataManagerComponent {
     }
 
     void inject(UserListActivity activity);
-
-    void inject(UpdateAccountActivity activity);
 
     void inject(MainActivity activity);
 

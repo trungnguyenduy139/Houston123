@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by trungnd4 on 05/11/2018.
  */
-public class LoginInfoResponse extends EmptyResponse {
+public class LoginInfoResponse {
     @SerializedName("permission")
     public String permission;
 

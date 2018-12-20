@@ -12,6 +12,9 @@ import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.rx.Optional;
 import com.trungnguyen.android.houston123.util.AppUtils;
 import com.trungnguyen.android.houston123.util.Constants;
+import com.trungnguyen.android.houston123.util.Lists;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -80,12 +83,12 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
                     putAuthInfoLocal(shouldReSaveState, shouldReSaveState ? token : Constants.EMPTY);
                 })
                 .flatMap(ObservablePattern::responseProcessingPattern)
-                .flatMap(accountInfoResponseListBaseResponse -> Observable.just(accountInfoResponseListBaseResponse.getDataList().get(this.DEFAULT_ACCOUNT_INFO_POSITION)))
                 .flatMap(accountInfoResponse -> {
-                    if (accountInfoResponse == null) {
+                    List<LoginInfoResponse> data = accountInfoResponse.loginInfo;
+                    if (Lists.isEmptyOrNull(data) || data.get(this.DEFAULT_ACCOUNT_INFO_POSITION) == null) {
                         return Observable.error(HttpEmptyResponseException::new);
                     }
-                    return Observable.just(accountInfoResponse);
+                    return Observable.just(data.get(this.DEFAULT_ACCOUNT_INFO_POSITION));
                 })
                 .doOnNext(loginInfoResponse -> mLocalStorage.putGlobalPermissionLocal(loginInfoResponse.permission));
     }
@@ -116,13 +119,5 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     public void putAuthInfoLocal(boolean state, final String accessToken) {
         mLocalStorage.setLoginState(state);
         mLocalStorage.putSafeAccessToken(accessToken);
-    }
-
-    @Override
-    public Observable<BaseResponse> callApiUpdateAccountInfo(String name, String cmnd, String phone, String email, String address) {
-        return mLocalStorage.getSafeAccessToken()
-                .map(AppUtils::transformToken)
-                .flatMap(formattedToken -> mRequestService.updateAccountInfo(formattedToken, name, cmnd, phone, email, address))
-                .flatMap(ObservablePattern::responseProcessingPattern);
     }
 }
