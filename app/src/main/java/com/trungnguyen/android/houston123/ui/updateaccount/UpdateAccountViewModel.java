@@ -5,6 +5,7 @@ import android.content.Context;
 import com.trungnguyen.android.houston123.anotation.OnClick;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
 import com.trungnguyen.android.houston123.data.LoginInfoModel;
+import com.trungnguyen.android.houston123.repository.login.AuthenticateRepository;
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
@@ -26,7 +27,7 @@ public class UpdateAccountViewModel extends BaseViewModel<IUpdateAccountView> {
     private AuthenticateStore.Repository mAuthenticateRepository;
 
     @Inject
-    public UpdateAccountViewModel(Context context, AuthenticateStore.Repository repository) {
+    public UpdateAccountViewModel(Context context, AuthenticateRepository repository) {
         super(context);
         this.mAuthenticateRepository = repository;
     }

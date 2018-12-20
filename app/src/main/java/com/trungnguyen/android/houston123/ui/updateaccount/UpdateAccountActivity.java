@@ -30,7 +30,14 @@ public class UpdateAccountActivity extends BaseToolbarActivity<ActivityUpdateAcc
 
 
     private LoginInfoModel mLoginModel;
-    private ArrayList<AppCompatEditText> mListOfValueEditText;
+    private List<AppCompatEditText> mListOfValueEditText = new ArrayList<>();
+    protected LinearLayout mDetailContainer;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDetailContainer = findViewById(R.id.detail_container_update_account);
+    }
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -75,8 +82,8 @@ public class UpdateAccountActivity extends BaseToolbarActivity<ActivityUpdateAcc
             mListOfValueEditText.add(tvVal);
             tvKey.setText(item.getKey());
             tvVal.setText(item.getValue());
-            binding.detailContainerUpdateAccount.addView(view);
-            binding.detailContainerUpdateAccount.invalidate();
+            mDetailContainer.addView(view);
+            mDetailContainer.invalidate();
         }
     }
 
@@ -85,8 +92,8 @@ public class UpdateAccountActivity extends BaseToolbarActivity<ActivityUpdateAcc
         if (mLoginModel == null) {
             return;
         }
-        mLoginModel.updateModelLoginInfo(getListOfValue());
-        viewModel.startUpdateAccountFlow(mLoginModel);
+        LoginInfoModel model = mLoginModel.updateModelLoginInfo(getListOfValue());
+        viewModel.startUpdateAccountFlow(model);
     }
 
     private List<String> getListOfValue() {

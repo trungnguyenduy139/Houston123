@@ -32,7 +32,7 @@ public class LoginInfoModel extends BaseModel {
         this.position = position;
     }
 
-    public BaseModel updateModelLoginInfo(List<String> resources) {
+    public LoginInfoModel updateModelLoginInfo(List<String> resources) {
         try {
             int i = 0;
             name = resources.get(i++);
