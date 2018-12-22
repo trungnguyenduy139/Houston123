@@ -21,10 +21,15 @@
     <string name="default_api_error_msg">Gặp sự cố khi kết nối. Vui lòng thử lại</string>
     <string name="dialog_default_title">    THÔNG BÁO    </string>
     <string name="dialog_ok">OK</string>
+    <string name="add_to_title">Thêm thông tin</string>
+    <string name="add_to_message">Bạn có chắc chắn với hành động thêm này</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="LOADING">Loading...</string>
+    <string name="LOADING">Loading…</string>
     <string name="logout">Đăng xuất</string>
     <string name="update_account_info">Cập nhật tài khoản</string>
+    <string name="search_and_add">Tìm kiểm và thêm</string>
+    <string name="start_search_and_add">Bắt đầu</string>
+    <string name="search_and_add_message">Tìm thông tin người dùng cần thêm</string>
     <string name="search_hint">Tìm kiếm</string>
     <string name="old_password">Nhập mật khẩu cũ</string>
     <string name="new_password">Nhập mật khẩu mới</string>

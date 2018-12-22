@@ -82,6 +82,12 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @Override
+    public <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleSearchServiceFlow(int code, String searchText) {
+        Observable<? extends ListBaseResponse<? extends EmptyResponse>> dataListFlow = mDataFactory.getSearchUserFlow(code, searchText);
+        return processUserFlow(dataListFlow);
+    }
+
+    @Override
     public Observable<BaseResponse> handleRemoveUserFlow(int code, final String userId) {
         String userType = mDataFactory.getDataType(code);
         if (code == Constants.DEFAULT_CODE_VALUE || TextUtils.isEmpty(userType) || TextUtils.isEmpty(userId)) {

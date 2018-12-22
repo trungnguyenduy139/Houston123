@@ -63,10 +63,10 @@ public class HomeAdapter extends AbsCommonAdapter<HomeAdapterListener, HomeItem>
 
         @Override
         public void onItemClick() {
-            if (mListener == null) {
+            if (mListener == null || mListener.get() == null) {
                 return;
             }
-            mListener.onItemClick(getAdapterPosition());
+            mListener.get().onItemClick(getAdapterPosition());
         }
     }
 }

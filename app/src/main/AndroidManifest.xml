@@ -60,6 +60,12 @@
             android:screenOrientation="portrait">
 
         </activity>
+
+        <activity android:name=".ui.addto.SearchAndAddToActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/search_and_add"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
