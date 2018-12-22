@@ -12,4 +12,6 @@ public interface UserListFactory extends IDataFactory {
     String getDataType(int code);
 
     Observable<? extends ListBaseResponse<? extends EmptyResponse>> getUserFlow(int api, int page);
+
+    Observable<? extends ListBaseResponse<? extends EmptyResponse>> getSearchUserFlow(int api, String textSearch);
 }

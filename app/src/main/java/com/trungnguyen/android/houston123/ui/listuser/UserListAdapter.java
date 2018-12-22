@@ -35,7 +35,7 @@ public class UserListAdapter<U extends BaseModel> extends BaseInfinityAdapter<Us
 
     private List<U> mFilterList = new ArrayList<>();
 
-    UserListAdapter(List<U> listUser) {
+    public UserListAdapter(List<U> listUser) {
         this.mListUser = listUser;
         this.mFilterList.addAll(listUser);
     }
@@ -129,20 +129,20 @@ public class UserListAdapter<U extends BaseModel> extends BaseInfinityAdapter<Us
 
         @Override
         public void onItemClick() {
-            if (mListener == null) {
+            if (mListener == null || mListener.get() == null) {
                 return;
             }
             int position = getAdapterPosition();
-            mListener.onItemClick(mListUser.get(position), position);
+            mListener.get().onItemClick(mListUser.get(position), position);
         }
 
         @Override
         public boolean onUserLongClick() {
-            if (mListener == null) {
+            if (mListener == null || mListener.get() == null) {
                 return false;
             }
             int position = getAdapterPosition();
-            mListener.onItemLongClick(position);
+            mListener.get().onItemLongClick(position);
             return true;
         }
     }

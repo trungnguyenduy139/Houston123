@@ -12,11 +12,13 @@ import android.widget.ProgressBar;
 import com.trungnguyen.android.houston123.R;
 import com.trungnguyen.android.houston123.anotation.InfinityAdapterType;
 
+import java.lang.ref.WeakReference;
+
 public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends RecyclerView.Adapter<BaseViewHolder> {
 
     protected Context context;
     @Nullable
-    protected L mListener;
+    protected WeakReference<L> mListener;
 
     protected boolean mShowLoader = true;
 
@@ -47,7 +49,7 @@ public abstract class BaseInfinityAdapter<L extends IAdapterListener> extends Re
         if (listener == null) {
             return;
         }
-        mListener = listener;
+        mListener = new WeakReference<>(listener);
     }
 
     public void releaseListener() {

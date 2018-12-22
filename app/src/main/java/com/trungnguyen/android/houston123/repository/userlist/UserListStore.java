@@ -12,7 +12,6 @@ import com.trungnguyen.android.houston123.data.SubjectResponse;
 import com.trungnguyen.android.houston123.util.Constants;
 
 import java.util.Collection;
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.DELETE;
@@ -31,6 +30,10 @@ public class UserListStore {
 
         @GET(Constants.Api.STUDENT)
         Observable<ListBaseResponse<StudentResponse>> getListStudents(@Query("page") int page);
+
+        @GET(Constants.Api.STUDENT + "/{str}")
+        Observable<ListBaseResponse<StudentResponse>> searchStudents(@Path("str") String searchText);
+
 
         @GET(Constants.Api.MANAGER)
         Observable<ListBaseResponse<ManagerResponse>> getListManager(@Query("page") int page);
@@ -56,6 +59,8 @@ public class UserListStore {
         Observable<BaseResponse> callApiDeleteUser(String userType, String userId);
 
         <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page);
+
+        <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleSearchServiceFlow(int code, String searchText);
 
         Observable<Integer> getPageFromLocal();
 
