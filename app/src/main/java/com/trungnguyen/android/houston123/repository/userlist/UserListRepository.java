@@ -36,7 +36,7 @@ public class UserListRepository implements UserListStore.Repository {
     public UserListRepository(UserListStore.RequestService requestService,
                               UserListStore.LocalStorage localStorage,
                               @Named("userListFactory")
-                              IDataFactory dataFactory) {
+                                      IDataFactory dataFactory) {
         this.mRequestService = requestService;
         this.mLocalStorage = localStorage;
         this.mDataFactory = (UserListFactory) dataFactory;
@@ -82,7 +82,7 @@ public class UserListRepository implements UserListStore.Repository {
     }
 
     @Override
-    public <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleSearchServiceFlow(int code, String searchText) {
+    public Observable<? extends Collection<? extends BaseModel>> handleSearchServiceFlow(int code, String searchText) {
         Observable<? extends ListBaseResponse<? extends EmptyResponse>> dataListFlow = mDataFactory.getSearchUserFlow(code, searchText);
         return processUserFlow(dataListFlow);
     }

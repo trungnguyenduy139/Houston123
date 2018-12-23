@@ -19,8 +19,8 @@ import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,7 +30,7 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
 
     private UserListAdapter<BaseModel> mDataAdapter;
 
-    private List<BaseModel> mDataList;
+    private List<BaseModel> mDataList = new ArrayList<>();
 
     private int mUserCode = Constants.DEFAULT_CODE_VALUE;
 
@@ -71,8 +71,10 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
         mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, Constants.DEFAULT_CODE_VALUE);
         mModel = (BaseModel) intent.getSerializableExtra(BundleConstants.ADD_TO_MODEL);
         binding.searchListRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mDataAdapter = new UserListAdapter<>(Collections.emptyList());
+        mDataAdapter = new UserListAdapter<>(mDataList);
         mDataAdapter.setListener(this);
+        mDataAdapter.setLoaderState(false);
+        binding.searchListRecycler.setAdapter(mDataAdapter);
     }
 
     @Override
@@ -88,7 +90,13 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
                 .setConfirmText(getString(R.string.dialog_ok))
                 .setCancelText(getString(R.string.close_dialog))
                 .setCancelClickListener(SweetAlertDialog::dismissWithAnimation)
-                .setConfirmClickListener(sweetAlertDialog -> viewModel.onAddUserAction(mDataList.get(position), mModel.getModelId(), getUserCode()))
+                .setConfirmClickListener(sweetAlertDialog -> {
+                    if (sweetAlertDialog == null) {
+                        return;
+                    }
+                    viewModel.onAddUserAction(mDataList.get(position), mModel.getModelId(), getUserCode());
+                    sweetAlertDialog.dismissWithAnimation();
+                })
                 .show();
     }
 

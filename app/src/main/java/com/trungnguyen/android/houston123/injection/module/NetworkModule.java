@@ -97,8 +97,8 @@ public class NetworkModule {
         builder.addInterceptor(baseNetworkInterceptor);
         builder.cache(cache);
         builder.connectionPool(new ConnectionPool(Constants.CONNECTION_POOL_COUNT, Constants.CONNECTION_KEEP_ALIVE_DURATION, TimeUnit.MINUTES));
-        builder.connectTimeout(10, TimeUnit.SECONDS);
-        builder.readTimeout(15, TimeUnit.SECONDS);
+        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.readTimeout(30, TimeUnit.SECONDS);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             ConnectionSpec cs = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
