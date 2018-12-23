@@ -8,4 +8,6 @@ import com.trungnguyen.android.houston123.base.IBaseView
  */
 interface ISearchAndAddToView : IBaseView {
     fun onSearchCompleted(userModels: Collection<BaseModel>)
+    fun addToCompleted()
+    fun getUserCode(): Int
 }

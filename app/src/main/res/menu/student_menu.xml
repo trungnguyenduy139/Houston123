@@ -12,10 +12,7 @@
         android:title="Cập nhật" />
 
     <item
-        android:id="@+id/detail_class_teacher"
-        android:title="Lớp của giáo viên" />
-
-    <item
-        android:id="@+id/detail_teacher_add_to_class"
-        android:title="Thêm giáo viên vào lớp" />
+        android:id="@+id/add_student_to_clazz"
+        android:icon="@drawable/ic_favorite_white_24dp"
+        android:title="Thêm vào lớp" />
 </menu>

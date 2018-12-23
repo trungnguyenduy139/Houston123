@@ -22,6 +22,7 @@ import com.trungnguyen.android.houston123.data.ClassResponse;
 import com.trungnguyen.android.houston123.databinding.ActivityDetailUserBinding;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
@@ -157,6 +158,9 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
             case UserType.SUBJECT:
                 menuId = R.menu.class_menu;
                 break;
+            case UserType.STUDENT:
+                menuId = R.menu.student_menu;
+                break;
             default:
                 menuId = R.menu.detail_user_menu;
                 break;
@@ -185,10 +189,19 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                     viewModel.classOfLecturer(mUserModel.getModelId());
                 }
                 break;
-
             case R.id.student_in_class:
                 if (mUserModel instanceof ClassModel) {
                     viewModel.studentInClass(mUserModel.getModelId());
+                }
+                break;
+            case R.id.detail_teacher_add_to_class:
+                if (mUserModel instanceof LecturerModel) {
+                    viewModel.handleAddUserToClazz((LecturerModel) mUserModel);
+                }
+                break;
+            case R.id.add_student_to_clazz:
+                if (mUserModel instanceof StudentModel) {
+                    viewModel.handleAddUserToClazz((StudentModel) mUserModel);
                 }
                 break;
             default:
