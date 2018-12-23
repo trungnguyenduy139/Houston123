@@ -32,7 +32,7 @@ public class UserListStore {
         Observable<ListBaseResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
         @GET(Constants.Api.CLAZZ + "/{str}")
-        Observable<ListBaseResponse<StudentResponse>> searchClazz(@Path("str") String searchText);
+        Observable<ListBaseResponse<ClassResponse>> searchClazz(@Path("str") String searchText);
 
 
         @GET(Constants.Api.MANAGER)
@@ -60,7 +60,7 @@ public class UserListStore {
 
         <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleUserServiceFlow(int code, int page);
 
-        <R extends EmptyResponse> Observable<? extends Collection<? extends BaseModel>> handleSearchServiceFlow(int code, String searchText);
+        Observable<? extends Collection<? extends BaseModel>> handleSearchServiceFlow(int code, String searchText);
 
         Observable<Integer> getPageFromLocal();
 
