@@ -40,8 +40,8 @@ public class UserListFactoryImpl implements UserListFactory {
     @Override
     public Observable<? extends ListBaseResponse<? extends EmptyResponse>> getSearchUserFlow(int api, String textSearch) {
         switch (api) {
-            case UserType.LECTURER:
-                return mUserListRequestService.searchStudents(textSearch);
+            case UserType.CLAZZ:
+                return mUserListRequestService.searchClazz(textSearch);
             default:
                 throw new IllegalStateException("Invalid type to get user list api");
         }

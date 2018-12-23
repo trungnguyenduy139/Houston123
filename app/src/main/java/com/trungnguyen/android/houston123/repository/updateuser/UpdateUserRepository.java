@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.repository.IDataFactory;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.ObservablePattern;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.DetailClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
@@ -70,6 +71,11 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
                 .toObservable();
     }
 
+    @Override
+    public Observable<BaseResponse> callApiAddLecturerToClazz() {
+        return null;
+    }
+
 //    @Override
 //    public Observable<List<StudentShortModel>> callApiStudentInClass(String id) {
 //        return mRequestService.getStudentInClass(id)
@@ -108,6 +114,8 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
                 return handleUpdateSubject(model);
             case UserType.CLAZZ:
                 return handleUpdateClazz(model);
+            case UserType.DETAIL_CLAZZ:
+                return handleUpdateDetailClazz(model);
             default:
                 throw new IllegalStateException("User code not contains in 'UserType' defined");
         }
@@ -139,6 +147,17 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String email = managerModel.endDate;
         String cmnd = managerModel.departmen;
         return mRequestService.updateClazz(model.getModelId(), name, phone, address, lecturerId, email, cmnd)
+                .flatMap(ObservablePattern::responseProcessingPattern);
+    }
+
+
+    private Observable<BaseResponse> handleUpdateDetailClazz(BaseModel model) {
+        DetailClassModel detailClassModel = (DetailClassModel) model;
+        String studentId = detailClassModel.getStudentId();
+        String clazzId = detailClassModel.getClazzId();
+        String tranferId = detailClassModel.getTransferId();
+        String transferTIme = detailClassModel.getTransferTime();
+        return mRequestService.updateDetailClass(studentId, clazzId, tranferId, transferTIme)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 

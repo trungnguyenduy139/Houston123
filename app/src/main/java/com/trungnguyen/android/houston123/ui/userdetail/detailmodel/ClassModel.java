@@ -43,6 +43,14 @@ public class ClassModel extends BaseModel {
         this.departmen = departmen;
     }
 
+    public ClassModel(String mainContent, String subCotent, String clazzId, String lecturerId, String departmen) {
+        super(mainContent, subCotent, clazzId);
+        this.lecturerId = lecturerId;
+        this.startDate = "";
+        this.endDate = "";
+        this.departmen = departmen;
+    }
+
     public static BaseModel initFromResource(List<String> resources) {
         int index = 0;
         String name = resources.get(index++);

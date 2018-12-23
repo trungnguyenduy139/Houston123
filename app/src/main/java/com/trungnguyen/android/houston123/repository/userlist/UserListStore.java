@@ -31,8 +31,8 @@ public class UserListStore {
         @GET(Constants.Api.STUDENT)
         Observable<ListBaseResponse<StudentResponse>> getListStudents(@Query("page") int page);
 
-        @GET(Constants.Api.STUDENT + "/{str}")
-        Observable<ListBaseResponse<StudentResponse>> searchStudents(@Path("str") String searchText);
+        @GET(Constants.Api.CLAZZ + "/{str}")
+        Observable<ListBaseResponse<StudentResponse>> searchClazz(@Path("str") String searchText);
 
 
         @GET(Constants.Api.MANAGER)

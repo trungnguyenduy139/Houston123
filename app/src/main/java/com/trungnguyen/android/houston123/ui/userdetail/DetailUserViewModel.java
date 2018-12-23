@@ -16,6 +16,8 @@ import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserStore;
 import com.trungnguyen.android.houston123.repository.userlist.UserListRepository;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.rx.SchedulerHelper;
+import com.trungnguyen.android.houston123.ui.addto.SearchAndAddToActivity;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
@@ -200,5 +202,16 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
     public void onAddNewClicked(int userCode, BaseModel model) {
         handleUpdateUser(userCode, model);
+    }
+
+    public void handleAddUserToClazz(BaseModel userModel) {
+        Bundle bundle = new BundleBuilder()
+                .putValue(BundleConstants.ADD_TO_MODEL, userModel)
+                .putValue(BundleConstants.USER_CODE_BUNDLE, UserType.STUDENT)
+                .build();
+        if (bundle == null) {
+            return;
+        }
+        mNavigator.startActivity(mContext, SearchAndAddToActivity.class, bundle);
     }
 }
