@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
+import com.trungnguyen.android.houston123.anotation.ToastType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseToolbarActivity;
 import com.trungnguyen.android.houston123.databinding.ActivitySearchAndAddBinding;
@@ -79,7 +80,7 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
 
     @Override
     public void addToCompleted() {
-        ToastCustom.makeTopToastText(this, getString(R.string.update_user_success));
+        ToastCustom.makeText(this, getString(R.string.update_user_success), ToastCustom.LENGTH_SHORT, ToastType.TYPE_OK);
     }
 
     @Override

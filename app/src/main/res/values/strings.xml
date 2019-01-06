@@ -50,4 +50,20 @@
         <item>Lớp học</item>
         <item>Môn học</item>
     </string-array>
+    <string name="lecturer">Giáo viên</string>
+    <string name="manager">Quản lý</string>
+    <string name="student">Học viên</string>
+    <string name="clazz">Lớp học</string>
+    <string name="subject">Môn học</string>
+    <string name="manager_title">Chứa danh sách quản lý của Trung tâm</string>
+    <string name="lecturer_title">Các giáo viên đang giảng dạy tại trung tâm</string>
+
+    <string name="student_title">Danh sách tất cả học viên hiện tại</string>
+    <string name="subject_title">Quản lý môn học của Trung tâm</string>
+    <string name="clazz_title">Danh sách các lớp học hiện có</string>
+    <string name="lecturer_add">Xếp lớp cho giáo viên</string>
+    <string name="add_student_new">Thêm học viên mới</string>
+    <string name="student_add">Xếp lớp cho học viên</string>
+
+    <string name="personal_title">Quản lý cá nhân</string>
 </resources>

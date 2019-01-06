@@ -1,26 +1,24 @@
 package com.trungnguyen.android.houston123.ui.main.home;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.trungnguyen.android.houston123.BR;
 import com.trungnguyen.android.houston123.R;
-import com.trungnguyen.android.houston123.base.BaseActivity;
+import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseFragment;
 import com.trungnguyen.android.houston123.base.BaseModel;
-import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.databinding.FragmentMainBinding;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Navigator;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,13 +31,10 @@ import timber.log.Timber;
  */
 public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewModel> implements IHomeView {
 
-    private HomeAdapter mHomeAdapter;
 
     @Inject
     Navigator mNavigator;
 
-    @NonNull
-    private List<HomeItem> mHomeItems = new ArrayList<>();
 
     @NonNull
     public static HomeFragment newInstance() {
@@ -61,10 +56,6 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (viewModel == null) {
-            return;
-        }
-        viewModel.attachAdapter(mHomeAdapter);
     }
 
     @Override
@@ -78,11 +69,15 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
         if (viewModel == null) {
             return;
         }
-        mHomeAdapter = new HomeAdapter(mHomeItems);
-        binding.homeRecyclerView.setAdapter(mHomeAdapter);
-        binding.homeRecyclerView.setLayoutManager(new GridLayoutManager(getBaseActivity(), 3));
-
-        viewModel.loadHomeResource();
+        Activity activity = getBaseActivity();
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+        activity.findViewById(R.id.llManager).setOnClickListener(v -> viewModel.onItemClick(UserType.MANAGER));
+        activity.findViewById(R.id.llStudent).setOnClickListener(v -> viewModel.onItemClick(UserType.STUDENT));
+        activity.findViewById(R.id.llLecturer).setOnClickListener(v -> viewModel.onItemClick(UserType.LECTURER));
+        activity.findViewById(R.id.llClass).setOnClickListener(v -> viewModel.onItemClick(UserType.CLAZZ));
+        activity.findViewById(R.id.llSubject).setOnClickListener(v -> viewModel.onItemClick(UserType.SUBJECT));
     }
 
     @Override
@@ -92,10 +87,7 @@ public class HomeFragment extends BaseFragment<FragmentMainBinding, HomeViewMode
 
     @Override
     public void onLoadHomeResourcesCompleted(List<HomeItem> homeItems) {
-        if (mHomeAdapter == null) {
-            return;
-        }
-        mHomeAdapter.addItems(homeItems);
+
     }
 
     @Override

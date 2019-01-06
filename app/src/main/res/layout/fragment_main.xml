@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
 
         <import type="android.view.View" />
@@ -9,20 +10,284 @@
             type="com.trungnguyen.android.houston123.ui.main.home.HomeViewModel" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:weightSum="15"
+        android:background="@color/gray_btn_bg_color"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/home_recycler_view"
+        <LinearLayout
+            android:layout_weight="3"
+            android:id="@+id/llManager"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="100dp">
+            <ImageView
+                android:src="@drawable/lecture"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
 
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/manager"
+                    android:textSize="26sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="#000"
+                    android:text="@string/manager_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_weight="3"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:id="@+id/llLecturer"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <LinearLayout
+                android:layout_weight="6"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                tools:ignore="NestedWeights">
+                <ImageView
+                    android:src="@drawable/lecture"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/lecturer"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textColor="#000"
+                        android:textSize="12sp"
+                        android:text="@string/lecturer_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:src="@drawable/lecture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:text="@string/lecturer_add"
+                    android:textColor="#000"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="3"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:id="@+id/llStudent"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:baselineAligned="false">
+            <LinearLayout
+                android:layout_weight="6"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@drawable/lecture"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/student"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textColor="#000"
+                        android:textSize="12sp"
+                        android:text="@string/student_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:src="@drawable/lecture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000"
+                    android:text="@string/add_student_new"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="3"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:id="@+id/llClass"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <LinearLayout
+                android:layout_weight="6"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                tools:ignore="NestedWeights">
+                <ImageView
+                    android:src="@drawable/lecture"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/clazz"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textColor="#000"
+                        android:textSize="12sp"
+                        android:text="@string/clazz_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:src="@drawable/lecture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000"
+                    android:text="@string/student_add"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_weight="3"
+            android:id="@+id/llSubject"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <ImageView
+                android:src="@drawable/lecture"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/subject"
+                    android:textSize="26sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="#000"
+                    android:text="@string/subject_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </layout>
