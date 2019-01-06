@@ -26,6 +26,7 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="LOADING">Loading…</string>
     <string name="logout">Đăng xuất</string>
+    <string name="logout_text">Bạn có chắc chắn muốn đăng xuất khỏi ứng dụng Houston123</string>
     <string name="update_account_info">Cập nhật tài khoản</string>
     <string name="search_and_add">Tìm kiểm và thêm</string>
     <string name="start_search_and_add">Bắt đầu</string>

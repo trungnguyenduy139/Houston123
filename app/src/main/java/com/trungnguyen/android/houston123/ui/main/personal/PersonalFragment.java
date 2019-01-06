@@ -16,8 +16,10 @@ import com.trungnguyen.android.houston123.databinding.FragmentPersonalBinding;
 import com.trungnguyen.android.houston123.injection.Injector;
 import com.trungnguyen.android.houston123.injection.UserComponent;
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
+import com.trungnguyen.android.houston123.util.AndroidUtils;
 import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.util.Navigator;
+import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,11 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Pers
     }
 
     @Override
+    public Activity getHostView() {
+        return getBaseActivity();
+    }
+
+    @Override
     public int initVariableId() {
         return BR.viewModel;
     }
@@ -101,5 +108,28 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Pers
             return;
         }
         mAdapter.addItems(items);
+    }
+
+    @Override
+    public void askBeforeLogout() {
+        Activity activity = getBaseActivity();
+        if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
+            return;
+        }
+        AndroidUtils.runOnUIThread(() -> new SweetAlertDialog(activity)
+                .setConfirmText(activity.getString(R.string.dialog_ok))
+                .setCancelText(activity.getString(R.string.dialog_cancel))
+                .setTitleText(activity.getString(R.string.logout))
+                .setContentText(activity.getString(R.string.logout_text))
+                .setConfirmClickListener(sweetAlertDialog -> {
+                    viewModel.startLogoutProcess();
+                    sweetAlertDialog.dismissWithAnimation();
+                })
+                .setCancelClickListener(sweetAlertDialog -> {
+                    if (sweetAlertDialog != null) {
+                        sweetAlertDialog.dismissWithAnimation();
+                    }
+                })
+                .show());
     }
 }

@@ -4,6 +4,6 @@
     <item
         android:id="@+id/add_new_action"
         app:showAsAction="always"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:icon="@drawable/confirm"
         android:title="Thêm" />
 </menu>

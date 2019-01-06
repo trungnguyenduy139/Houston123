@@ -2,7 +2,7 @@
 
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/ic_access_time_white_24dp"
+        android:icon="@drawable/list"
         android:title="Danh Sách" />
 
     <item
@@ -12,6 +12,6 @@
 
     <item
         android:id="@+id/menu_profile"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:icon="@drawable/man"
         android:title="Cá Nhân" />
 </menu>

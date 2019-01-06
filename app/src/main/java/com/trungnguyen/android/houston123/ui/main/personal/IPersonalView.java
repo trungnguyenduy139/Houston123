@@ -1,5 +1,7 @@
 package com.trungnguyen.android.houston123.ui.main.personal;
 
+import android.app.Activity;
+
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
  */
 public interface IPersonalView {
     void successToLogout();
-
+    Activity getHostView();
     void onLoadResourceCompleted(List<ItemDetailModel> items);
+
+    void askBeforeLogout();
 }

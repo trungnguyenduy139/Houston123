@@ -28,20 +28,25 @@ public class PersonalViewModel extends BaseViewModel<IPersonalView> {
 
     private AuthenticateStore.Repository mAuthRepository;
     private Navigator mNavigator;
-    private Context mContext;
 
     @Inject
     public PersonalViewModel(AuthenticateRepository authRepository,
                              Navigator navigator,
                              Context context) {
         super(context);
-        this.mContext = context;
         this.mNavigator = navigator;
         this.mAuthRepository = authRepository;
     }
 
     @OnClick
     public void onUserLogout() {
+        if (mView == null) {
+            return;
+        }
+        mView.askBeforeLogout();
+    }
+
+    public void startLogoutProcess() {
         Disposable subscription = mAuthRepository.callLogoutApi()
                 .doOnNext(authenticateResponse -> mAuthRepository.putAuthInfoLocal(false, Constants.EMPTY))
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
@@ -55,10 +60,10 @@ public class PersonalViewModel extends BaseViewModel<IPersonalView> {
 
     @OnClick
     public void onUpdateAccount() {
-        if (mContext == null) {
+        if (context == null) {
             return;
         }
-        mNavigator.startActivity(mContext, UpdateAccountActivity.class);
+        mNavigator.startActivity(context, UpdateAccountActivity.class);
     }
 
     @OnClick
