@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/menu_transaction"
-        android:icon="@drawable/ic_audiotrack_white_24dp"
+        android:icon="@drawable/settings"
         android:title="Công Cụ" />
 
     <item
