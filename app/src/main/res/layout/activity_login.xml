@@ -26,7 +26,17 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/logohouston" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="26sp"
+            android:text="Houston123"
+            android:fontFamily="serif-monospace"
+            android:layout_below="@id/imageView"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/editText"
