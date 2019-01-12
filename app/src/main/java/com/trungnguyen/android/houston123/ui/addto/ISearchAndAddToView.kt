@@ -10,4 +10,5 @@ interface ISearchAndAddToView : IBaseView {
     fun onSearchCompleted(userModels: Collection<BaseModel>)
     fun addToCompleted()
     fun getUserCode(): Int
+    fun addToFailed()
 }

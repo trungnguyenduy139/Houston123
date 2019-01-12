@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.ui.userdetail.detailmodel;
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
@@ -57,6 +58,32 @@ public class StudentModel extends BaseUserModel {
         this.official = official;
         this.department = department;
         this.departmentName = departmentName;
+    }
+
+    public StudentModel(String name, String phoneNumber, String address,
+                        String clazz, String birthday, String income, String startDate, String school, String departmentName) {
+        super(name, phoneNumber, address, "");
+        this.clazz = clazz;
+        this.birthday = birthday;
+        this.income = income;
+        this.startDate = startDate;
+        this.school = school;
+        this.departmentName = departmentName;
+    }
+
+    public static BaseModel initFromResource(List<String> resources) {
+        int position = 0;
+        String name = resources.get(position++);
+        String sdt = resources.get(position++);
+        String address = resources.get(position++);
+        String clazz = resources.get(position++);
+        String birthday = resources.get(position++);
+        String income = resources.get(position++);
+        String startDate = resources.get(position++);
+        String school = resources.get(position++);
+        String depart = resources.get(position++);
+
+        return new StudentModel(name, sdt, address, clazz, birthday, income, startDate, school, depart);
     }
 
     public String getSafeObject(String object) {

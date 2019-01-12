@@ -4,6 +4,7 @@ package com.trungnguyen.android.houston123.util;
 import android.content.Context;
 
 import com.trungnguyen.android.houston123.R;
+import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.ui.main.home.HomeItem;
 
 import java.util.ArrayList;
@@ -33,5 +34,22 @@ public final class CommonResourceLoader {
         }
 
         return Observable.just(homeItems);
+    }
+
+    public String getToolbarTitle(Context context, int code) {
+        switch (code) {
+            case UserType.LECTURER:
+                return context.getString(R.string.lecturer);
+            case UserType.MANAGER:
+                return context.getString(R.string.manager);
+            case UserType.STUDENT:
+                return context.getString(R.string.student);
+            case UserType.CLAZZ:
+                return context.getString(R.string.clazz);
+            case UserType.SUBJECT:
+                return context.getString(R.string.subject);
+            default:
+                return context.getString(R.string.user_list);
+        }
     }
 }

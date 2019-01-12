@@ -42,12 +42,8 @@ public class AuthenticateRepository implements AuthenticateStore.Repository {
     public Observable<LoginInfoResponse> callLoginApi(String userName, String password) {
         return mRequestService.loginService(userName, password)
                 .compose(ObservablePattern.transformObservable(DEFAULT_AUTHENTICATE_RESPONSE))
-                .flatMap(authenticateResponse -> {
-                    if (authenticateResponse == null) {
-                        return Observable.just(DEFAULT_AUTHENTICATE_RESPONSE.userToken);
-                    }
-                    return Observable.just(authenticateResponse.userToken);
-                })
+                .flatMap(ObservablePattern::responseProcessingPattern)
+                .map(response -> response.userToken)
                 .doOnNext(token -> {
                     Timber.d("[Auth] Authenticate api response %s", token);
                     putAuthInfoLocal(true, token);

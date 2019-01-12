@@ -43,6 +43,27 @@ public class UpdateUserStore {
                                                @Query("ngaynghi") String out,
                                                @Query("lydonghi") String reason);
 
+        @POST(Constants.Api.STUDENT)
+        Observable<BaseResponse> updateStudent(@Query("hovaten") String name,
+                                               @Query("hinhanh") String img,
+                                               @Query("lop") String permission,
+                                               @Query("sdt") String available,
+                                               @Query("diachi") String address,
+                                               @Query("ngaysinh") String email,
+                                               @Query("hoclopvao") String cmnd,
+                                               @Query("ngaynhaphoc") String position,
+                                               @Query("truonghocchinh") String department,
+                                               @Query("hohang") String hohang,
+                                               @Query("tenNT1") String tenNT1,
+                                               @Query("ngheNT1") String ngheNT1,
+                                               @Query("sdtNT1") String sdtNT1,
+                                               @Query("tenNT2") String tenNT2,
+                                               @Query("ngheNT2") String ngheNT2,
+                                               @Query("sdtNT2") String sdtNT2,
+                                               @Query("lydobietHouston") String howToKnow,
+                                               @Query("chinhthuc") String chinhthuc,
+                                               @Query("coso") String depart);
+
         @PUT(Constants.Api.LECTURER + "/{user_id}")
         Observable<BaseResponse> updateLecturer(@Path(value = "user_id") String userId,
                                                 @Query("hovaten") String name,
@@ -53,7 +74,6 @@ public class UpdateUserStore {
                                                 @Query("diachi") String address,
                                                 @Query("email") String email,
                                                 @Query("cmnd") String cmnd,
-                                                @Query("chucvu") String position,
                                                 @Query("coso") String department,
                                                 @Query("ngaynghi") String out,
                                                 @Query("lydonghi") String reason);
@@ -89,7 +109,7 @@ public class UpdateUserStore {
         //        Observable<List<ClassModel>> callApiClassOfLecturer(String id);
 //        Observable<List<StudentShortModel>> callApiStudentInClass(String id);
 //        Observable<List<ClassModel>> clazzIsLearningSubject(String id);
-        Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model);
+        Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId);
 
         Observable<List<BaseModel>> handleUpdateRepositoryMainFlow(int code, String id);
 

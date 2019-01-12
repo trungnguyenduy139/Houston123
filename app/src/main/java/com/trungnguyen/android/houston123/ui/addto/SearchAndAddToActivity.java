@@ -110,4 +110,9 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
     public int getUserCode() {
         return mUserCode;
     }
+
+    @Override
+    public void addToFailed() {
+        showErrorDialog(getString(R.string.default_api_error_msg));
+    }
 }

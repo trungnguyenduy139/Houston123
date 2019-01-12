@@ -6,11 +6,14 @@ import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * Created by trungnd4 on 14/08/2018.
@@ -32,7 +35,7 @@ public final class ModelResourceLoader {
 
 
     public static List<String> loadStudentResource() {
-        return Arrays.asList("Họ tên", "SĐT", "Địa chỉ", "Mã Học Viên", "Lớp", "Ngày Sinh", "Học Lực Đầu Vào", "Ngày Bắt Đầu", "Trường", "Cơ sở");
+        return Arrays.asList("Họ tên", "SĐT", "Địa chỉ", "Lớp", "Ngày Sinh", "Học Lực Đầu Vào", "Ngày Bắt Đầu", "Trường", "Cơ sở");
     }
 
     public static List<String> loadSubjectResource() {
@@ -55,6 +58,9 @@ public final class ModelResourceLoader {
             case UserType.SUBJECT:
                 resources = loadSubjectResource();
                 break;
+            case UserType.STUDENT:
+                resources = loadStudentResource();
+                break;
             default:
                 resources = new ArrayList<>();
                 break;
@@ -67,6 +73,7 @@ public final class ModelResourceLoader {
 
     public static BaseModel convertModel(int code, List<String> resources) {
         BaseModel model;
+        Timber.d("convert model %s", code);
         switch (code) {
             case UserType.LECTURER:
                 model = LecturerModel.initFromResource(resources);
@@ -80,8 +87,12 @@ public final class ModelResourceLoader {
             case UserType.SUBJECT:
                 model = SubjectModel.initFromResource(resources);
                 break;
+            case UserType.STUDENT:
+                model = StudentModel.initFromResource(resources);
+                break;
             default:
-                throw new IllegalStateException();
+                model = BaseModel.EMPTY;
+                break;
         }
 
         return model;

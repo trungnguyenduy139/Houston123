@@ -14,6 +14,7 @@ import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.DetailClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
     private UpdateUserStore.RequestService mRequestService;
     private UserListStore.LocalStorage mLocalStorage;
     private UpdateUserFactory mDataFactory;
+    private String mId = "";
 
     @Inject
     public UpdateUserRepository(UpdateUserStore.RequestService requestService,
@@ -104,7 +106,8 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
 
 
     @Override
-    public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model) {
+    public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId) {
+        mId = modelId;
         switch (code) {
             case UserType.MANAGER:
                 return handleUpdateManager(model);
@@ -116,29 +119,55 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
                 return handleUpdateClazz(model);
             case UserType.DETAIL_CLAZZ:
                 return handleUpdateDetailClazz(model);
+            case UserType.STUDENT:
+                return handleUpdateStudent(model);
             default:
-                throw new IllegalStateException("User code not contains in 'UserType' defined");
+                return Observable.empty();
         }
     }
 
+    private Observable<BaseResponse> handleUpdateStudent(BaseModel model) {
+        if (!(model instanceof StudentModel)) {
+            return Observable.empty();
+        }
+        StudentModel studentModel = (StudentModel) model;
+        String name = studentModel.getName();
+        String img = "";
+        String clazz = studentModel.getClazz();
+        String phone = studentModel.getPhoneNumber();
+        String address = studentModel.getAddress();
+        String birthday = studentModel.getBirthday();
+        String hocLucDauVao = studentModel.getIncome();
+        String date = studentModel.getStartDate();
+        String school = studentModel.getSchool();
+        String depart = studentModel.getDepartment();
+        return mRequestService.updateStudent(name, img, clazz, phone, address,
+                birthday, hocLucDauVao, date, school, depart, "", "",
+                "", "", "", "", "", "", "")
+                .flatMap(ObservablePattern::responseProcessingPattern);
+    }
+
     private Observable<BaseResponse> handleUpdateLecturer(BaseModel model) {
+        if (!(model instanceof LecturerModel)) {
+            return Observable.empty();
+        }
         LecturerModel managerModel = (LecturerModel) model;
         String name = managerModel.getName();
         String phone = managerModel.getPhoneNumber();
         String address = managerModel.getAddress();
-        String lecturerId = managerModel.getCmnd();
         String email = managerModel.getEmail();
         String cmnd = managerModel.getCmnd();
-        String img = managerModel.getImg();
         String outDate = managerModel.getOutDate();
         String outReason = managerModel.getOutReason();
         String department = managerModel.getDepartment();
-        String permission = managerModel.getPermission();
-        return mRequestService.updateLecturer(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department, permission, outDate, outReason)
+        return mRequestService.updateLecturer(mId, name, "", "giaovien", "available", phone, address, email, cmnd, department, outDate, outReason)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
     private Observable<BaseResponse> handleUpdateClazz(BaseModel model) {
+        if (!(model instanceof ClassModel)) {
+            return Observable.empty();
+        }
         ClassModel managerModel = (ClassModel) model;
         String name = managerModel.getMainContent();
         String phone = managerModel.getSubCotent();
@@ -146,7 +175,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String lecturerId = managerModel.startDate;
         String email = managerModel.endDate;
         String cmnd = managerModel.departmen;
-        return mRequestService.updateClazz(model.getModelId(), name, phone, address, lecturerId, email, cmnd)
+        return mRequestService.updateClazz(mId, name, phone, address, lecturerId, email, cmnd)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
@@ -157,7 +186,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String clazzId = detailClassModel.getClazzId();
         String tranferId = detailClassModel.getTransferId();
         String transferTIme = detailClassModel.getTransferTime();
-        return mRequestService.updateDetailClass(studentId, clazzId, tranferId, transferTIme)
+        return mRequestService.updateDetailClass(mId, clazzId, tranferId, transferTIme)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
@@ -183,7 +212,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String outReason = managerModel.getOutReason();
         String department = managerModel.getDepartment();
         String position = managerModel.getPosition();
-        return mRequestService.updateManager(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department, position, outDate, outReason)
+        return mRequestService.updateManager(name, phone, address, mId, email, cmnd, img, outDate, outReason, department, position, outDate, outReason)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 }

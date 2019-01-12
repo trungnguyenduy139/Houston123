@@ -22,4 +22,6 @@ public interface IDetailUserView extends IBaseLoadingView {
 
     void onUpdateActionSuccess();
     void onUpdateActionFailed();
+
+    int getCode();
 }

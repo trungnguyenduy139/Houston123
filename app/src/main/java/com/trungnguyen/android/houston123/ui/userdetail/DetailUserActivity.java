@@ -168,13 +168,17 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         inflater.inflate(menuId, menu);
         return true;
     }
+    @Override
+    public int getCode() {
+        return mCode;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.detail_update:
-                viewModel.onUpdateClick(DetailServiceType.START_UPDATE, null);
+                viewModel.onUpdateClick(DetailServiceType.START_UPDATE, mUserModel, mUserModel.getModelId());
                 break;
             case R.id.detail_delete:
                 String modelId = mUserModel.getModelId();
@@ -196,12 +200,12 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                 break;
             case R.id.detail_teacher_add_to_class:
                 if (mUserModel instanceof LecturerModel) {
-                    viewModel.handleAddUserToClazz((LecturerModel) mUserModel);
+                    viewModel.handleAddUserToClazz(mUserModel, UserType.LECTURER);
                 }
                 break;
             case R.id.add_student_to_clazz:
                 if (mUserModel instanceof StudentModel) {
-                    viewModel.handleAddUserToClazz((StudentModel) mUserModel);
+                    viewModel.handleAddUserToClazz(mUserModel, UserType.STUDENT);
                 }
                 break;
             default:

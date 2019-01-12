@@ -68,7 +68,7 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
         }
         if (codeSource == UserType.STUDENT) {
             DetailClassModel detailClazzModel = AddUserUtils.INSTANCE.tranformDetailClsasModel(model, modelId);
-            Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.DETAIL_CLAZZ, detailClazzModel)
+            Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.DETAIL_CLAZZ, detailClazzModel, modelId)
                     .compose(SchedulerHelper.applySchedulers())
                     .doOnSubscribe(disposable -> showLoading())
                     .doOnTerminate(this::hideLoading)
@@ -76,7 +76,12 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
                         if (mView != null) {
                             mView.addToCompleted();
                         }
-                    }, Timber::d);
+                    }, throwable -> {
+                        if (mView == null) {
+                            return;
+                        }
+                        mView.addToFailed();
+                    });
 
 
             mSubscription.add(subscription);
@@ -84,7 +89,7 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
             return;
         }
         ClassModel clazzModel = AddUserUtils.INSTANCE.transformClassModel(model, modelId);
-        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.CLAZZ, clazzModel)
+        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.CLAZZ, clazzModel, modelId)
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> showLoading())
                 .doOnTerminate(this::hideLoading)
@@ -92,7 +97,12 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
                     if (mView != null) {
                         mView.addToCompleted();
                     }
-                }, Timber::d);
+                }, throwable -> {
+                    if (mView == null) {
+                        return;
+                    }
+                    mView.addToFailed();
+                });
 
         mSubscription.add(subscription);
     }

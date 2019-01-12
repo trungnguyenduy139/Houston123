@@ -74,7 +74,7 @@ public class UserListActivity extends BaseToolbarActivity<ActivityUserListBindin
                 }
             }
         });
-        setTitle(getResources().getString(R.string.user_list));
+        setTitle(viewModel.getToolbarTitle(this, mUserCode));
 
         viewModel.getUserListLiveData().observe(this, o -> {
 

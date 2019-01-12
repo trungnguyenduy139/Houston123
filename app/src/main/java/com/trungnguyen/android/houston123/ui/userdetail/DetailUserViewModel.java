@@ -80,28 +80,35 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
     }
 
     @OnClick
-    public void onUpdateClick(int code, BaseModel model) {
+    public void onUpdateClick(int code, BaseModel model, String modelId) {
         if (mUserModel == null) {
             return;
         }
         switch (code) {
             case DetailServiceType.START_UPDATE:
-                Bundle bundle = new BundleBuilder().putValue(BundleConstants.KEY_UPDATE_USER_DETAIL, mUserModel).build();
+                Bundle bundle = new BundleBuilder().putValue(BundleConstants.KEY_UPDATE_USER_DETAIL, model)
+                        .putValue(BundleConstants.IS_ADD_NEW, false)
+                        .putValue(BundleConstants.USER_CODE_BUNDLE, this.getCode())
+                        .build();
                 mNavigator.startEditDetailActivity(context, bundle);
                 break;
             case DetailServiceType.DO_UPDATE:
                 if (model == null) {
                     return;
                 }
-                handleUpdateUser(code, model);
+                handleUpdateUser(this.getCode(), model, modelId);
                 break;
             default:
                 break;
         }
     }
 
-    public void handleUpdateUser(int code, BaseModel model) {
-        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(code, model)
+    private int getCode() {
+        return mView == null ?  Constants.DEFAULT_CODE_VALUE : mView.getCode();
+    }
+
+    private void handleUpdateUser(int code, BaseModel model, String modelId) {
+        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(code, model, modelId)
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(response -> {
                     if (mView != null) {
@@ -201,13 +208,13 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
 
     public void onAddNewClicked(int userCode, BaseModel model) {
-        handleUpdateUser(userCode, model);
+        handleUpdateUser(userCode, model, "");
     }
 
-    public void handleAddUserToClazz(BaseModel userModel) {
+    public void handleAddUserToClazz(BaseModel userModel, int userMode) {
         Bundle bundle = new BundleBuilder()
                 .putValue(BundleConstants.ADD_TO_MODEL, userModel)
-                .putValue(BundleConstants.USER_CODE_BUNDLE, UserType.STUDENT)
+                .putValue(BundleConstants.USER_CODE_BUNDLE, userMode)
                 .build();
         if (bundle == null) {
             return;

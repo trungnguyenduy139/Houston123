@@ -34,7 +34,6 @@ public class LecturerModel extends BaseUserModel implements Serializable {
         String name = resources.get(index++);
         String phone = resources.get(index++);
         String address = resources.get(index++);
-        String lecturerId = resources.get(index++);
         String email = resources.get(index++);
         String cmnd = resources.get(index++);
         String img = "";
@@ -42,7 +41,7 @@ public class LecturerModel extends BaseUserModel implements Serializable {
         String outReason = resources.get(index++);
         String department = resources.get(index++);
 
-        return new LecturerModel(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department);
+        return new LecturerModel(name, phone, address, "", email, cmnd, img, outDate, outReason, department);
     }
 
     public String getImg() {

@@ -16,6 +16,7 @@ import com.trungnguyen.android.houston123.rx.SchedulerHelper;
 import com.trungnguyen.android.houston123.ui.userdetail.UpdateDetailUserActivity;
 import com.trungnguyen.android.houston123.util.BundleBuilder;
 import com.trungnguyen.android.houston123.util.BundleConstants;
+import com.trungnguyen.android.houston123.util.CommonResourceLoader;
 import com.trungnguyen.android.houston123.util.Constants;
 import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.util.Navigator;
@@ -37,19 +38,22 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     private UpdateUserStore.Repository mUpdateUserListRepository;
     private UserListAdapter<BaseModel> mAdapter;
     private Context mContext;
+    private CommonResourceLoader mResourceLoader;
 
     @NonNull
     private final MutableLiveData<List<BaseViewModel>> mUserListLiveData;
 
     @Inject
     UserListViewModel(Context context, Navigator navigator, UserListRepository userListRepository,
-                      UpdateUserRepository updateUserListRepository) {
+                      UpdateUserRepository updateUserListRepository,
+                      CommonResourceLoader commonResourceLoader) {
         super(context);
         this.mContext = context;
         this.mUserListLiveData = new MutableLiveData<>();
         this.mNavigator = navigator;
         this.mUpdateUserListRepository = updateUserListRepository;
         this.mUserListRepository = userListRepository;
+        this.mResourceLoader = commonResourceLoader;
     }
 
     @NonNull
@@ -169,6 +173,7 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
             return;
         }
         mNavigator.startActivity(mContext, UpdateDetailUserActivity.class, new BundleBuilder()
+                .putValue(BundleConstants.IS_ADD_NEW, true)
                 .putValue(BundleConstants.ADD_NEW_USER_BUNDLE, userCode).build());
     }
 
@@ -189,5 +194,10 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
                 }, throwable -> Timber.d("Fail to load resource lecturer logged in [%s]", throwable.getMessage()));
 
         mSubscription.add(subscription);
+    }
+
+
+    public String getToolbarTitle(Context context, int userCode) {
+        return mResourceLoader.getToolbarTitle(context, userCode);
     }
 }

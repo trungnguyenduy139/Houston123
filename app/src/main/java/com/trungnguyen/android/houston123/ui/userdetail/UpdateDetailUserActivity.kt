@@ -28,16 +28,23 @@ class UpdateDetailUserActivity : DetailUserActivity() {
 
     private val listOfVal: List<String> = mListOfValueEditText.map { it.text.toString() }
 
+    private var mModel: BaseModel? = BaseModel.EMPTY
+
+    private fun refillListOfVal() : List<String> = mListOfValueEditText.map { it.text.toString() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
         var baseUserModel: BaseModel? = null
         if (bundle != null) {
-            mIsAddNew = bundle.containsKey(BundleConstants.ADD_NEW_USER_BUNDLE)
+            mIsAddNew = bundle.getBoolean(BundleConstants.IS_ADD_NEW)
             if (mIsAddNew) {
                 mUserCode = bundle.getInt(BundleConstants.ADD_NEW_USER_BUNDLE)
-            } else
+            } else {
                 baseUserModel = bundle.getSerializable(BundleConstants.KEY_UPDATE_USER_DETAIL) as BaseModel
+                mUserCode = bundle.getInt(BundleConstants.USER_CODE_BUNDLE)
+                mModel = baseUserModel
+            }
         }
         if (baseUserModel != null) {
             viewModel.setLecturerModel(baseUserModel)
@@ -50,6 +57,8 @@ class UpdateDetailUserActivity : DetailUserActivity() {
 
         title = resources.getString(R.string.update_user_detail)
     }
+
+    override fun getCode(): Int = mUserCode
 
     override fun updateResourceList(list: List<ItemDetailModel>) {
         if (Lists.isEmptyOrNull(list)) {
@@ -83,12 +92,12 @@ class UpdateDetailUserActivity : DetailUserActivity() {
         val id = item.itemId
         when (id) {
             R.id.add_new_action -> {
-                val model = ModelResourceLoader.convertModel(mUserCode, listOfVal)
+                val model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
                 viewModel.onAddNewClicked(mUserCode, model)
             }
             R.id.update_action -> {
-                val model = ModelResourceLoader.convertModel(mUserCode, listOfVal)
-                viewModel.onUpdateClick(DetailServiceType.DO_UPDATE, model)
+                val model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
+                viewModel.onUpdateClick(DetailServiceType.DO_UPDATE, model, mModel?.modelId)
             }
             else -> {
             }

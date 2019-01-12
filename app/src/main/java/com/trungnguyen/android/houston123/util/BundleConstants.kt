@@ -20,4 +20,6 @@ object BundleConstants {
     const val ADD_NEW_USER_BUNDLE = "user_code_bundle"
     const val LECTURER_LOGGED_IN = "lecturer_logged_in"
     const val ADD_TO_MODEL = "lecturer_logged_in"
+    const val IS_ADD_NEW = "is-add-new"
+
 }

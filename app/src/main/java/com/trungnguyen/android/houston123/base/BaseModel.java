@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -25,6 +26,18 @@ public abstract class BaseModel extends BaseObservable implements Serializable {
     public BaseModel() {
 
     }
+
+    public static final BaseModel EMPTY = new BaseModel() {
+        @Override
+        public List<String> getSource() {
+            return Collections.emptyList();
+        }
+
+        @Override
+        public List<String> getValue() {
+            return Collections.emptyList();
+        }
+    };
 
     public BaseModel(String mainContent, String subContent, String modelId) {
         this.mainContent = mainContent;
