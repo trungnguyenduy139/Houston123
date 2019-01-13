@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.BaseViewModel;
@@ -172,6 +173,9 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
         if (mNavigator == null) {
             return;
         }
+//        if (userCode == UserType.LECTURER || userCode == UserType.MANAGER) {
+//            mNavigator.startActivity(mContext,);
+//        }
         mNavigator.startActivity(mContext, UpdateDetailUserActivity.class, new BundleBuilder()
                 .putValue(BundleConstants.IS_ADD_NEW, true)
                 .putValue(BundleConstants.ADD_NEW_USER_BUNDLE, userCode).build());

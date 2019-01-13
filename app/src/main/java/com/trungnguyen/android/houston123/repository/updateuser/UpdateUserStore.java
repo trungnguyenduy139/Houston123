@@ -94,8 +94,21 @@ public class UpdateUserStore {
                                              @Query("ketthuc") String sdt,
                                              @Query("coso") String address);
 
+        @PUT(Constants.Api.LECTURER)
+        Observable<BaseResponse> createClazzz(@Query("lop") String name,
+                                             @Query("mamonhoc") String img,
+                                             @Query("magiaovien") String permission,
+                                             @Query("batdau") String available,
+                                             @Query("ketthuc") String sdt,
+                                             @Query("coso") String address);
+
         @PUT(Constants.Api.LECTURER + "/{user_id}")
         Observable<BaseResponse> updateSubject(@Path(value = "user_id") String userId,
+                                               @Query("ten") String name,
+                                               @Query("bophanquanly") String img);
+
+        @POST(Constants.Api.LECTURER )
+        Observable<BaseResponse> createSubject(@Query("ma") String ma,
                                                @Query("ten") String name,
                                                @Query("bophanquanly") String img);
 
@@ -109,7 +122,7 @@ public class UpdateUserStore {
         //        Observable<List<ClassModel>> callApiClassOfLecturer(String id);
 //        Observable<List<StudentShortModel>> callApiStudentInClass(String id);
 //        Observable<List<ClassModel>> clazzIsLearningSubject(String id);
-        Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId);
+        Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId, boolean isAddNew);
 
         Observable<List<BaseModel>> handleUpdateRepositoryMainFlow(int code, String id);
 

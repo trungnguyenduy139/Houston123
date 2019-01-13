@@ -21,11 +21,11 @@ import timber.log.Timber;
 
 public final class ModelResourceLoader {
     public static List<String> loadResourceLecturer() {
-        return Arrays.asList("Họ và tên", "Số điện thoại", "Địa chỉ", "Email", "CMND", "Ngày nghĩ", "Lý do nghĩ", "Cơ sở");
+        return Arrays.asList("Mã giáo viên","Họ và tên", "Số điện thoại", "Địa chỉ", "Email", "CMND", "Ngày nghĩ", "Lý do nghĩ", "Cơ sở", "Tên cơ sở", "Available");
     }
 
     public static List<String> loadResourceManager() {
-        return Arrays.asList("Mã quản lý", "Họ và tên", "Số điện thoại", "Địa chỉ", "Email", "CMND", "Chức vụ", "Ngày nghĩ", "Lý do nghĩ", "Cơ sở");
+        return Arrays.asList("Mã quản lý", "Họ và tên", "Số điện thoại", "Địa chỉ", "Email", "CMND", "Chức vụ", "Ngày nghĩ", "Lý do nghĩ", "Cơ sở", "Permission", "Tên cơ sở");
     }
 
 

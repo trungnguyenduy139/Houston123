@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.trungnguyen.android.houston123.R
 import com.trungnguyen.android.houston123.anotation.DetailServiceType
+import com.trungnguyen.android.houston123.anotation.ToastType
 import com.trungnguyen.android.houston123.base.BaseModel
 import com.trungnguyen.android.houston123.util.BundleConstants
 import com.trungnguyen.android.houston123.util.Constants
 import com.trungnguyen.android.houston123.util.Lists
 import com.trungnguyen.android.houston123.util.ModelResourceLoader
+import com.trungnguyen.android.houston123.widget.ToastCustom
 import java.util.*
 
 /**
@@ -29,8 +31,18 @@ class UpdateDetailUserActivity : DetailUserActivity() {
     private val listOfVal: List<String> = mListOfValueEditText.map { it.text.toString() }
 
     private var mModel: BaseModel? = BaseModel.EMPTY
+    private var mIsAllowAddOrUpdateAction = true
 
-    private fun refillListOfVal() : List<String> = mListOfValueEditText.map { it.text.toString() }
+    private fun refillListOfVal() : List<String> = mListOfValueEditText.map {
+        var content = ""
+        if (it != null) {
+            content = it.text.toString()
+        }
+        if (content.isEmpty()) {
+            mIsAllowAddOrUpdateAction = false
+        }
+        return@map content
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,11 +104,22 @@ class UpdateDetailUserActivity : DetailUserActivity() {
         val id = item.itemId
         when (id) {
             R.id.add_new_action -> {
+                var isAllow = false
                 val model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
+                if (!mIsAllowAddOrUpdateAction) {
+                    ToastCustom.makeText(this, "Chưa nhập đầy đủ thông tin", ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR)
+                    return false
+                }
+                mIsAllowAddOrUpdateAction = true
                 viewModel.onAddNewClicked(mUserCode, model)
             }
             R.id.update_action -> {
                 val model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
+                if (!mIsAllowAddOrUpdateAction) {
+                    ToastCustom.makeText(this, "Chưa nhập đầy đủ thông tin", ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR)
+                    return false
+                }
+                mIsAllowAddOrUpdateAction = true
                 viewModel.onUpdateClick(DetailServiceType.DO_UPDATE, model, mModel?.modelId)
             }
             else -> {

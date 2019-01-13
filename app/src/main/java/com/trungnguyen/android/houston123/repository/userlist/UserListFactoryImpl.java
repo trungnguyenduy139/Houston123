@@ -43,7 +43,7 @@ public class UserListFactoryImpl implements UserListFactory {
             case UserType.CLAZZ:
                 return mUserListRequestService.searchClazz(textSearch);
             default:
-                throw new IllegalStateException("Invalid type to get user list api");
+                return Observable.empty();
         }
     }
 

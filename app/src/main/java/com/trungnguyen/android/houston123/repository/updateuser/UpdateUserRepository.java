@@ -45,21 +45,6 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         this.mDataFactory = (UpdateUserFactory) dataFactory;
     }
 
-//    @Override
-//    public Observable<List<ClassModel>> callApiClassOfLecturer(String id) {
-//        return mRequestService.getClassOfLecturer(id)
-//                .flatMap(ObservablePattern::responseProcessingPattern)
-//                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
-//                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
-//                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
-//                .flatMapIterable(data -> data)
-//                .map(ClassResponse::convertToModel)
-//                .toList()
-//                .toObservable();
-//
-//
-//    }
-
     @Override
     public Observable<List<BaseModel>> handleUpdateRepositoryMainFlow(int code, String id) {
         return mDataFactory.handleUpdateRepositoryFlow(code, id)
@@ -78,35 +63,9 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         return null;
     }
 
-//    @Override
-//    public Observable<List<StudentShortModel>> callApiStudentInClass(String id) {
-//        return mRequestService.getStudentInClass(id)
-//                .flatMap(ObservablePattern::responseProcessingPattern)
-//                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
-//                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
-//                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
-//                .flatMapIterable(data -> data)
-//                .map(StudentShortResponse::convertToModel)
-//                .toList()
-//                .toObservable();
-//    }
-
-//    @Override
-//    public Observable<List<ClassModel>> clazzIsLearningSubject(String id) {
-//        return mRequestService.getListClazzLearningSubject(id)
-//                .flatMap(ObservablePattern::responseProcessingPattern)
-//                .doOnNext(classResponseListBaseResponse -> mLocalStorage.putHasLoader(!TextUtils.isEmpty(classResponseListBaseResponse.getNextPageUrl())))
-//                .doOnError(throwable -> Timber.d("Falied to load %s", throwable.getMessage()))
-//                .flatMap(listResponse -> Observable.just(listResponse.getDataList()))
-//                .flatMapIterable(data -> data)
-//                .map(ClassResponse::convertToModel)
-//                .toList()
-//                .toObservable();
-//    }
-
 
     @Override
-    public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId) {
+    public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId, boolean isUpdate) {
         mId = modelId;
         switch (code) {
             case UserType.MANAGER:
@@ -114,9 +73,9 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
             case UserType.LECTURER:
                 return handleUpdateLecturer(model);
             case UserType.SUBJECT:
-                return handleUpdateSubject(model);
+                return handleUpdateSubject(model, isUpdate);
             case UserType.CLAZZ:
-                return handleUpdateClazz(model);
+                return handleUpdateClazz(model, isUpdate);
             case UserType.DETAIL_CLAZZ:
                 return handleUpdateDetailClazz(model);
             case UserType.STUDENT:
@@ -148,7 +107,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
     }
 
     private Observable<BaseResponse> handleUpdateLecturer(BaseModel model) {
-        if (!(model instanceof LecturerModel)) {
+        if (!(model instanceof LecturerModel) || mId.isEmpty()) {
             return Observable.empty();
         }
         LecturerModel managerModel = (LecturerModel) model;
@@ -164,18 +123,19 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
-    private Observable<BaseResponse> handleUpdateClazz(BaseModel model) {
+    private Observable<BaseResponse> handleUpdateClazz(BaseModel model, boolean isUppdate) {
         if (!(model instanceof ClassModel)) {
             return Observable.empty();
         }
-        ClassModel managerModel = (ClassModel) model;
-        String name = managerModel.getMainContent();
-        String phone = managerModel.getSubCotent();
-        String address = managerModel.lecturerId;
-        String lecturerId = managerModel.startDate;
-        String email = managerModel.endDate;
-        String cmnd = managerModel.departmen;
-        return mRequestService.updateClazz(mId, name, phone, address, lecturerId, email, cmnd)
+        ClassModel clazzModel = (ClassModel) model;
+        String clazz = clazzModel.clazz;
+        String subjectId = clazzModel.getSubCotent();
+        String lecturerId = clazzModel.lecturerId;
+        String start = clazzModel.startDate;
+        String end = clazzModel.endDate;
+        String departmen = clazzModel.departmen;
+        return isUppdate ? mRequestService.updateClazz(mId, clazz, subjectId, lecturerId, start, end, departmen)
+                .flatMap(ObservablePattern::responseProcessingPattern) : mRequestService.createClazzz(clazz, subjectId, lecturerId, start, end, departmen)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
@@ -191,11 +151,16 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
     }
 
 
-    private Observable<BaseResponse> handleUpdateSubject(BaseModel model) {
-        SubjectModel managerModel = (SubjectModel) model;
-        String name = managerModel.getMainContent();
-        String phone = managerModel.getManagerAllow();
-        return mRequestService.updateSubject(model.getModelId(), name, phone)
+    private Observable<BaseResponse> handleUpdateSubject(BaseModel model, boolean isUpdate) {
+        if (!(model instanceof SubjectModel)) {
+            return Observable.empty();
+        }
+        SubjectModel subjectModel = (SubjectModel) model;
+        String name = subjectModel.getMainContent();
+        String id = subjectModel.getSubCotent();
+        String manager = subjectModel.getManagerAllow();
+        return isUpdate ? mRequestService.updateSubject(mId, name, manager)
+                .flatMap(ObservablePattern::responseProcessingPattern) : mRequestService.createSubject(id, name, manager)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 

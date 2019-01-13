@@ -68,7 +68,7 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
         }
         if (codeSource == UserType.STUDENT) {
             DetailClassModel detailClazzModel = AddUserUtils.INSTANCE.tranformDetailClsasModel(model, modelId);
-            Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.DETAIL_CLAZZ, detailClazzModel, modelId)
+            Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.DETAIL_CLAZZ, detailClazzModel, modelId, false)
                     .compose(SchedulerHelper.applySchedulers())
                     .doOnSubscribe(disposable -> showLoading())
                     .doOnTerminate(this::hideLoading)
@@ -89,7 +89,7 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
             return;
         }
         ClassModel clazzModel = AddUserUtils.INSTANCE.transformClassModel(model, modelId);
-        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.CLAZZ, clazzModel, modelId)
+        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.CLAZZ, clazzModel, modelId, false)
                 .compose(SchedulerHelper.applySchedulers())
                 .doOnSubscribe(disposable -> showLoading())
                 .doOnTerminate(this::hideLoading)

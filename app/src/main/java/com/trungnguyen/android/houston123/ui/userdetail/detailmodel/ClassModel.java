@@ -74,6 +74,6 @@ public class ClassModel extends BaseModel {
 
     @Override
     public List<String> getValue() {
-        return Arrays.asList(clazzId, getMainContent(), getSubCotent(), lecturerId, lecturerName, startDate, endDate, branch, departmen);
+        return Arrays.asList(clazzId, clazz, getSubCotent(), getMainContent(), lecturerId, lecturerName, startDate, endDate, branch, departmen);
     }
 }

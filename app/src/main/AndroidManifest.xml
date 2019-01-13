@@ -66,6 +66,13 @@
             android:label="@string/search_and_add"
             android:screenOrientation="portrait">
         </activity>
+
+
+        <activity android:name=".ui.register.RegisterUserActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/register"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

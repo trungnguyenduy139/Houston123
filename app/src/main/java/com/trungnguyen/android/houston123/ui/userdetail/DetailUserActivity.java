@@ -90,6 +90,9 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
         }
         ViewGroup view;
         for (ItemDetailModel item : list) {
+            if (item.getValue().isEmpty()) {
+                continue;
+            }
             view = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.user_detail_item, null);
             LinearLayout container = (LinearLayout) view.getChildAt(0);
             AppCompatTextView tvKey = (AppCompatTextView) container.getChildAt(0);

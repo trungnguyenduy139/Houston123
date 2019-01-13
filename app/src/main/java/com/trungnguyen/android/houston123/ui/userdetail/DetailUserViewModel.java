@@ -96,7 +96,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                 if (model == null) {
                     return;
                 }
-                handleUpdateUser(this.getCode(), model, modelId);
+                handleUpdateUser(this.getCode(), model, modelId, true);
                 break;
             default:
                 break;
@@ -107,8 +107,8 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         return mView == null ?  Constants.DEFAULT_CODE_VALUE : mView.getCode();
     }
 
-    private void handleUpdateUser(int code, BaseModel model, String modelId) {
-        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(code, model, modelId)
+    private void handleUpdateUser(int code, BaseModel model, String modelId, boolean isUpdate) {
+        Disposable subscription = mUpdateUserRepository.callApiUpdateUser(code, model, modelId, isUpdate)
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(response -> {
                     if (mView != null) {
@@ -208,7 +208,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
 
 
     public void onAddNewClicked(int userCode, BaseModel model) {
-        handleUpdateUser(userCode, model, "");
+        handleUpdateUser(userCode, model, "", false);
     }
 
     public void handleAddUserToClazz(BaseModel userModel, int userMode) {

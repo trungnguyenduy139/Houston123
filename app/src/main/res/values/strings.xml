@@ -29,6 +29,7 @@
     <string name="logout_text">Bạn có chắc chắn muốn đăng xuất khỏi ứng dụng Houston123</string>
     <string name="update_account_info">Cập nhật tài khoản</string>
     <string name="search_and_add">Tìm kiểm và thêm</string>
+    <string name="register">Đăng ký</string>
     <string name="start_search_and_add">Bắt đầu</string>
     <string name="search_and_add_message">Tìm thông tin người dùng cần thêm</string>
     <string name="search_hint">Tìm kiếm</string>

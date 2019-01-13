@@ -23,6 +23,10 @@ public class ManagerResponse extends BaseUserResponse {
     String position;
     @SerializedName("Cơ Sở")
     String department;
+    @SerializedName("permission")
+    String permission;
+    @SerializedName("Tên Cơ Sở")
+    String departmentName;
 
 
     public ManagerResponse(String lecturerId, String img, String email, String cmnd, String outDate, String outReason, String position, String department) {
@@ -38,6 +42,6 @@ public class ManagerResponse extends BaseUserResponse {
 
     @Override
     public ManagerModel convertToModel() {
-        return new ManagerModel(userName, phoneNumber, lecturerId, img, address, email, cmnd, outDate, outReason, department, position);
+        return new ManagerModel(userName, phoneNumber, lecturerId, img, address, email, cmnd, outDate, outReason, department, position, permission, departmentName);
     }
 }

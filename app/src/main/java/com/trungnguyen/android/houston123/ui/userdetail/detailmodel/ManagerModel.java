@@ -18,19 +18,20 @@ public class ManagerModel extends BaseUserModel {
     private String outReason;
     private String department;
     private String position;
+    private String departmentName;
 
 
-    public ManagerModel(String name, String phone, String lecturerId, String img, String address, String email, String cmnd, String outDate, String outReason, String department, String position) {
-        super(name, phone, address, lecturerId, email, cmnd);
+    public ManagerModel(String name, String phone, String managerId, String img, String address,
+                        String email, String cmnd, String outDate, String outReason, String department, String position, String permission, String departmentName) {
+        super(name, phone, address, managerId, email, cmnd);
         this.img = img;
         this.outDate = outDate;
         this.outReason = outReason;
         this.department = department;
         this.position = position;
-        this.permission = "quanly";
+        this.permission = permission;
+        this.departmentName = departmentName;
     }
-
-
 
 
     public ManagerModel() {
@@ -50,8 +51,9 @@ public class ManagerModel extends BaseUserModel {
         String outReason = resources.get(index++);
         String department = resources.get(index++);
         String position = resources.get(index++);
+        String departmentName = resources.get(index++);
 
-        return new ManagerModel(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department, position);
+        return new ManagerModel(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department, position, "", departmentName);
     }
 
     public String getImg() {
@@ -94,11 +96,6 @@ public class ManagerModel extends BaseUserModel {
 
     @Override
     public List<String> getValue() {
-        return Arrays.asList(userId, getMainContent(), getSubCotent(), address, email, cmnd, position, getOutDate(), getOutReason(), department);
-    }
-
-    public ManagerModel convertToModel() {
-        ManagerModel managerModel = new ManagerModel();
-        return managerModel;
+        return Arrays.asList(userId, getMainContent(), getSubCotent(), address, email, cmnd, position, getOutDate(), getOutReason(), department, permission, departmentName);
     }
 }

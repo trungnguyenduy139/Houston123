@@ -18,15 +18,18 @@ public class LecturerModel extends BaseUserModel implements Serializable {
     private String outDate;
     private String outReason;
     private String department;
+    private String departmentName;
 
 
-    public LecturerModel(String name, String phone, String lecturerId, String img, String address, String email, String cmnd, String outDate, String outReason, String department) {
+    public LecturerModel(String name, String phone, String lecturerId, String img,
+                         String address, String email, String cmnd, String outDate, String outReason, String department, String departmentName) {
         super(name, phone, address, lecturerId, email, cmnd);
         this.img = img;
         this.outDate = outDate;
         this.outReason = outReason;
         this.department = department;
         this.permission = "giaovien";
+        this.departmentName = departmentName;
     }
 
     public static BaseModel initFromResource(List<String> resources) {
@@ -40,8 +43,9 @@ public class LecturerModel extends BaseUserModel implements Serializable {
         String outDate = resources.get(index++);
         String outReason = resources.get(index++);
         String department = resources.get(index++);
+        String departmentName = resources.get(index++);
 
-        return new LecturerModel(name, phone, address, "", email, cmnd, img, outDate, outReason, department);
+        return new LecturerModel(name, phone, address, "", email, cmnd, img, outDate, outReason, department, departmentName);
     }
 
     public String getImg() {
@@ -76,6 +80,6 @@ public class LecturerModel extends BaseUserModel implements Serializable {
 
     @Override
     public List<String> getValue() {
-        return Arrays.asList(getMainContent(), getSubCotent(), getAddress(), getEmail(), getCmnd(), getOutDate(), getOutReason(), getDepartment());
+        return Arrays.asList(getModelId(), getMainContent(), getSubCotent(), getAddress(), getEmail(), getCmnd(), getOutDate(), getOutReason(), getDepartment(), departmentName == null ? "": departmentName);
     }
 }

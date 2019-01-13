@@ -22,9 +22,12 @@ public class LecturerResponse extends BaseUserResponse {
     String outReason;
     @SerializedName("Cơ Sở")
     String department;
+    @SerializedName("Tên Cơ Sở")
+    String departmentName;
+
 
     @Override
     public LecturerModel convertToModel() {
-        return new LecturerModel(userName, phoneNumber, lecturerId, img, address, email, cmnd, outDate, outReason, department);
+        return new LecturerModel(userName, phoneNumber, lecturerId, img, address, email, cmnd, outDate, outReason, department, departmentName);
     }
 }

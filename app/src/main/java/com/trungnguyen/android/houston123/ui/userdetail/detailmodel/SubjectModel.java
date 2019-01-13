@@ -20,10 +20,10 @@ public class SubjectModel extends BaseModel {
 
     public static BaseModel initFromResource(List<String> resources) {
         int index = 0;
-        String name = resources.get(index++);
-        String phone = resources.get(index++);
+        String subjectName = resources.get(index++);
         String subjectId = resources.get(index++);
-        return new SubjectModel(name, subjectId, phone);
+        String managerAllow = resources.get(index++);
+        return new SubjectModel(subjectName, subjectId, managerAllow);
     }
 
     public String getManagerAllow() {
@@ -37,6 +37,6 @@ public class SubjectModel extends BaseModel {
 
     @Override
     public List<String> getValue() {
-        return Arrays.asList(getMainContent(), getSubCotent(), getManagerAllow());
+        return Arrays.asList(getMainContent(), getModelId(), getManagerAllow());
     }
 }
