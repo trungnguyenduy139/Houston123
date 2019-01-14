@@ -90,19 +90,29 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
             return Observable.empty();
         }
         StudentModel studentModel = (StudentModel) model;
-        String name = studentModel.getName();
+        String name = studentModel.getSafeObject(studentModel.getName());
         String img = "";
-        String clazz = studentModel.getClazz();
-        String phone = studentModel.getPhoneNumber();
-        String address = studentModel.getAddress();
-        String birthday = studentModel.getBirthday();
-        String hocLucDauVao = studentModel.getIncome();
-        String date = studentModel.getStartDate();
-        String school = studentModel.getSchool();
-        String depart = studentModel.getDepartment();
+        String clazz = studentModel.getSafeObject(studentModel.getClazz());
+        String phone = studentModel.getSafeObject(studentModel.getPhoneNumber());
+        String address = studentModel.getSafeObject(studentModel.getAddress());
+        String birthday = studentModel.getSafeObject(studentModel.getBirthday());
+        String hocLucDauVao = studentModel.getSafeObject(studentModel.getIncome());
+        String date = studentModel.getSafeObject(studentModel.getStartDate());
+        String school = studentModel.getSafeObject(studentModel.getSchool());
+        String depart = studentModel.getSafeObject(studentModel.getDepartment());
+        String nameNT1 = studentModel.getSafeObject(studentModel.getNameNT1());
+        String phoneNT1 = studentModel.getSafeObject(studentModel.getPhoneNT1());
+        String carrerNT1 = studentModel.getSafeObject(studentModel.getCarrerNT1());
+        String nameNT2 = studentModel.getSafeObject(studentModel.getNameNT2());
+        String phoneNT2 = studentModel.getSafeObject(studentModel.getPhoneNT2());
+        String carrerNT2 = studentModel.getSafeObject(studentModel.getCarrerNT2());
+        String toknow = studentModel.getSafeObject(studentModel.getHowToKnow());
+        String official = studentModel.getSafeObject(studentModel.getOfficial());
+
+
         return mRequestService.updateStudent(name, img, clazz, phone, address,
-                birthday, hocLucDauVao, date, school, depart, "", "",
-                "", "", "", "", "", "", "")
+                birthday, hocLucDauVao, date, school, "HoHang", nameNT1, carrerNT1,
+                phoneNT1, nameNT2, carrerNT2, phoneNT2, toknow, official, depart)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
@@ -169,7 +179,6 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String name = managerModel.getName();
         String phone = managerModel.getPhoneNumber();
         String address = managerModel.getAddress();
-        String lecturerId = managerModel.getCmnd();
         String email = managerModel.getEmail();
         String cmnd = managerModel.getCmnd();
         String img = managerModel.getImg();
@@ -177,7 +186,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String outReason = managerModel.getOutReason();
         String department = managerModel.getDepartment();
         String position = managerModel.getPosition();
-        return mRequestService.updateManager(name, phone, address, mId, email, cmnd, img, outDate, outReason, department, position, outDate, outReason)
+        return mRequestService.updateManager(mId, name, phone, address, email, cmnd, img, outDate, outReason, department, position, outDate, outReason)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 }

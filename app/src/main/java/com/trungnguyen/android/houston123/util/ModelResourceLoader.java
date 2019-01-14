@@ -35,7 +35,19 @@ public final class ModelResourceLoader {
 
 
     public static List<String> loadStudentResource() {
-        return Arrays.asList("Họ tên", "SĐT", "Địa chỉ", "Lớp", "Ngày Sinh", "Học Lực Đầu Vào", "Ngày Bắt Đầu", "Trường", "Cơ sở");
+        return Arrays.asList("Họ tên", "Lớp", "Số điện thoại", "Địa chỉ",
+                "Ngày Sinh", "Học Lực Đầu Vào",
+                "Ngày Nhập Học","Trường", "Ngày nghĩ","Lý do nghĩ",
+                "Họ tên người thân 1",
+                "SĐT người thân 1",
+                "Nghề nghiệp người thân 1",
+                "Họ tên người thân 2",
+                "SĐT người thân 2",
+                "Nghề nghiệp người thân 2",
+                "Biết Houston123 như thế nào",
+                "Chính thức",
+                "Cơ sở",
+                "Tên cơ sở");
     }
 
     public static List<String> loadSubjectResource() {

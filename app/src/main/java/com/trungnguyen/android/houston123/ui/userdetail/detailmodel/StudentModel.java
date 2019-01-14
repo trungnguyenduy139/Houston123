@@ -4,7 +4,6 @@ import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.util.ModelResourceLoader;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,6 +59,7 @@ public class StudentModel extends BaseUserModel {
         this.departmentName = departmentName;
     }
 
+
     public StudentModel(String name, String phoneNumber, String address,
                         String clazz, String birthday, String income, String startDate, String school, String departmentName) {
         super(name, phoneNumber, address, "");
@@ -71,19 +71,57 @@ public class StudentModel extends BaseUserModel {
         this.departmentName = departmentName;
     }
 
+    public StudentModel(String name, String phoneNumber, String address,
+                        String clazz, String birthday, String income, String startDate, String school, String outDate, String outReason,
+                        String nameNT1, String phoneNT1, String carrerNT1, String nameNT2, String phoneNT2, String carrerNT2, String howToKnow,
+                        String official, String department, String departmentName) {
+        super(name, phoneNumber, address, "");
+        this.clazz = clazz;
+        this.birthday = birthday;
+        this.income = income;
+        this.startDate = startDate;
+        this.school = school;
+        this.outDate = outDate;
+        this.outReason = outReason;
+        this.nameNT1 = nameNT1;
+        this.phoneNT1 = phoneNT1;
+        this.carrerNT1 = carrerNT1;
+        this.nameNT2 = nameNT2;
+        this.phoneNT2 = phoneNT2;
+        this.carrerNT2 = carrerNT2;
+        this.howToKnow = howToKnow;
+        this.official = official;
+        this.department = department;
+        this.departmentName = departmentName;
+    }
+
     public static BaseModel initFromResource(List<String> resources) {
         int position = 0;
         String name = resources.get(position++);
+        String clazz = resources.get(position++);
         String sdt = resources.get(position++);
         String address = resources.get(position++);
-        String clazz = resources.get(position++);
         String birthday = resources.get(position++);
         String income = resources.get(position++);
         String startDate = resources.get(position++);
         String school = resources.get(position++);
+        String outDate =resources.get(position++);
+        String outReason = resources.get(position++);
+        String nameNT1 = resources.get(position++);
+        String phoneNT1 = resources.get(position++);
+        String carrerNT1 = resources.get(position++);
+        String nameNT2 = resources.get(position++);
+        String phoneNT2 = resources.get(position++);
+        String carrerNT2 = resources.get(position++);
+        String toknow = resources.get(position++);
+        String official = resources.get(position++);
         String depart = resources.get(position++);
+        String departName = resources.get(position++);
 
-        return new StudentModel(name, sdt, address, clazz, birthday, income, startDate, school, depart);
+
+
+        return new StudentModel(name, sdt, address,clazz,birthday,
+                income, startDate, school, outDate, outReason, nameNT1, phoneNT1, carrerNT1, nameNT2, phoneNT2, carrerNT2, toknow, official, depart, departName);
     }
 
     public String getSafeObject(String object) {
@@ -172,6 +210,19 @@ public class StudentModel extends BaseUserModel {
 
     @Override
     public List<String> getValue() {
-        return Arrays.asList(getMainContent(), getSubCotent(), getAddress(), getUserId(), getSafeObject(clazz), getSafeObject(birthday), getSafeObject(income), getSafeObject(startDate), getSafeObject(school), getSafeObject(departmentName));
+        return Arrays.asList(getMainContent(),getSafeObject(clazz), getSubCotent(), getAddress(), getSafeObject(birthday),
+                getSafeObject(income), getSafeObject(startDate), getSafeObject(school),
+                getSafeObject(outDate),
+                getSafeObject(outReason),
+                getSafeObject(nameNT1),
+                getSafeObject(phoneNT1),
+                getSafeObject(carrerNT1),
+                getSafeObject(nameNT2),
+                getSafeObject(phoneNT2),
+                getSafeObject(carrerNT2),
+                getSafeObject(howToKnow),
+                getSafeObject(official),
+                getSafeObject(department),
+                getSafeObject(departmentName));
     }
 }

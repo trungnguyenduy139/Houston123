@@ -31,6 +31,11 @@ object Constants {
         const val DETAIL_CLASS = "chitietlop"
     }
 
+    object Marketing {
+        const val PREDICT = "predict"
+
+    }
+
     object ServerCode {
         const val SUCCESS = 200
         const val FAILED = -200

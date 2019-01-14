@@ -27,9 +27,6 @@ class UpdateDetailUserActivity : DetailUserActivity() {
     private var mIsAddNew = false
     private var mUserCode = Constants.DEFAULT_CODE_VALUE
     private val mListOfValueEditText = ArrayList<AppCompatEditText>()
-
-    private val listOfVal: List<String> = mListOfValueEditText.map { it.text.toString() }
-
     private var mModel: BaseModel? = BaseModel.EMPTY
     private var mIsAllowAddOrUpdateAction = true
 
@@ -40,6 +37,9 @@ class UpdateDetailUserActivity : DetailUserActivity() {
         }
         if (content.isEmpty()) {
             mIsAllowAddOrUpdateAction = false
+        }
+        if (content.isNullOrEmpty()) {
+            content = ""
         }
         return@map content
     }
@@ -104,21 +104,22 @@ class UpdateDetailUserActivity : DetailUserActivity() {
         val id = item.itemId
         when (id) {
             R.id.add_new_action -> {
-                var isAllow = false
-                val model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
-                if (!mIsAllowAddOrUpdateAction) {
-                    ToastCustom.makeText(this, "Chưa nhập đầy đủ thông tin", ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR)
-                    return false
-                }
+                var model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
+//                if (!mIsAllowAddOrUpdateAction) {
+//                    ToastCustom.makeText(this, "Chưa nhập đầy đủ thông tin", ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR)
+//                    model = null
+//                    return false
+//                }
                 mIsAllowAddOrUpdateAction = true
                 viewModel.onAddNewClicked(mUserCode, model)
             }
             R.id.update_action -> {
-                val model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
-                if (!mIsAllowAddOrUpdateAction) {
-                    ToastCustom.makeText(this, "Chưa nhập đầy đủ thông tin", ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR)
-                    return false
-                }
+                var model = ModelResourceLoader.convertModel(mUserCode, refillListOfVal())
+//                if (!mIsAllowAddOrUpdateAction) {
+//                    ToastCustom.makeText(this, "Chưa nhập đầy đủ thông tin", ToastCustom.LENGTH_SHORT, ToastType.TYPE_ERROR)
+//                    model = null
+//                    return false
+//                }
                 mIsAllowAddOrUpdateAction = true
                 viewModel.onUpdateClick(DetailServiceType.DO_UPDATE, model, mModel?.modelId)
             }

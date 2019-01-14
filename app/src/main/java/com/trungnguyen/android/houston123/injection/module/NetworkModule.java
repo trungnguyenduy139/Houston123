@@ -46,6 +46,7 @@ import timber.log.Timber;
 public class NetworkModule {
 
     public static final String BASE_URL = "http://houston123.xyz/api/";
+    public static final String BASE_MKT_URL = "https://customer-conversion-classifier.herokuapp.com/api";
 
     private static final HttpUrl API_HTTP_URL = HttpUrl.parse(BASE_URL);
 
@@ -197,6 +198,19 @@ public class NetworkModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(callAdapter)
                 .baseUrl(BASE_URL)
+                .validateEagerly(BuildConfig.DEBUG)
+                .client(okHttpClient)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    @Named(NamedRetrofitConstants.MARKETING_RETROFIT_API)
+    Retrofit provideMarketingRetrofit(Gson gson, OkHttpClient okHttpClient, CallAdapter.Factory callAdapter) {
+        return new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(callAdapter)
+                .baseUrl(BASE_MKT_URL)
                 .validateEagerly(BuildConfig.DEBUG)
                 .client(okHttpClient)
                 .build();

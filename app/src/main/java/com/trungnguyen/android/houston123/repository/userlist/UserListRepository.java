@@ -45,14 +45,11 @@ public class UserListRepository implements UserListStore.Repository {
     private Observable<List<BaseModel>> processUserFlow(Observable<? extends ListBaseResponse<? extends EmptyResponse>> observable) {
         return observable
                 .flatMap(ObservablePattern::responseProcessingPattern)
+                .filter(response -> response != null)
+                .doOnNext(response -> mLocalStorage.putCurrentListPageLocal(response.getPage()))
                 .doOnNext(responseListBaseResponse -> {
-                    if (responseListBaseResponse == null) {
-                        Timber.d("[UserList] List of response User api is NULL");
-                        return;
-                    }
                     String url = responseListBaseResponse.getNextPageUrl();
                     String nextPageUrl = url == null ? Constants.EMPTY : url;
-                    mLocalStorage.putCurrentListPageLocal(responseListBaseResponse.getPage());
                     mLocalStorage.putHasLoader(!TextUtils.isEmpty(nextPageUrl));
                 })
                 .flatMap(responseListBaseResponse -> Observable.just(responseListBaseResponse.getDataList()))
