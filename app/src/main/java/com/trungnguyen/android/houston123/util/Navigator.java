@@ -11,6 +11,7 @@ import com.trungnguyen.android.houston123.base.ContainerActivity;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.MainActivity;
+import com.trungnguyen.android.houston123.ui.updateaccount.UpdateAccountActivity;
 import com.trungnguyen.android.houston123.ui.userdetail.DetailUserActivity;
 import com.trungnguyen.android.houston123.ui.userdetail.UpdateDetailUserActivity;
 
@@ -78,5 +79,10 @@ public final class Navigator {
     @NonNull
     private Intent getIntent(Context context, Class<?> clazz) {
         return new Intent(context, clazz);
+    }
+
+    public void starFoResult(Activity context, Class<UpdateAccountActivity> updateAccountActivityClass) {
+        Intent intent = new Intent(context, updateAccountActivityClass);
+        context.startActivityForResult(intent, 555);
     }
 }

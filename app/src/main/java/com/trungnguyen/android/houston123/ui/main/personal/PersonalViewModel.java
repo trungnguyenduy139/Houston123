@@ -63,7 +63,7 @@ public class PersonalViewModel extends BaseViewModel<IPersonalView> {
         if (context == null) {
             return;
         }
-        mNavigator.startActivity(context, UpdateAccountActivity.class);
+        mNavigator.starFoResult(mView.getHostView(), UpdateAccountActivity.class);
     }
 
     @OnClick

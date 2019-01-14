@@ -132,4 +132,8 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Pers
                 })
                 .show());
     }
+
+    public void updateList(LoginInfoModel model) {
+        viewModel.loadUserInfoResource(model);
+    }
 }

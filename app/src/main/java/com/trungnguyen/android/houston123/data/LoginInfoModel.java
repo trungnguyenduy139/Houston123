@@ -2,13 +2,14 @@ package com.trungnguyen.android.houston123.data;
 
 import com.trungnguyen.android.houston123.base.BaseModel;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by trungnd4 on 06/11/2018.
  */
-public class LoginInfoModel extends BaseModel {
+public class LoginInfoModel extends BaseModel implements Serializable {
 
     public String permission;
 
@@ -36,10 +37,11 @@ public class LoginInfoModel extends BaseModel {
         try {
             int i = 0;
             name = resources.get(i++);
-            cmnd = resources.get(i++);
             phone = resources.get(i++);
-            email = resources.get(i++);
             address = resources.get(i++);
+            cmnd = resources.get(i++);
+            email = resources.get(i++);
+            position = resources.get(i++);
         } catch (Exception ignored) {
 
         }
@@ -53,6 +55,6 @@ public class LoginInfoModel extends BaseModel {
 
     @Override
     public List<String> getValue() {
-        return Arrays.asList(getSafeObject(getMainContent()), getSafeObject(getSubCotent()), getSafeObject(address), getSafeObject(email), getSafeObject(cmnd), getSafeObject(position));
+        return Arrays.asList(getSafeObject(getMainContent()), getSafeObject(getSubCotent()), getSafeObject(address), getSafeObject(cmnd), getSafeObject(email), getSafeObject(position));
     }
 }

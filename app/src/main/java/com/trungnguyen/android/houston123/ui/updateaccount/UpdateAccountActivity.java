@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.ui.updateaccount;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -92,8 +93,8 @@ public class UpdateAccountActivity extends BaseToolbarActivity<ActivityUpdateAcc
         if (mLoginModel == null) {
             return;
         }
-        LoginInfoModel model = mLoginModel.updateModelLoginInfo(getListOfValue());
-        viewModel.startUpdateAccountFlow(model);
+        mLoginModel = mLoginModel.updateModelLoginInfo(getListOfValue());
+        viewModel.startUpdateAccountFlow(mLoginModel);
     }
 
     private List<String> getListOfValue() {
@@ -110,6 +111,14 @@ public class UpdateAccountActivity extends BaseToolbarActivity<ActivityUpdateAcc
 
     @Override
     public void updateSuccess(String message) {
+        mDetailContainer.removeAllViews();
+        if (mLoginModel != null) {
+            viewModel.loadUserInfoResource(mLoginModel);
+        }
+        Intent intent = new Intent();
+        intent.putExtra("RESULT_INFO", mLoginModel);
+        setResult(666, intent);
+        Injector.getInstance().createUserScope(mLoginModel);
         new SweetAlertDialog(this).setContentText(getString(R.string.update_user_success)).show();
     }
 }
