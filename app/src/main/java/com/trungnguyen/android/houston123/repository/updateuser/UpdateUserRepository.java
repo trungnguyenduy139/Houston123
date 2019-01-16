@@ -16,6 +16,7 @@ import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerMode
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.SubjectModel;
+import com.trungnguyen.android.houston123.util.Lists;
 
 import java.util.List;
 
@@ -63,10 +64,22 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         return null;
     }
 
+    @Override
+    public Observable<List<BaseModel>> handleNonLecturerClass(String modelId) {
+        return mRequestService.getListNoneLecturer(modelId)
+                .flatMap(ObservablePattern::responseProcessingPattern)
+                .flatMap(responseListBaseResponse -> Observable.just(responseListBaseResponse.getDataList()))
+                .filter(dataList -> !Lists.isEmptyOrNull(dataList))
+                .flatMapIterable(responses -> responses)
+                .map(EmptyResponse::convertToModel)
+                .toList()
+                .toObservable();
+    }
+
 
     @Override
     public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId, boolean isUpdate) {
-        mId = modelId;
+        mId = model.getModelId();
         switch (code) {
             case UserType.MANAGER:
                 return handleUpdateManager(model);
@@ -79,27 +92,27 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
             case UserType.DETAIL_CLAZZ:
                 return handleUpdateDetailClazz(model);
             case UserType.STUDENT:
-                return handleUpdateStudent(model);
+                return handleUpdateStudent(model, isUpdate);
             default:
                 return Observable.empty();
         }
     }
 
-    private Observable<BaseResponse> handleUpdateStudent(BaseModel model) {
+    private Observable<BaseResponse> handleUpdateStudent(BaseModel model, boolean isUpdate) {
         if (!(model instanceof StudentModel)) {
             return Observable.empty();
         }
         StudentModel studentModel = (StudentModel) model;
-        String name = studentModel.getSafeObject(studentModel.getName());
+        String name = studentModel.getSafeObject(studentModel.getMainContent());
         String img = "";
         String clazz = studentModel.getSafeObject(studentModel.getClazz());
-        String phone = studentModel.getSafeObject(studentModel.getPhoneNumber());
+        String phone = studentModel.getSafeObject(studentModel.getSubCotent());
         String address = studentModel.getSafeObject(studentModel.getAddress());
         String birthday = studentModel.getSafeObject(studentModel.getBirthday());
         String hocLucDauVao = studentModel.getSafeObject(studentModel.getIncome());
         String date = studentModel.getSafeObject(studentModel.getStartDate());
         String school = studentModel.getSafeObject(studentModel.getSchool());
-        String depart = studentModel.getSafeObject(studentModel.getDepartment());
+        String depart = studentModel.getSafeObject(studentModel.getDepartmentName());
         String nameNT1 = studentModel.getSafeObject(studentModel.getNameNT1());
         String phoneNT1 = studentModel.getSafeObject(studentModel.getPhoneNT1());
         String carrerNT1 = studentModel.getSafeObject(studentModel.getCarrerNT1());
@@ -108,10 +121,15 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String carrerNT2 = studentModel.getSafeObject(studentModel.getCarrerNT2());
         String toknow = studentModel.getSafeObject(studentModel.getHowToKnow());
         String official = studentModel.getSafeObject(studentModel.getOfficial());
+        String offDate = studentModel.getSafeObject(studentModel.getOutDate());
+        String offReason = studentModel.getSafeObject(studentModel.getOutReason());
 
 
-        return mRequestService.updateStudent(name, img, clazz, phone, address,
-                birthday, hocLucDauVao, date, school, "HoHang", nameNT1, carrerNT1,
+        return isUpdate ? mRequestService.updateStudent(mId, name, img, clazz, phone, address,
+                birthday, hocLucDauVao, date, school, nameNT1, carrerNT1,
+                phoneNT1, nameNT2, carrerNT2, phoneNT2, toknow, official, depart, offDate, offReason)
+                .flatMap(ObservablePattern::responseProcessingPattern) : mRequestService.createStudent(name, img, clazz, phone, address,
+                birthday, hocLucDauVao, date, school, nameNT1, carrerNT1,
                 phoneNT1, nameNT2, carrerNT2, phoneNT2, toknow, official, depart)
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
@@ -144,8 +162,8 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String start = clazzModel.startDate;
         String end = clazzModel.endDate;
         String departmen = clazzModel.departmen;
-        return isUppdate ? mRequestService.updateClazz(mId, clazz, subjectId, lecturerId, start, end, departmen)
-                .flatMap(ObservablePattern::responseProcessingPattern) : mRequestService.createClazzz(clazz, subjectId, lecturerId, start, end, departmen)
+        return isUppdate ? mRequestService.updateClazz(mId,  lecturerId, start, end, "", "")
+                .flatMap(ObservablePattern::responseProcessingPattern) : mRequestService.createClazzz(clazz, subjectId, lecturerId, start, end, "Dĩ An")
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 

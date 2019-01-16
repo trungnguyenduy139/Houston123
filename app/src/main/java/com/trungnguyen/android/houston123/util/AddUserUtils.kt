@@ -13,7 +13,7 @@ import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel
 object AddUserUtils {
     fun transformClassModel(model: BaseModel, modelId: String): ClassModel {
         val classModelSource = model as ClassModel
-        return ClassModel(classModelSource.mainContent, classModelSource.subCotent, classModelSource.modelId, modelId, classModelSource.departmen)
+        return ClassModel(classModelSource.mainContent, classModelSource.subCotent, classModelSource.modelId, modelId, classModelSource.departmen, classModelSource.startDate, classModelSource.endDate)
     }
 
 

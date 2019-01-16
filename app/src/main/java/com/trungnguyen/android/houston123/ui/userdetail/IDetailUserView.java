@@ -1,5 +1,6 @@
 package com.trungnguyen.android.houston123.ui.userdetail;
 
+import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.base.BaseUserModel;
 import com.trungnguyen.android.houston123.base.IBaseLoadingView;
 import com.trungnguyen.android.houston123.data.ClassResponse;
@@ -24,4 +25,6 @@ public interface IDetailUserView extends IBaseLoadingView {
     void onUpdateActionFailed();
 
     int getCode();
+
+    void onGetSuccess(List<? extends BaseModel> models);
 }

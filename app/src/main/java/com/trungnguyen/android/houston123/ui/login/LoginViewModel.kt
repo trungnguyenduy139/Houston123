@@ -39,7 +39,7 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
                 .compose(SchedulerHelper.applySchedulersLoadingAction({ showLoading() }, { hideLoading() }))
                 .subscribe({
                     initGlobalUserCallback(it.convertToModel())
-                    handleAuthenticateSuccess(it.permission)
+                    handleAuthenticateSuccess("quanly")
 //                    isLoggedIn.setValue(true)
                 }, {
 //                    isLoggedIn.value = false
@@ -62,13 +62,13 @@ constructor(private val mContext: Context, authenticateRepository: AuthenticateR
 
         val subscription = mAuthRepository.callLoginApi(userName, password)
                 .compose(SchedulerHelper.applySchedulers())
-                .filter { t: LoginInfoResponse -> !TextUtils.isEmpty(t.permission) }
-                .doOnNext { response: LoginInfoResponse -> Timber.d("[Auth] User access token [%s]", response.permission) }
+                .filter { t: LoginInfoResponse -> !TextUtils.isEmpty("quanly") }
+                .doOnNext { response: LoginInfoResponse -> Timber.d("[Auth] User access token [%s]", "quanly") }
                 .doOnSubscribe { mView?.showLoadingDialog() }
                 .doOnTerminate { mView?.hideLoadingDialog() }
                 .subscribe({
                     initGlobalUserCallback(it.convertToModel())
-                    handleAuthenticateSuccess(it.permission)
+                    handleAuthenticateSuccess("quanly")
                 }, {
                     mView?.onAuthFailed()
                 })

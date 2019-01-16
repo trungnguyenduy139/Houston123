@@ -132,7 +132,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     @Override
     public void onUpdateActionSuccess() {
         new SweetAlertDialog(this)
-                .setContentText(getString(R.string.delete_user_success))
+                .setContentText(getString(R.string.update_user_success))
                 .setConfirmText(getString(R.string.close_dialog))
                 .setConfirmClickListener(sweetAlertDialog -> {
                     if (sweetAlertDialog != null) {
@@ -177,6 +177,11 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
     }
 
     @Override
+    public void onGetSuccess(List<? extends BaseModel> models) {
+        viewModel.handleAddUserToClazz(mUserModel, UserType.LECTURER, models);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
@@ -203,12 +208,12 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                 break;
             case R.id.detail_teacher_add_to_class:
                 if (mUserModel instanceof LecturerModel) {
-                    viewModel.handleAddUserToClazz(mUserModel, UserType.LECTURER);
+                    viewModel.callApiClassNoneLecturer(mUserModel.getModelId());
                 }
                 break;
             case R.id.add_student_to_clazz:
                 if (mUserModel instanceof StudentModel) {
-                    viewModel.handleAddUserToClazz(mUserModel, UserType.STUDENT);
+//                    viewModel.handleAddUserToClazz(mUserModel, UserType.STUDENT);
                 }
                 break;
             default:

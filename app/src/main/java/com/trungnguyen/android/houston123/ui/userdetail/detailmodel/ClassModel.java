@@ -43,28 +43,30 @@ public class ClassModel extends BaseModel {
         this.departmen = departmen;
     }
 
-    public ClassModel(String mainContent, String subCotent, String clazzId, String lecturerId, String departmen) {
+    public ClassModel(String mainContent, String subCotent, String clazzId, String lecturerId, String departmen, String startDate, String endDate) {
         super(mainContent, subCotent, clazzId);
         this.lecturerId = lecturerId;
-        this.startDate = "";
-        this.endDate = "";
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.lecturerId = lecturerId;
         this.departmen = departmen;
     }
 
     public static BaseModel initFromResource(List<String> resources) {
         int index = 0;
+        String clazzId = resources.get(index++);
+        String clazz = resources.get(index++);
+        String subjectId = resources.get(index++);
         String name = resources.get(index++);
-        String phone = resources.get(index++);
-        String address = resources.get(index++);
         String lecturerId = resources.get(index++);
-        String email = resources.get(index++);
-        String cmnd = resources.get(index++);
+        String lecturerName = resources.get(index++);
         String img = "";
-        String outDate = resources.get(index++);
-        String outReason = resources.get(index++);
+        String startDate = resources.get(index++);
+        String endDate = resources.get(index++);
+        String branch = resources.get(index++);
         String department = resources.get(index++);
 
-        return new ClassModel(name, phone, address, lecturerId, email, cmnd, img, outDate, outReason, department);
+        return new ClassModel(name, subjectId, clazzId, clazz, lecturerId, lecturerName, startDate, endDate, branch, department);
     }
 
     @Override

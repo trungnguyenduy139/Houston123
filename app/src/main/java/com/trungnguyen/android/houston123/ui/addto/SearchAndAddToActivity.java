@@ -71,11 +71,22 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
         Intent intent = getIntent();
         mUserCode = intent.getIntExtra(BundleConstants.USER_CODE_BUNDLE, Constants.DEFAULT_CODE_VALUE);
         mModel = (BaseModel) intent.getSerializableExtra(BundleConstants.ADD_TO_MODEL);
+        List<? extends BaseModel> datas = intent.getParcelableArrayListExtra("USER_NONE_LIST");
         binding.searchListRecycler.setLayoutManager(new LinearLayoutManager(this));
         mDataAdapter = new UserListAdapter<>(mDataList);
         mDataAdapter.setListener(this);
         mDataAdapter.setLoaderState(false);
         binding.searchListRecycler.setAdapter(mDataAdapter);
+
+        if (binding.searchListRecycler.getVisibility() == View.INVISIBLE) {
+            binding.searchListRecycler.setVisibility(View.VISIBLE);
+            binding.tvEmptyData.setVisibility(View.INVISIBLE);
+        }
+        if (mDataAdapter == null) {
+            return;
+        }
+        mDataList = (List<BaseModel>) datas;
+        mDataAdapter.addItems(datas);
     }
 
     @Override

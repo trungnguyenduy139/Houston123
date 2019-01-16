@@ -133,11 +133,8 @@ public class UserListViewModel extends BaseViewModel<IUserListView> implements U
     }
 
     public void doRemoveUser(int code, int position, BaseModel baseUserModel) {
-        if (!(baseUserModel instanceof BaseUserModel)) {
-            return;
-        }
 
-        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, ((BaseUserModel) baseUserModel).getUserId())
+        Disposable subscription = mUserListRepository.handleRemoveUserFlow(code, baseUserModel.getModelId())
                 .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
                 .subscribe(baseResponse -> {
                     if (mView != null) {

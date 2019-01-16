@@ -211,14 +211,30 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
         handleUpdateUser(userCode, model, "", false);
     }
 
-    public void handleAddUserToClazz(BaseModel userModel, int userMode) {
+    public void handleAddUserToClazz(BaseModel userModel, int userMode, List<? extends BaseModel> list) {
         Bundle bundle = new BundleBuilder()
                 .putValue(BundleConstants.ADD_TO_MODEL, userModel)
                 .putValue(BundleConstants.USER_CODE_BUNDLE, userMode)
+                .putValue("USER_NONE_LIST", list)
                 .build();
         if (bundle == null) {
             return;
         }
         mNavigator.startActivity(mContext, SearchAndAddToActivity.class, bundle);
+    }
+
+    public void callApiClassNoneLecturer(String modelId) {
+        Disposable subscription = mUpdateUserRepository.handleNonLecturerClass(modelId)
+                .compose(SchedulerHelper.applySchedulers())
+
+                .doOnSubscribe(disposable -> showLoading())
+                .doOnTerminate(this::hideLoading)
+                .subscribe(list -> {
+                    if (mView != null) {
+                        mView.onGetSuccess(list);
+                    }
+                }, throwable -> Timber.d("LoiRoiCu %s", throwable.getMessage()));
+
+        mSubscription.add(subscription);
     }
 }
