@@ -14,23 +14,23 @@ public class DetailClassModel extends BaseModel {
 
     String clazzId;
 
-    String transferId;
+    String point;
 
-    String transferTime;
+    String comment;
 
     public DetailClassModel(String studentId, String clazzId, String transferId, String transferTime) {
         this.studentId = studentId;
         this.clazzId = clazzId;
-        this.transferId = transferId;
-        this.transferTime = transferTime;
+        this.point = transferId;
+        this.comment = transferTime;
     }
 
     public DetailClassModel(String mainContent, String subContent, String modelId, String studentId, String clazzId, String transferId, String transferTime) {
         super(mainContent, subContent, modelId);
         this.studentId = studentId;
         this.clazzId = clazzId;
-        this.transferId = transferId;
-        this.transferTime = transferTime;
+        this.point = transferId;
+        this.comment = transferTime;
     }
 
     public String getStudentId() {
@@ -50,19 +50,19 @@ public class DetailClassModel extends BaseModel {
     }
 
     public String getTransferId() {
-        return transferId;
+        return point;
     }
 
     public void setTransferId(String transferId) {
-        this.transferId = transferId;
+        this.point = transferId;
     }
 
     public String getTransferTime() {
-        return transferTime;
+        return comment;
     }
 
     public void setTransferTime(String transferTime) {
-        this.transferTime = transferTime;
+        this.comment = transferTime;
     }
 
     @Override

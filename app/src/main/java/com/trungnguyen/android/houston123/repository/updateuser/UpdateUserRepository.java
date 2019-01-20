@@ -90,7 +90,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
             case UserType.CLAZZ:
                 return handleUpdateClazz(model, isUpdate);
             case UserType.DETAIL_CLAZZ:
-                return handleUpdateDetailClazz(model);
+                return handleUpdateDetailClazz(model, isUpdate);
             case UserType.STUDENT:
                 return handleUpdateStudent(model, isUpdate);
             default:
@@ -162,20 +162,22 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
         String start = clazzModel.startDate;
         String end = clazzModel.endDate;
         String departmen = clazzModel.departmen;
-        return isUppdate ? mRequestService.updateClazz(mId,  lecturerId, start, end, "", "")
+        return isUppdate ? mRequestService.updateClazz(mId, lecturerId, start, end, "", "")
                 .flatMap(ObservablePattern::responseProcessingPattern) : mRequestService.createClazzz(clazz, subjectId, lecturerId, start, end, "Dĩ An")
                 .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
 
-    private Observable<BaseResponse> handleUpdateDetailClazz(BaseModel model) {
+    private Observable<BaseResponse> handleUpdateDetailClazz(BaseModel model, boolean isUpdate) {
         DetailClassModel detailClassModel = (DetailClassModel) model;
         String studentId = detailClassModel.getStudentId();
         String clazzId = detailClassModel.getClazzId();
-        String tranferId = detailClassModel.getTransferId();
-        String transferTIme = detailClassModel.getTransferTime();
-        return mRequestService.updateDetailClass(mId, clazzId, tranferId, transferTIme)
-                .flatMap(ObservablePattern::responseProcessingPattern);
+        String point = detailClassModel.getTransferId();
+        String comment = detailClassModel.getTransferTime();
+        return isUpdate ? mRequestService.createDetailClazz(clazzId, mId)
+                .flatMap(ObservablePattern::responseProcessingPattern) :
+                mRequestService.updateDetailClass(mId, clazzId, studentId, point, comment)
+                        .flatMap(ObservablePattern::responseProcessingPattern);
     }
 
 

@@ -15,6 +15,7 @@ import com.trungnguyen.android.houston123.ui.listuser.UserListAdapter;
 import com.trungnguyen.android.houston123.ui.listuser.UserListListener;
 import com.trungnguyen.android.houston123.util.BundleConstants;
 import com.trungnguyen.android.houston123.util.Constants;
+import com.trungnguyen.android.houston123.util.Lists;
 import com.trungnguyen.android.houston123.widget.ToastCustom;
 import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
@@ -78,12 +79,14 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
         mDataAdapter.setLoaderState(false);
         binding.searchListRecycler.setAdapter(mDataAdapter);
 
-        if (binding.searchListRecycler.getVisibility() == View.INVISIBLE) {
-            binding.searchListRecycler.setVisibility(View.VISIBLE);
-            binding.tvEmptyData.setVisibility(View.INVISIBLE);
-        }
-        if (mDataAdapter == null) {
-            return;
+        if (!Lists.isEmptyOrNull(datas)) {
+            if (binding.searchListRecycler.getVisibility() == View.INVISIBLE) {
+                binding.searchListRecycler.setVisibility(View.VISIBLE);
+                binding.tvEmptyData.setVisibility(View.INVISIBLE);
+            }
+            if (mDataAdapter == null) {
+                return;
+            }
         }
         mDataList = (List<BaseModel>) datas;
         mDataAdapter.addItems(datas);

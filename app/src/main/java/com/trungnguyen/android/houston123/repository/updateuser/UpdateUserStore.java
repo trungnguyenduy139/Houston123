@@ -103,12 +103,6 @@ public class UpdateUserStore {
                                                 @Query("ngaynghi") String out,
                                                 @Query("lydonghi") String reason);
 
-        @POST(Constants.Api.DETAIL_CLASS)
-        Observable<BaseResponse> updateDetailClass(
-                @Query("mahocvien") String name,
-                @Query("malop") String img,
-                @Query("malopchuyen") String permission,
-                @Query("thoigianchuyen") String available);
 
         @PUT(Constants.Api.CLAZZ + "/{user_id}")
         Observable<BaseResponse> updateClazz(@Path(value = "user_id") String userId,
@@ -143,6 +137,17 @@ public class UpdateUserStore {
         Observable<ListBaseResponse<ClassResponse>> getListNoneLecturer(@Path(value = "user_id") String userId);
 
 
+        @POST(Constants.Api.DETAIL_CLASS)
+        Observable<BaseResponse> createDetailClazz(  @Query("MaLop") String malop,
+                                                     @Query("MaHocVien") String mahocvien);
+
+        @PUT(Constants.Api.DETAIL_CLASS + "/{user_id}")
+        Observable<BaseResponse> updateDetailClass(
+                @Path(value = "user_id") String userId,
+                @Query("MaLop") String malop,
+                @Query("MaHocVien") String mahocvien,
+                @Query("Diem") String diem,
+                @Query("DanhGia") String danhgia);
     }
 
     public interface Repository {

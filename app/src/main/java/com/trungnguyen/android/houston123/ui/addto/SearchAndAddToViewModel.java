@@ -45,20 +45,20 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
 
     @OnClick
     public void onSubmitSearchToAdd(View view, String text) {
-//        if (TextUtils.isEmpty(text)) {
-//            ToastCustom.makeTopToastText(mContext, mContext.getString(R.string.general_error_message));
-//            return;
-//        }
-//        Disposable subscription = mUserListRepository.handleSearchServiceFlow(UserType.CLAZZ, text)
-//                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
-//                .doOnError(throwable -> Timber.d("NetworkModule error caused [%s]", throwable.getMessage()))
-//                .subscribe(data -> {
-//                    if (mView != null) {
-//                        mView.onSearchCompleted(data);
-//                    }
-//                }, Timber::d);
-//
-//        mSubscription.add(subscription);
+        if (TextUtils.isEmpty(text)) {
+            ToastCustom.makeTopToastText(mContext, mContext.getString(R.string.general_error_message));
+            return;
+        }
+        Disposable subscription = mUserListRepository.handleSearchServiceFlow(UserType.CLAZZ, text)
+                .compose(SchedulerHelper.applySchedulersLoadingAction(this::showLoading, this::hideLoading))
+                .doOnError(throwable -> Timber.d("NetworkModule error caused [%s]", throwable.getMessage()))
+                .subscribe(data -> {
+                    if (mView != null) {
+                        mView.onSearchCompleted(data);
+                    }
+                }, Timber::d);
+
+        mSubscription.add(subscription);
     }
 
     public void onAddUserAction(BaseModel model, String modelId, int codeSource) {
@@ -68,7 +68,7 @@ public class SearchAndAddToViewModel extends BaseViewModel<ISearchAndAddToView> 
         }
         if (codeSource == UserType.STUDENT) {
             DetailClassModel detailClazzModel = AddUserUtils.INSTANCE.tranformDetailClsasModel(model, modelId);
-            Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.DETAIL_CLAZZ, detailClazzModel, modelId, true)
+            Disposable subscription = mUpdateUserRepository.callApiUpdateUser(UserType.DETAIL_CLAZZ, detailClazzModel, modelId, false)
                     .compose(SchedulerHelper.applySchedulers())
                     .doOnSubscribe(disposable -> showLoading())
                     .doOnTerminate(this::hideLoading)

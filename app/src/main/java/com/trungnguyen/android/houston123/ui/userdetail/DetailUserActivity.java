@@ -30,6 +30,7 @@ import com.trungnguyen.android.houston123.widget.sweetalert.SweetAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -213,7 +214,7 @@ public class DetailUserActivity extends BaseToolbarActivity<ActivityDetailUserBi
                 break;
             case R.id.add_student_to_clazz:
                 if (mUserModel instanceof StudentModel) {
-//                    viewModel.handleAddUserToClazz(mUserModel, UserType.STUDENT);
+                    viewModel.handleAddUserToClazz(mUserModel, UserType.STUDENT, Collections.emptyList());
                 }
                 break;
             default:
