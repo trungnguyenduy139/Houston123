@@ -170,11 +170,11 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
 
     private Observable<BaseResponse> handleUpdateDetailClazz(BaseModel model, boolean isUpdate) {
         DetailClassModel detailClassModel = (DetailClassModel) model;
-        String studentId = detailClassModel.getStudentId();
-        String clazzId = detailClassModel.getClazzId();
+        String studentId = detailClassModel.getSubCotent();
+        String clazzId = detailClassModel.getSafeObject(detailClassModel.getClazzId());
         String point = detailClassModel.getTransferId();
         String comment = detailClassModel.getTransferTime();
-        return isUpdate ? mRequestService.createDetailClazz(clazzId, mId)
+        return !isUpdate ? mRequestService.createDetailClazz(clazzId, studentId)
                 .flatMap(ObservablePattern::responseProcessingPattern) :
                 mRequestService.updateDetailClass(mId, clazzId, studentId, point, comment)
                         .flatMap(ObservablePattern::responseProcessingPattern);

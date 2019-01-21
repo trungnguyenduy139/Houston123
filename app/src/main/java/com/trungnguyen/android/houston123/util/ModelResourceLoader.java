@@ -4,6 +4,7 @@ import com.trungnguyen.android.houston123.anotation.UserType;
 import com.trungnguyen.android.houston123.base.BaseModel;
 import com.trungnguyen.android.houston123.ui.userdetail.ItemDetailModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ClassModel;
+import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.DetailClassModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.LecturerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.ManagerModel;
 import com.trungnguyen.android.houston123.ui.userdetail.detailmodel.StudentModel;
@@ -105,6 +106,9 @@ public final class ModelResourceLoader {
                 break;
             case UserType.STUDENT:
                 model = StudentModel.initFromResource(resources);
+                break;
+            case UserType.DETAIL_CLAZZ:
+                model = DetailClassModel.initFromResource(resources);
                 break;
             default:
                 model = BaseModel.EMPTY;

@@ -34,6 +34,17 @@ public class DetailClassModel extends BaseModel {
         this.comment = transferTime;
     }
 
+    public static BaseModel initFromResource(List<String> resources) {
+        int position = 0;
+        String detailId = resources.get(position++);
+        String clazzId = resources.get(position++);
+        String studentId = resources.get(position++);
+        String point = resources.get(position++);
+        String comment = resources.get(position++);
+        String name = resources.get(position++);
+        return new DetailClassModel(studentId, clazzId, point, comment, name, detailId);
+    }
+
     public String getStudentId() {
         return studentId;
     }

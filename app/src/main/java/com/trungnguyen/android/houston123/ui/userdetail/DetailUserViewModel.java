@@ -197,7 +197,7 @@ public class DetailUserViewModel extends BaseListViewModel<IDetailUserView, User
                     if (mNavigator != null) {
                         Bundle bundle = new BundleBuilder()
                                 .putValue(BundleConstants.LIST_USER_BUNDLE, dataList)
-                                .putValue(BundleConstants.USER_CODE_BUNDLE, UserType.STUDENT)
+                                .putValue(BundleConstants.USER_CODE_BUNDLE, UserType.DETAIL_CLAZZ)
                                 .build();
                         mNavigator.startUserListActivity(mContext, bundle);
                     }
