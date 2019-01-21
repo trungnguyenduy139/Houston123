@@ -87,6 +87,7 @@ public class SearchAndAddToActivity extends BaseToolbarActivity<ActivitySearchAn
             if (mDataAdapter == null) {
                 return;
             }
+            binding.searchContainer.setVisibility(View.GONE);
         }
         mDataList = (List<BaseModel>) datas;
         mDataAdapter.addItems(datas);

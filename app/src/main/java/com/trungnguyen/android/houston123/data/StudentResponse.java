@@ -20,7 +20,7 @@ public class StudentResponse extends BaseUserResponse {
     String income;
     @SerializedName("Ngày Nhập Học")
     String startDate;
-    @SerializedName("Trường Học Chính Khóa")
+    @SerializedName("Tên Trường")
     String school;
     @SerializedName("Ngày Nghỉ Học")
     String outDate;

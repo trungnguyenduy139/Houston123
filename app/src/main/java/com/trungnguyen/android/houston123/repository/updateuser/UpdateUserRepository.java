@@ -79,7 +79,7 @@ public class UpdateUserRepository implements UpdateUserStore.Repository {
 
     @Override
     public Observable<BaseResponse> callApiUpdateUser(int code, BaseModel model, String modelId, boolean isUpdate) {
-        mId = model.getModelId();
+        mId = TextUtils.isEmpty(model.getModelId()) ? modelId : model.getModelId();
         switch (code) {
             case UserType.MANAGER:
                 return handleUpdateManager(model);
