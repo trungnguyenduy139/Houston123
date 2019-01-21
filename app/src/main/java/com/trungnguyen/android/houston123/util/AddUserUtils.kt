@@ -19,7 +19,7 @@ object AddUserUtils {
 
     fun tranformDetailClsasModel(model: BaseModel, modelId: String): DetailClassModel {
         val classModel = model as ClassModel
-        return DetailClassModel(classModel.modelId, modelId, "", "")
+        return DetailClassModel(classModel.modelId, modelId, "", "", "", "")
     }
 
     fun getCodeFromModel(model: BaseModel): Int {

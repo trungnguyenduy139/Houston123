@@ -33,6 +33,10 @@ public final class ModelResourceLoader {
         return Arrays.asList("Mã Lớp", "Lớp", "Mã Môn Học", "Tên", "Mã Giáo Viên", "Họ Và Tên", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Nhánh", "Cơ sở");
     }
 
+    public static List<String> loadClassDetailResource() {
+        return Arrays.asList("Mã Chi Tiết", "Mã Lớp", "Mã Học Viên", "Điểm Số", "Đánh Giá", "Họ Và Tên");
+    }
+
 
     public static List<String> loadStudentResource() {
         return Arrays.asList("Họ tên", "Lớp", "Số điện thoại", "Địa chỉ",
