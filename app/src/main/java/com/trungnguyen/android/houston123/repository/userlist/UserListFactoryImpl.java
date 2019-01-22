@@ -60,6 +60,8 @@ public class UserListFactoryImpl implements UserListFactory {
                 return mUserListRequestService.getLisClazz(page);
             case UserType.SUBJECT:
                 return mUserListRequestService.getListSubject(page);
+            case UserType.DETAIL_CLAZZ:
+                return Observable.empty();
             default:
                 throw new IllegalStateException("Invalid type to get user list api");
         }
