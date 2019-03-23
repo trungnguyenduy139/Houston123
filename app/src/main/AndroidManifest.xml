@@ -73,6 +73,12 @@
             android:label="@string/register"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity android:name=".ui.analyze.AnalyzeDataActivity"
+            android:theme="@style/AppTheme"
+            android:label="Analyze"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

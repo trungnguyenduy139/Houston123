@@ -7,6 +7,7 @@ import com.trungnguyen.android.houston123.injection.module.DataManagerModule;
 import com.trungnguyen.android.houston123.injection.module.LoginModule;
 import com.trungnguyen.android.houston123.injection.module.UserListModule;
 import com.trungnguyen.android.houston123.ui.addto.SearchAndAddToActivity;
+import com.trungnguyen.android.houston123.ui.analyze.AnalyzeDataActivity;
 import com.trungnguyen.android.houston123.ui.listuser.UserListActivity;
 import com.trungnguyen.android.houston123.ui.login.LoginActivity;
 import com.trungnguyen.android.houston123.ui.main.ChangePasswordActivity;
@@ -40,6 +41,8 @@ public interface DataManagerComponent {
     }
 
     void inject(UserListActivity activity);
+
+    void inject(AnalyzeDataActivity activity);
 
     void inject(RegisterUserActivity activity);
 

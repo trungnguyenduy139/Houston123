@@ -46,7 +46,7 @@ import timber.log.Timber;
 public class NetworkModule {
 
     public static final String BASE_URL = "http://houston123.xyz/api/";
-    public static final String BASE_MKT_URL = "https://customer-conversion-classifier.herokuapp.com/api";
+    public static final String BASE_MKT_URL = "https://customer-conversion-classifier.herokuapp.com/api/";
 
     private static final HttpUrl API_HTTP_URL = HttpUrl.parse(BASE_URL);
 

@@ -1,6 +1,7 @@
 package com.trungnguyen.android.houston123.injection.module;
 
 import com.trungnguyen.android.houston123.repository.login.AuthenticateStore;
+import com.trungnguyen.android.houston123.repository.marketing.MarketingStore;
 import com.trungnguyen.android.houston123.repository.updateuser.UpdateUserStore;
 import com.trungnguyen.android.houston123.repository.userlist.UserListStore;
 import com.trungnguyen.android.houston123.util.NamedRetrofitConstants;
@@ -32,5 +33,12 @@ public abstract class ApiModule {
     @Singleton
     static protected UpdateUserStore.RequestService provideUpdateUserRetrofitApi(@Named(NamedRetrofitConstants.UPDATE_USER_RETROFIT_API) Retrofit retrofit) {
         return retrofit.create(UpdateUserStore.RequestService.class);
+    }
+
+
+    @Provides
+    @Singleton
+    static protected MarketingStore.RequestService provideMarketingRetrofitApi(@Named(NamedRetrofitConstants.MARKETING_RETROFIT_API) Retrofit retrofit) {
+        return retrofit.create(MarketingStore.RequestService.class);
     }
 }
